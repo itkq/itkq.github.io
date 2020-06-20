@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Contest on itkq.jp</title>
+    <link>https://itkq.jp/tags/contest/</link>
+    <description>Recent content in Contest on itkq.jp</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-JP</language>
+    <lastBuildDate>Sun, 20 Nov 2016 20:36:54 +0900</lastBuildDate>
+    
+	<atom:link href="https://itkq.jp/tags/contest/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>git challenge 4th で優勝してきた</title>
+      <link>https://itkq.jp/blog/2016/11/20/git-challenge/</link>
+      <pubDate>Sun, 20 Nov 2016 20:36:54 +0900</pubDate>
+      
+      <guid>https://itkq.jp/blog/2016/11/20/git-challenge/</guid>
+      <description>git challenge 以前参加した逆求人イベントで、このコンテストをmixiの中の人に教えていただき、興味を持ったので参加した。
+git challenge 2016.11.20
+朝 会場はmixiのビルだった。
+第4回git challengeがはじまりました。今日は快晴で、git challenge日和となりました。#mixi_git pic.twitter.com/0aIH0Au6uw
+&amp;mdash; ミクシィグループ 新卒採用公式アカウント (@HR_mixi) 2016年11月20日 
+コンテストは2人組のチーム制で、チームは事前に決められていて、 逆求人イベントで一緒したラルフ氏 ( @r_ralph_h ) でした。他に顔見知りはいなかった。 コンテストのチュートリアルをやって、GithubにプッシュするとCIで採点、Slackに通知されるという流れを体験した。
+昼 🍣 のスライドがあったものの、mixiでは 🍣 == 🍛 が true らしく、お昼ごはんはカレーだった。おいしかった。
+コンテスト 戦略は特に無くて、奇数と偶数の問題をそれぞれが担当した。 問題内容は公開NGらしいので触れない。
+コンテスト中はそれっぽいBGMが流れていたが、 全体的な解答ペースが早かったらしく、途中でPPAPなど妨害音楽に切り替わって険しかった。 不評を買ってか、その後九条カレンが登場したので良かった。
+きんいろモザイク対応企業 #mixi_git pic.twitter.com/CF8JTOM4E1
+&amp;mdash; いたこ (@itkq) 2016年11月20日 
+途中で詰まった問題はあったけれど、チームメイトが解いてくれた。神。 終盤の高難度問題は、解き方は見えたものの時間が足りなかった。
+結果、同率1位で自分のチームを含めた3チームが優勝ということになった。 賞品は後で郵送してもらえるらしい。感謝。
+（同着だったけど）優勝しました！！！ #mixi_git
+&amp;mdash; いたこ (@itkq) 2016年11月20日 
+懇親会 作問者と会話して直接フィードバックできたり作問の裏話が聞けたので良かった。
+まとめ 接戦だったので楽しかった。 治安のいいGit開発を心掛けたい。
+チームメイトのエントリ ==&amp;gt; mixiのgit challengeに参加したお話
+追記 賞品はメダルとOctcatくんでした。 でかい pic.</description>
+    </item>
+    
+    <item>
+      <title>学生枠でISUCON5に参加してみたら運良く予選を突破した</title>
+      <link>https://itkq.jp/blog/2015/10/09/isucon5-qualifier/</link>
+      <pubDate>Fri, 09 Oct 2015 11:25:38 +0900</pubDate>
+      
+      <guid>https://itkq.jp/blog/2015/10/09/isucon5-qualifier/</guid>
+      <description>もう結構前のことになりますが、ISUCON5 というコンテストに参加しました。
+書くことあんまりないからって書かないでいたらチームメイトから書くように煽られてしまったので書きます。
+準備 バイト先の先輩である shiki に誘われて、その友人の @nemupm と僕 @itkq の 3人で参加することになった。 チーム名の「アジ・タコ・エンガワ！」は好きな寿司ネタを並べたものという設定で、僕はアジ（本当はタイが一番好きなんですが頭文字が被るのでやめました）。
+コンテスト自体はなんとなく聞いたことある程度で、知識も経験もない僕は足手まといにならないか結構不安だった（先輩方は参加経験があった）。
+担当は
+ インフラ
+@nemupm
+ アプリ
+shiki @itkq
+  に決まり、最初に話し合った時に、せっかくだから Golang でいってみようということになり、触ったことがなかった僕は Tour of a Go  と build-web-application-with-golang を1週間ちょっとやって、なんとなく読める程度にした。
+予選 まず MySQL と nginx のログとって Golang 実装のコード読んでどこが重いとか調べて作戦を立ててたら14時ぐらいになってて、ちょっと焦りつつもそこからアプリのチューニングを始めた。unix domain socket を使うとか定番のやつがあまり効かなくて、relations テーブルをメモリに載せる結構大きめな作業にとりかかることにした。
+ダンプしたクエリを ruby で整形して/initializeで載せてアプリの SQL を取っ払ったら、スコアが5000ほど一気に伸びて一番盛り上がったし嬉しかった。
+もう少し作業の余地はあったけど、Git 周りでうまくいかなかったり突然 Mac が落ちたりで焦って思ったように動けなくて本当申し訳なかった。
+提出スコアが6000台で、終わった後に微妙そうって話をしてたけど、結果は5位でギリギリ本戦に出場できることになった！
+終わりに 運営のみなさん本当にお疲れさまでした。本戦のほうもよろしくお願いします。
+チームの先輩方ありがとうございました。予選は本当だめだめだったので本戦はもっと頑張りたいです。
+あと @nemupm とは本戦で顔合わせなので楽しみです。
+予選のリポジトリ: nemupm/isucon5-qualifier
+以下チームメイトのエントリ:
+ISUCON5予選 学生枠５位だけど突破できた
+ISUCON予選を学生枠でギリギリ通過する技術</description>
+    </item>
+    
+  </channel>
+</rss>

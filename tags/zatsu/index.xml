@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Zatsu on itkq.jp</title>
+    <link>https://itkq.jp/tags/zatsu/</link>
+    <description>Recent content in Zatsu on itkq.jp</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-JP</language>
+    <lastBuildDate>Tue, 03 Jan 2017 15:52:28 +0900</lastBuildDate>
+    
+	<atom:link href="https://itkq.jp/tags/zatsu/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>2017年の抱負</title>
+      <link>https://itkq.jp/blog/2017/01/03/2017-goal/</link>
+      <pubDate>Tue, 03 Jan 2017 15:52:28 +0900</pubDate>
+      
+      <guid>https://itkq.jp/blog/2017/01/03/2017-goal/</guid>
+      <description> 去年 だめだめ
+やりたかったこと  英語
+ やれてない 日経ニュースを英語で聞ける LissN を聞く時期があったけど、忙しいとか言い訳してたら習慣が終わった  関数型プログラミング
+ やれてない プログラミングの基礎を読んだ Scala関数型デザイン&amp;amp;プログラミング Scalazコントリビューターによる関数型徹底ガイドでつんでる  学部卒業
+ やれた   やってたこと  インターンにいかずに研究を進めた 就活っぽいやつ やっていき  反省  春休み何をやっていたのか記憶がない やれてない  今年 とりあえず
+やること  就職先
+ きめる  研究
+ 卒業したいので研究をやる  インプット
+ 去年は計15冊程度しか読めなかったので、今年は倍読む  アウトプット
+ 不寛容社会とエンジニアの「正しさハラスメント」 読んだ。ここはインターネットなので、言い方や伝え方は様々ある 批判や否定があることも意識しながら恐れずにアウトプットする必要がある 自分も、ブックマークがたくさん付いた記事を読んで、しょうもないなって思うことがあるけど、読んでもらうことに意味があると思うようにしたい ブログ書く OSS やっていきたい   </description>
+    </item>
+    
+  </channel>
+</rss>

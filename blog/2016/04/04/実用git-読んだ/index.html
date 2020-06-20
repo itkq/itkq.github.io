@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="ja-JP">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="no-referrer">
+<meta name="author" content="itkq">
+<meta name="description" content="最近自分の Git に対する知識の無さを感じてきたので本を読もうと思っていたら、ちょうど借りる機会があったのでまとめた。Git コマンドの操作をより自信を持って行えるようになった気がする。
+Git の基本的な概念 Git リポジトリは、作業ディレクトリと .git ディレクトリから成る。
+git init により生成される Git リポジトリ (.git ディレクトリ) には、リビジョンと履歴の情報がすべて詰まっている。Git リポジトリが保持するデータ構造は、オブジェクト格納領域とインデックスの2つ。
+Git オブジェクト Git オブジェクト格納領域は、オブジェクトの内容に SHA1 を適用して得られたハッシュ値から生成されるユニークな オブジェクト ID (名前) をもつ。 オブジェクト格納領域 (.git/objects) に配置される Git オブジェクトは、次の4種類である。
+ blob
+ファイルの各バージョンは blob (binary large object) で表される。blob にはファイルのデータのみが含まれており、メタデータやファイル名は含まれていない。 Git はファイル名を気にしないため、同じ内容のファイルが複数あっても、それは1つの blob で表される。
+ tree
+tree オブジェクトは、1階層分のディレクトリ情報を表現する。 tree は blob のオブジェクトID とパス名を持っている。 コミットが指す tree オブジェクトの ID さえ分かれば、再帰的に子の tree を辿ることで、そのコミットの状態のファイルをすべて取り出せる。
+ commit
+コミットオブジェクトは、リポジトリに加えられた変更のメタデータを持つ。
+ tree の名前 新しいバージョンの作成者 (author) 作成された時間 新しいバージョンをリポジトリに置いた人 (comitter) リビジョンを作った理由の説明 (commit message)    ルートコミット（最初のコミット）以外は1つ以上の親コミットIDをもつ。">
+
+<meta name="google-site-verification" content="AyWEWMfqdOijgoPW5yMy188xoQqY46L6pFXyd3Jizyc">
+
+
+<meta property="og:title" content="実用Git 読んだ" />
+<meta property="og:description" content="最近自分の Git に対する知識の無さを感じてきたので本を読もうと思っていたら、ちょうど借りる機会があったのでまとめた。Git コマンドの操作をより自信を持って行えるようになった気がする。
+Git の基本的な概念 Git リポジトリは、作業ディレクトリと .git ディレクトリから成る。
+git init により生成される Git リポジトリ (.git ディレクトリ) には、リビジョンと履歴の情報がすべて詰まっている。Git リポジトリが保持するデータ構造は、オブジェクト格納領域とインデックスの2つ。
+Git オブジェクト Git オブジェクト格納領域は、オブジェクトの内容に SHA1 を適用して得られたハッシュ値から生成されるユニークな オブジェクト ID (名前) をもつ。 オブジェクト格納領域 (.git/objects) に配置される Git オブジェクトは、次の4種類である。
+ blob
+ファイルの各バージョンは blob (binary large object) で表される。blob にはファイルのデータのみが含まれており、メタデータやファイル名は含まれていない。 Git はファイル名を気にしないため、同じ内容のファイルが複数あっても、それは1つの blob で表される。
+ tree
+tree オブジェクトは、1階層分のディレクトリ情報を表現する。 tree は blob のオブジェクトID とパス名を持っている。 コミットが指す tree オブジェクトの ID さえ分かれば、再帰的に子の tree を辿ることで、そのコミットの状態のファイルをすべて取り出せる。
+ commit
+コミットオブジェクトは、リポジトリに加えられた変更のメタデータを持つ。
+ tree の名前 新しいバージョンの作成者 (author) 作成された時間 新しいバージョンをリポジトリに置いた人 (comitter) リビジョンを作った理由の説明 (commit message)    ルートコミット（最初のコミット）以外は1つ以上の親コミットIDをもつ。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://itkq.jp/blog/2016/04/04/%E5%AE%9F%E7%94%A8git-%E8%AA%AD%E3%82%93%E3%81%A0/" /><meta property="article:published_time" content="2016-04-04T02:20:25&#43;09:00"/>
+<meta property="article:modified_time" content="2016-04-04T02:20:25&#43;09:00"/>
+
+
+<title>
+
+
+     実用Git 読んだ 
+
+</title>
+<link rel="canonical" href="https://itkq.jp/blog/2016/04/04/%E5%AE%9F%E7%94%A8git-%E8%AA%AD%E3%82%93%E3%81%A0/">
+
+
+
+
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/styles/github.min.css">
+
+
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Ubuntu+Mono:400,400i,700,700i|Raleway:500">
+
+
+
+    
+    <link rel="stylesheet" href="https://itkq.jp/css/reset.css?t=2020-06-20%2004%3a57%3a44.011944171%20%2b0000%20UTC%20m%3d%2b0.080775803">
+    <link rel="stylesheet" href="https://itkq.jp/css/pygments.css?t=2020-06-20%2004%3a57%3a44.011944171%20%2b0000%20UTC%20m%3d%2b0.080775803">
+    <link rel="stylesheet" href="https://itkq.jp/css/main.css?t=2020-06-20%2004%3a57%3a44.011944171%20%2b0000%20UTC%20m%3d%2b0.080775803">
+    
+        <link rel="stylesheet" href="https://itkq.jp/css/override.css?t=2020-06-20%2004%3a57%3a44.011944171%20%2b0000%20UTC%20m%3d%2b0.080775803">
+    
+
+
+
+
+<link rel="shortcut icon"
+
+    href="https://itkq.jp/img/leaf.ico"
+
+>
+
+
+
+
+
+
+
+
+</head>
+
+
+<body lang="ja">
+
+<section class="header">
+    <div class="container">
+            
+                
+                
+                
+                
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                
+                <a href="https://itkq.jp/"><img class="avatar" src="https://itkq.jp/img/profile.png" srcset="https://itkq.jp/img/profile.png 1x"></a>
+            
+        <div class="content">
+            <a href="https://itkq.jp/"><div class="name">itkq</div></a>
+            
+            <nav>
+                <ul>
+                    
+                        <li class="nav-blog"><a href="https://itkq.jp/blog/"><span>Blog</span></a></li>
+                    
+                        <li class="nav-about"><a href="https://itkq.jp/about/"><span>About</span></a></li>
+                    
+                </ul>
+            </nav>
+        </div>
+    </div>
+</section>
+
+<section class="icons">
+    <div class="container">
+        <div class="content">
+        
+            <a href="https://github.com/itkq" target="_blank" rel="noopener"><img class="icon" src="https://itkq.jp/img/github.svg" alt="github" /></a>
+        
+
+        
+            <a href="https://twitter.com/itkq" target="_blank" rel="noopener"><img class="icon" src="https://itkq.jp/img/twitter.svg" alt="twitter" /></a>
+        
+
+	
+
+        
+
+        
+
+        
+            <a href="//linkedin.com/in/takuya-kosugiyama-107402195/" target="_blank" rel="noopener"><img class="icon" src="https://itkq.jp/img/linkedin.svg" alt="linkedin" /></a>
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+            <a href="mailto:re@itkq.jp"><img class="icon" src="https://itkq.jp/img/email.svg" alt="email" /></a>
+        
+
+        
+
+        
+        </div>
+    </div>
+</section>
+
+
+<section class="main post non-narrow zero-top-spacing">
+    <div class="container">
+        <div class="content">
+            <div class="front-matter">
+                <div class="title-container">
+                    <div class="page-heading">
+
+    実用Git 読んだ
+
+
+
+
+
+
+
+
+</div>
+
+                    <div class="initials"><a href="https://itkq.jp/">ad</a></div>
+                </div>
+                <div class="meta">
+                    
+                    <div class="date" title='Mon Apr 4 2016 02:20:25 &#43;0900'>Apr 4, 2016</div>
+                    
+                    
+                </div>
+            </div>
+            <div class="markdown">
+                
+
+<p>最近自分の Git に対する知識の無さを感じてきたので本を読もうと思っていたら、ちょうど借りる機会があったのでまとめた。Git コマンドの操作をより自信を持って行えるようになった気がする。</p>
+
+<hr />
+
+<h1 id="git-の基本的な概念">Git の基本的な概念</h1>
+
+<p>Git リポジトリは、作業ディレクトリと <code>.git</code> ディレクトリから成る。</p>
+
+<p><code>git init</code> により生成される <strong>Git リポジトリ</strong> (<code>.git</code> ディレクトリ) には、リビジョンと履歴の情報がすべて詰まっている。Git リポジトリが保持するデータ構造は、<strong>オブジェクト格納領域</strong>と<strong>インデックス</strong>の2つ。</p>
+
+<h2 id="git-オブジェクト">Git オブジェクト</h2>
+
+<p>Git オブジェクト格納領域は、オブジェクトの内容に SHA1 を適用して得られたハッシュ値から生成されるユニークな <strong>オブジェクト ID</strong> (名前) をもつ。
+オブジェクト格納領域 (<code>.git/objects</code>) に配置される Git オブジェクトは、次の4種類である。</p>
+
+<ul>
+<li><p><strong>blob</strong><br />
+ファイルの各バージョンは blob (<em>binary large object</em>) で表される。blob にはファイルのデータのみが含まれており、メタデータやファイル名は含まれていない。
+Git はファイル名を気にしないため、同じ内容のファイルが複数あっても、それは1つの blob で表される。</p></li>
+
+<li><p><strong>tree</strong><br />
+tree オブジェクトは、1階層分のディレクトリ情報を表現する。
+tree は blob のオブジェクトID とパス名を持っている。
+コミットが指す tree オブジェクトの ID さえ分かれば、再帰的に子の tree  を辿ることで、そのコミットの状態のファイルをすべて取り出せる。</p></li>
+
+<li><p><strong>commit</strong><br />
+コミットオブジェクトは、リポジトリに加えられた変更のメタデータを持つ。</p>
+
+<ul>
+<li>tree の名前</li>
+<li>新しいバージョンの作成者 (<em>author</em>)</li>
+<li>作成された時間</li>
+<li>新しいバージョンをリポジトリに置いた人 (<em>comitter</em>)</li>
+<li>リビジョンを作った理由の説明 (<em>commit message</em>)
+<br /></li>
+</ul></li>
+</ul>
+
+<p>ルートコミット（最初のコミット）以外は1つ以上の親コミットIDをもつ。</p>
+
+<ul>
+<li><strong>tag</strong><br />
+特定のオブジェクトに対して、名前をつけるためのオブジェクト。
+タグには<strong>軽量タグ</strong> (<em>lightweight tag</em>) と <strong>注釈付きタグ</strong> (<em>annotated tag</em>) の2種類がある。
+軽量タグは、単にコミットオブジェクトを指すもので、永続的なオブジェクトは生成しない。対して注釈付きタグはオブジェクトを生成する。タグの正体は、後述するシンボリック参照である。</li>
+</ul>
+
+<p><code>.git/objects/</code> にオブジェクトを格納する際、オブジェクトID の先頭2文字のディレクトリを作成し、その下にそれ以降のIDを名前とした実際のオブジェクトを配置する（ファイルシステムの効率化）。
+オブジェクト格納領域が大きくなると、Git はオブジェクトを圧縮して<strong>パックファイル</strong>を作成し <code>.git/objects/pack/</code> 以下に置く。</p>
+
+<p>次のような操作をしたとする。</p>
+
+<pre><code class="language-sh">$ mkdir hoge &amp;&amp; cd hoge
+$ git init
+$ echo 'Hello, World!' &gt; hello.txt
+$ git commit -am 'first hello'
+$ git tag -a v1.0 -m 'version 1.0' master # masterブランチの先頭を指す注釈付きタグ
+</code></pre>
+
+<p>オブジェクトの詳細を調べる。</p>
+
+<pre><code class="language-sh">$ git rev-parse master # master (branch) が指すコミットの名前
+cca3c27176c5539148cb0662a61e475d90a3bc78  
+
+$ git cat-file -p cca3c27176c5539148cb0662a61e475d90a3bc78 # commit の内容
+tree bc225ea23f53f06c0c5bd3ba2be85c2120d68417
+author itkq &lt;mail@itkq.jp&gt; 1458492347 +0900
+committer itkq &lt;mail@itkq.jp&gt; 1458492347 +0900
+
+first hello
+
+$ git cat-file -p bc225ea23f53f06c0c5bd3ba2be85c2120d68417 # tree の内容
+100644 blob 8ab686eafeb1f44702738c8b0f24f2567c36da6d    hello.txt
+
+$ git cat-file -p 8ab686eafeb1f44702738c8b0f24f2567c36da6d # blob の内容
+Hello, World!
+
+$ git rev-parse v1.0 # v1.0 (tag) が指すコミットの名前
+0aba706179c7e6cf682be3378460ca824c11f775
+
+$ git cat-file -p 0aba706179c7e6cf682be3378460ca824c11f775 # tag の内容
+object cca3c27176c5539148cb0662a61e475d90a3bc78
+type commit
+tag v1.0
+tagger itkq &lt;mail@itkq.jp&gt; 1458492759 +0900
+
+version 1.0
+
+$ find .git/objects
+.git/objects
+.git/objects/0a
+.git/objects/0a/ba706179c7e6cf682be3378460ca824c11f775
+.git/objects/8a
+.git/objects/8a/b686eafeb1f44702738c8b0f24f2567c36da6d
+.git/objects/bc
+.git/objects/bc/225ea23f53f06c0c5bd3ba2be85c2120d68417
+.git/objects/cc
+.git/objects/cc/a3c27176c5539148cb0662a61e475d90a3bc78
+.git/objects/info
+.git/objects/pack
+
+
+</code></pre>
+
+<h2 id="インデックス">インデックス</h2>
+
+<p>インデックスは、リポジトリ全体のディレクトリ構造が記述されたバイナリファイルであり、段階的開発とコミットの分離をするための機能である。
+インデックスの導入により、ファイルは3種類に分けられる。</p>
+
+<ul>
+<li><p><strong>追跡</strong> (<em>tracked</em>)<br />
+すでにリポジトリに入っているか、インデックスに登録されているファイル</p></li>
+
+<li><p><strong>無視</strong> (<em>ignored</em>)<br />
+<code>.gitignore</code> によって明示的に宣言した Git で扱わないファイル</p></li>
+
+<li><p><strong>未追跡</strong> (<em>untracked</em>)<br />
+追跡でも無視でもないファイル</p></li>
+</ul>
+
+<p>無視でないファイルは、<code>git add</code> コマンドによってオブジェクト格納領域にコピーされ、格納により生じる SHA1 名によってインデックスが作成される。この操作を<strong>ステージする</strong> (<em>stage</em>) という。
+インデックスは仮想的な tree オブジェクトである。</p>
+
+<pre><code class="language-sh">$ touch data
+$ git status
+On branch master
+
+Initial commit
+
+Untracked files:
+  (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)
+
+        data
+
+nothing added to commit but untracked files present (use &quot;git add&quot; to track)
+
+$ git add data
+$ git status
+On branch master
+
+Initial commit
+
+Changes to be committed:
+  (use &quot;git rm --cached &lt;file&gt;...&quot; to unstage)
+
+        new file:   data
+
+
+$ git ls-files --stage # インデックスの内容
+100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0       data
+</code></pre>
+
+<p>ステージされたファイルは、<code>git commit</code> コマンドで commit オブジェクトと tree オブジェクトの作成により Git に記録される。</p>
+
+<p>ファイルを削除する操作は3つある。インデックスからファイルを削除する操作をアンステージという。
+- <code>git rm</code> : インデックスと作業ディレクトリから削除（ <code>rm</code> + <code>git add</code> )
+- <code>git rm --cached</code> : インデックスからのみ削除
+- <code>rm</code> : 作業ディレクトリからのみ削除</p>
+
+<h1 id="ブランチ">ブランチ</h1>
+
+<p>ブランチは、ソフトウェア開発において別の開発ラインを立ち上げるための基本的な方法である。
+Git では、1つのリポジトリの内部に複数のブランチを作ることができる。</p>
+
+<h2 id="参照">参照</h2>
+
+<p><strong>参照</strong> (<em>ref</em>) とは、Git のオブジェクト格納領域内でオブジェクトを参照する SHA1 ハッシュ値であり、<strong>シンボリック参照</strong> (<em>symref</em>) は、Git オブジェクトを間接的に指す名前である。
+シンボリック参照は、<code>refs/</code> で始まる名前で、 <code>refs/head/[ref]/</code> (ローカルブランチ)、<code>refs/remotes/[ref]/</code> (リモート追跡ブランチ)、<code>refs/tags/[ref]</code> (タグ) の3種類がある。</p>
+
+<p>Git が管理する特殊なシンボリック参照</p>
+
+<ul>
+<li><p><code>HEAD</code><br />
+カレントブランチの最新のコミットを指す</p></li>
+
+<li><p><code>ORIG_HEAD</code><br />
+マージやリセットの操作で <code>HEAD</code> が更新される前のバックアップ</p></li>
+
+<li><p><code>MERGE_HEAD</code><br />
+マージにおいてマージ元のブランチの先頭を指す</p></li>
+
+<li><p><code>FETCH_HEAD</code><br />
+<code>git fetch</code> コマンドでフェッチしたブランチの先頭が記録されている</p></li>
+</ul>
+
+<p>ブランチの正体は、commit オブジェクトへのシンボリック参照である。ローカルブランチ <code>master</code> は、<code>refs/heads/master</code> の短縮形である。</p>
+
+<pre><code class="language-sh">$ git rev-parse master
+cca3c27176c5539148cb0662a61e475d90a3bc78
+
+$ git rev-parse refs/heads/master
+cca3c27176c5539148cb0662a61e475d90a3bc78
+
+$ git cat-file -p cca3c27176c5539148cb0662a61e475d90a3bc78
+tree bc225ea23f53f06c0c5bd3ba2be85c2120d68417
+author itkq &lt;mail@itkq.jp&gt; 1458492347 +0900
+committer itkq &lt;mail@itkq.jp&gt; 1458492347 +0900
+
+first hello
+</code></pre>
+
+<h2 id="ブランチの作成">ブランチの作成</h2>
+
+<p>リポジトリ内に作成するブランチを、<strong>トピックブランチ</strong>や<strong>開発ブランチ</strong>と呼ぶ。
+<code>git branch [name] [starting-commit]</code> コマンドで、カレントブランチの <code>starting-commit</code> から分岐するブランチを作成できる。<code>starting-commit</code> が指定されない場合は <code>HEAD</code> を使用する。</p>
+
+<h2 id="チェックアウト">チェックアウト</h2>
+
+<p>他のブランチの状態をリポジトリに反映する操作を<strong>チェックアウト</strong>という。
+<code>git checkout [branch]</code> によって、対象のブランチの tree と同じ状態になるようにオブジェクト格納領域のオブジェクトを作業ディレクトリに反映する。
+ブランチの先頭にチェックアウトすることが普通であるが、チェックアウトは任意のコミットに対して実行できる。その場合、Git は切り離されたブランチ (<em>detached branch</em>) という無名のブランチを作成する。</p>
+
+<h1 id="コミット">コミット</h1>
+
+<p>Git では、リポジトリの変更を記録するためにコミットを使う。</p>
+
+<h2 id="git-commit"><code>git commit</code></h2>
+
+<p>次のように動作する。</p>
+
+<ol>
+<li>インデックスを本物のツリーオブジェクトに変換し、対応する SHA1 名でオブジェクト格納領域に配置する。</li>
+<li>コミットオブジェクトを作成する。配置したツリーオブジェクトと直前のコミットを親として指す。</li>
+<li>ブランチの参照が新規のコミットオブジェクトに移り、<code>HEAD</code> となる。</li>
+</ol>
+
+<h2 id="コミットの参照">コミットの参照</h2>
+
+<p>あるコミット <code>C</code> に対して <code>C^n</code> は第nの親を、<code>C~n</code> はn番目の祖先を意味する。
+チルダによる参照は、親が複数あるときは常に第一の親を辿る。</p>
+
+<h2 id="コミット関連のコマンド">コミット関連のコマンド</h2>
+
+<h3 id="git-reset"><code>git reset</code></h3>
+
+<p><code>git reset</code> コマンドは、リポジトリと作業ディレクトリを既知の状態に変更する。厳密には、<code>HEAD</code> の参照を指定されたコミットに変更する。3つの段階的なオプションがある。
+<code>--hard</code> オプションは唯一作業ディレクトリの変更を破棄する。</p>
+
+<ul>
+<li><p><code>git reset --soft [commit]</code><br />
+<code>HEAD</code> の参照を指定されたコミットに変更する</p></li>
+
+<li><p><code>git reset --mixed [commit]</code><br />
+<code>HEAD</code> の変更に加え、インデックスもコミットのツリーの内容に変更する</p></li>
+
+<li><p><code>git reset --hard [commit]</code><br />
+<code>HEAD</code> とインデックスの変更に加え、作業ディレクトリもコミットのツリーの内容に変更する</p></li>
+</ul>
+
+<p><code>git reflog</code> コマンドでリポジトリ内の変更履歴を表示できる。</p>
+
+<pre><code class="language-sh">$ git reflog
+794eec4 HEAD@{0}: commit (merge): Merge branch 'alternate'
+a43a771 HEAD@{1}: checkout: moving from alternate to master
+a861233 HEAD@{2}: commit: Add alternate line 5 and 6
+ea825d6 HEAD@{3}: checkout: moving from master to alternate
+a43a771 HEAD@{4}: commit: Add line 5 and 6
+6bb76eb HEAD@{5}: checkout: moving from master to master
+6bb76eb HEAD@{6}: merge alternate: Merge made by the 'recursive' strategy.
+f554bac HEAD@{7}: checkout: moving from alternate to master
+ea825d6 HEAD@{8}: commit: Add alternate line 4
+cc92869 HEAD@{9}: checkout: moving from master to alternate
+f554bac HEAD@{10}: commit: Another file
+cc92869 HEAD@{11}: commit (initial): Initial 3 line file
+</code></pre>
+
+<p><code>git checkout</code> が ブランチを切り替えて <code>HEAD</code> を変更するのに対し、<code>git reset</code> は ブランチを変更せずに <code>HEAD</code> を変更する。</p>
+
+<h3 id="git-cherry-pick"><code>git cherry-pick</code></h3>
+
+<p><code>git cherry-pick [commit]</code> コマンドは、指定したコミットが持ち込んだ変更をカレントブランチに適用する。その際、新しくコミットを作る。</p>
+
+<h3 id="git-revert"><code>git revert</code></h3>
+
+<p><code>git revert [commit]</code> コマンドは、指定したコミットの逆を適用するコミットを作成する。</p>
+
+<h3 id="git-commit-amend"><code>git commit --amend</code></h3>
+
+<p>カレントブランチの最新のコミットを修正するためのコマンドであるが、実質的には</p>
+
+<pre><code class="language-sh">$ git reset --soft HEAD^
+$ git commit
+</code></pre>
+
+<p>と同じである。</p>
+
+<h1 id="マージ">マージ</h1>
+
+<p>マージ (<em>merge</em>) は、2つ以上のブランチを統合する。</p>
+
+<h2 id="通常-recursive-マージの例">通常 (recursive) マージの例</h2>
+
+<pre><code class="language-sh">$ git init
+Initialized empty Git repository in /Users/itkq/tmp/fuga/.git/
+
+$ cat &gt; file
+Line 1 stuff
+Line 2 stuff
+Line 3 stuff
+^D
+
+$ git add file &amp;&amp; git commit -m &quot;Initial 3 line file&quot;
+[master (root-commit) cc92869] Initial 3 line file
+ 1 file changed, 3 insertions(+)
+ create mode 100644 file
+
+$ cat &gt; other_file
+Here is stuff on another file!
+^D
+
+$ git add other_file &amp;&amp; git commit -m &quot;Another file&quot;
+[master f554bac] Another file
+ 1 file changed, 1 insertion(+)
+ create mode 100644 other_file
+
+$ git checkout -b alternate master^
+Switched to a new branch 'alternate'
+
+$ git show-branch
+* [alternate] Initial 3 line file
+ ! [master] Another file
+--
+ + [master] Another file
+*+ [alternate] Initial 3 line file
+
+$ cat &gt;&gt; file
+Line 4 alternate stuff
+^D
+
+$ git commit -am &quot;Add alternate line 4&quot;
+[alternate ea825d6] Add alternate line 4
+ 1 file changed, 1 insertion(+)
+
+$ git checkout master
+Switched to branch 'master'
+
+$ git merge alternate
+Merge made by the 'recursive' strategy.
+ file | 1 +
+ 1 file changed, 1 insertion(+)
+
+$ git log --graph --pretty=oneline --abbrev-commit
+*   6bb76eb Merge branch 'alternate'
+|\
+| * ea825d6 Add alternate line 4
+* | f554bac Another file
+|/
+* cc92869 Initial 3 line file
+</code></pre>
+
+<h2 id="競合を伴うマージの例">競合を伴うマージの例</h2>
+
+<pre><code class="language-sh">$ git checkout master
+Already on 'master'
+
+$ cat &gt;&gt; file
+Line 5 stuff
+Line 6 stuff
+^D
+
+$ git commit -am &quot;Add line 5 and 6&quot;
+[master a43a771] Add line 5 and 6
+ 1 file changed, 2 insertions(+)
+
+$ git checkout alternate
+Switched to branch 'alternate'
+
+$ git show-branch
+* [alternate] Add alternate line 4
+ ! [master] Add line 5 and 6
+--
+ + [master] Add line 5 and 6
+*+ [alternate] Add alternate line 4
+
+$ cat &gt;&gt; file                                        
+Line 5 alternate stuff
+Line 6 alternate stuff
+
+$ cat file
+Line 1 stuff
+Line 2 stuff
+Line 3 stuff
+Line 4 alternate stuff
+Line 5 alternate stuff
+Line 6 alternate stuff
+
+$ git commit -am &quot;Add alternate line 5 and 6&quot;
+[alternate a861233] Add alternate line 5 and 6
+ 1 file changed, 2 insertions(+)
+ 
+$ git show-branch
+* [alternate] Add alternate line 5 and 6
+ ! [master] Add line 5 and 6
+--
+*  [alternate] Add alternate line 5 and 6
+ + [master] Add line 5 and 6
+*+ [alternate^] Add alternate line 4
+
+$ git checkout master
+Switched to branch 'master'
+
+$ git merge alternate # conflict!
+Auto-merging file
+CONFLICT (content): Merge conflict in file
+Automatic merge failed; fix conflicts and then commit the result.
+
+$ git diff
+diff --cc file
+index 4d77dd1,802acf8..0000000
+--- a/file
++++ b/file
+@@@ -2,5 -2,5 +2,10 @@@ Line 1 stuf
+  Line 2 stuff
+  Line 3 stuff
+  Line 4 alternate stuff
+++&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+ +Line 5 stuff
+ +Line 6 stuff
+++=======
++ Line 5 alternate stuff
++ Line 6 alternate stuff
+++&gt;&gt;&gt;&gt;&gt;&gt;&gt; alternate
+
+$ git log --merge --left-right -p
+commit &gt; a8612335753608ea80a9a2bfc179706628426616
+Author: itkq &lt;mail@itkq.jp&gt;
+Date:   Mon Mar 21 18:26:13 2016 +0900
+
+    Add alternate line 5 and 6
+
+diff --git a/file b/file
+index a29c52b..802acf8 100644
+--- a/file
++++ b/file
+@@ -2,3 +2,5 @@ Line 1 stuff
+ Line 2 stuff
+ Line 3 stuff
+ Line 4 alternate stuff
++Line 5 alternate stuff
++Line 6 alternate stuff
+
+commit &lt; a43a7710935a7de4219e26183237dc842cbb1b3e
+Author: itkq &lt;mail@itkq.jp&gt;
+Date:   Mon Mar 21 18:25:12 2016 +0900
+
+    Add line 5 and 6
+
+diff --git a/file b/file
+index a29c52b..4d77dd1 100644
+--- a/file
++++ b/file
+@@ -2,3 +2,5 @@ Line 1 stuff
+ Line 2 stuff
+ Line 3 stuff
+ Line 4 alternate stuff
++Line 5 stuff
++Line 6 stuff
+</code></pre>
+
+<p>マージで競合 (<em>conflict</em>) が起こった場合、
+Git のインデックスは、個々の競合ファイルのコピーを3つ保持している。
+マージ基点、our バージョン、their バージョンであり、それぞれステージ番号として 1, 2, 3 が割り振られる。</p>
+
+<pre><code class="language-sh">$ git ls-files -s
+100644 a29c52b5dcff9d445bc1e5ebeedac28e88ce6327 1       file # base of merge
+100644 4d77dd1638c289baa16fdcb24c8aa7386ab464ab 2       file # our
+100644 802acf861df14fb91823a7ca1cfaf5d8a8100279 3       file # their
+100644 eaeeeba5973e46152dc758215c7e76dcecfd5f9b 0       other_file
+
+$ git diff :1:file :3:file # マージ基点とtheirの比較
+diff --git a/:1:file b/:3:file
+index a29c52b..802acf8 100644
+--- a/:1:file
++++ b/:3:file
+@@ -2,3 +2,5 @@ Line 1 stuff
+ Line 2 stuff
+ Line 3 stuff
+ Line 4 alternate stuff
++Line 5 alternate stuff
++Line 6 alternate stuff
+</code></pre>
+
+<p><code>git checkout</code> の引数として <code>--ours</code> と <code>--theirs</code> を使うことで、競合マージのどちらかからファイルをチェックアウトできる。</p>
+
+<pre><code class="language-sh">$ git checkout --theirs file
+
+$ git diff --ours
+* Unmerged path file
+diff --git a/file b/file
+index 4d77dd1..802acf8 100644
+--- a/file
++++ b/file
+@@ -2,5 +2,5 @@ Line 1 stuff
+ Line 2 stuff
+ Line 3 stuff
+ Line 4 alternate stuff
+-Line 5 stuff
+-Line 6 stuff
++Line 5 alternate stuff
++Line 6 alternate stuff
+</code></pre>
+
+<p>競合を解決したら、ファイルをステージし、マージコミットを作成する。</p>
+
+<pre><code class="language-sh">$ git add file
+$ git commit
+
+#### launch editor
+Merge branch 'alternate'
+
+# Conflicts:
+#	file
+#
+# It looks like you may be committing a merge.
+# If this is not correct, please remove the file
+#	.git/MERGE_HEAD
+# and try again.
+
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch master
+# All conflicts fixed but you are still merging.
+#
+# Changes to be committed:
+#	modified:   file
+#
+
+#### editor
+
+[master 794eec4] Merge branch 'alternate'
+
+$ git show-branch
+! [alternate] Add alternate line 5 and 6
+ * [master] Merge branch 'alternate'
+--
+ - [master] Merge branch 'alternate'
++* [alternate] Add alternate line 5 and 6
+</code></pre>
+
+<p>マージ操作を開始したものの、マージをやめたくなった場合は</p>
+
+<pre><code class="language-sh">$ git reset --hard HEAD
+</code></pre>
+
+<p>で作業ツリーとインデックスをマージ前の状態に戻せる。
+マージの完了後にマージを破棄したい場合は</p>
+
+<pre><code class="language-sh">$ git reset --hard ORIG_HEAD
+</code></pre>
+
+<p>とする。</p>
+
+<h2 id="マージ戦略">マージ戦略</h2>
+
+<p>Git の開発者は、マージを一般化し、様々なシナリオを扱える、<strong>マージ戦略</strong>を導入した。</p>
+
+<h3 id="縮退マージ">縮退マージ</h3>
+
+<p>2つのシナリオがある。どちらのシナリオも、実際には新しいマージコミットを作らない。</p>
+
+<ul>
+<li><p><em>already up-to-date</em><br />
+他のブランチ (の <code>HEAD</code> ) からのコミットがすべて対象ブランチに含まれている場合。操作は何も行わない。</p></li>
+
+<li><p><em>fast-forward</em><br />
+対象ブランチの <code>HEAD</code> がすでに他のブランチ上にすべて存在している場合。単に <code>HEAD</code> に他のコミットを付け足し、<code>HEAD</code> を最新のコミットに移動させるだけである。</p></li>
+</ul>
+
+<h3 id="通常マージ">通常マージ</h3>
+
+<p>マージの結果としてコミットを作り出し、カレントブランチに追加する。
+マージ基点が複数ある場合、そのマージは<strong>交差マージ</strong> (<em>criss-cross merge</em>) という。</p>
+
+<ul>
+<li><em>resolve</em><br />
+2つのブランチのみを扱う。共通の祖先をマージ基点とし、マージ基点から他のブランチの先端までの変更をカレントブランチに適用することで、直接 3way マージを実行する直感的な戦略。</li>
+
+<li><p><em>recursive</em><br />
+<em>resolve</em> 同様に、2つのブランチのみ扱う。2つのマージ基点から一時的なマージ基点を生成し、それをマージに用いる。この方法は再帰的に適用できる。<code>git merge</code> コマンドのデフォルトは <em>recursive</em> 戦略を用いる。</p></li>
+
+<li><p><em>octopus</em><br />
+2つ以上のブランチを同時にマージする戦略。内部的には <em>recursive</em> 戦略を複数回呼び出している。</p></li>
+</ul>
+
+<h1 id="リベース">リベース</h1>
+
+<p><code>git rebase</code> コマンドは、一連のコミットの基点を変更する際に使う。
+一般的な用途は、ローカルの一連のコミットを、追跡ブランチの最新の状態に合わせるというものである。
+一連のコミットをブランチの先頭へリベースすることは、2つのブランチのマージに似ているが、リベースでは、Git は完全に新しいコミットを作成する。また、リベースによって元ブランチの開発履歴が線形化されるため、リベースしたいブランチ上のコミットをすでに公開している場合は、リベースは適さない。</p>
+
+<h1 id="リポジトリ">リポジトリ</h1>
+
+<h2 id="git-リポジトリの概念">Git リポジトリの概念</h2>
+
+<p>Git のリポジトリは2種類ある。</p>
+
+<ul>
+<li><p><strong>ベア</strong> (<em>bare</em>) リポジトリ<br />
+作業ディレクトリを持たず、通常の開発には使用されない。チェックアウトされたブランチの概念もない。</p></li>
+
+<li><p><strong>開発</strong>リポジトリ<br />
+ベアでない (<em>non-bare</em>) リポジトリで、通常の開発に使用される。カレントブランチの概念を持ち、作業ディレクトリ内における、現在のブランチのチェックアウトされたコピーを提供する。</p></li>
+</ul>
+
+<h2 id="リモート">リモート</h2>
+
+<p>現在作業中のリポジトリを<strong>ローカルリポジトリ</strong>、ファイルを交換する相手のリポジトリを<strong>リモートリポジトリ</strong>という。</p>
+
+<h3 id="refspec">refspec</h3>
+
+<p>refspec は、リモートリポジトリ中のブランチ名を、ローカルリポジトリ中のブランチ名に対応付ける。refspec は、ローカルリポジトリ、リモートリポジトリのブランチを同時に指定することが必要なので、完全なブランチ名を使用する。</p>
+
+<p>refspec の構文は次の通りである。</p>
+
+<pre><code class="language-sh">[+]source:destination
+</code></pre>
+
+<p>オプションとして、先頭に <code>+</code> をつけると転送中に fast-forward による安全チェックが実行されない。</p>
+
+<h3 id="クローン">クローン</h3>
+
+<p><code>git clone</code> によるクローンでは、元リポジトリの <code>refs/heads/</code> の格納されているローカルブランチは、新しいクローンの <code>refs/remotes/</code> 以下のリモート追跡ブランチとなる。
+Git はまた、デフォルトの fetch refspec を使って <code>origin</code> リモートを設定する。</p>
+
+<pre><code class="language-sh">fetch = +refs/heads/*:refs/remotes/origin/*
+</code></pre>
+
+<h3 id="リモートリポジトリを参照するコマンド">リモートリポジトリを参照するコマンド</h3>
+
+<ul>
+<li><p><code>git fetch</code><br />
+リモートリポジトリからオブジェクトとそれに関連したメタデータを取得</p></li>
+
+<li><p><code>git pull</code><br />
+<code>git fetch</code> に加えて対応するブランチに変更をマージする</p></li>
+
+<li><p><code>git push</code><br />
+オブジェクトとそれに関連したメタデータをリモートリポジトリに転送</p></li>
+
+<li><p><code>git ls-remote</code><br />
+リモート内の参照を表示</p></li>
+</ul>
+
+<h1 id="その他">その他</h1>
+
+<h2 id="git-diff"><code>git diff</code></h2>
+
+<ul>
+<li><p><code>git diff</code><br />
+作業ディレクトリとインデックスの差異</p></li>
+
+<li><p><code>git diff [commit]</code><br />
+作業ディレクトリと commit の差異</p></li>
+
+<li><p><code>git diff --cached [commit]</code><br />
+インデックスにステージされた変更と commit の差異</p></li>
+
+<li><p><code>git diff [commit1] [commit2]</code><br />
+2つの commit の差異</p></li>
+</ul>
+
+<h2 id="git-bisect"><code>git bisect</code></h2>
+
+<p>2分探索によってコミットを特定するコマンド。</p>
+
+                <br>
+		<p class="back-to-posts"><a href="https://itkq.jp/blog/">Back to posts</a></p>
+            </div>
+            <br>
+            <div class="disqus">
+                <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "itkq-jp" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+            </div>
+            
+        </div>
+    </div>
+</section>
+
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-71205730-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js"></script>
+  
+
+  <script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+  </script>
+
+
+
+
+
+</body>
+</html>
+

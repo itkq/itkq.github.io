@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ja-JP">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="no-referrer">
+<meta name="author" content="itkq">
+<meta name="description" content="LaTeXiT というTeX形式の数式を入力するとTeX形式の画像を出力するツールを知った．
+研究発表のスライドを作る場合に，TeX形式の画像を貼り付けたいことがあり，早速インストールした．
+最近のVim&#43;LaTeX事情 に書いたように，最近はTexLiveのDockerイメージでLaTeX文書をコンパイルしている．
+LaTeXiTのコンパイル設定をカスタマイズすれば対応できると思ったが，うまくいかなかった． コンパイルスクリプトでは，作業ディレクトリをマウントしてDockerイメージのコンパイルバイナリを走らせている．LaTeXiTが実行するコンパイルコマンドは，一時的に作成した /var/folders/&hellip;/.tex を絶対参照しており，その部分は書き換えようがなかった．
+LaTeXiTの動作は，コンパイル後にBounding boxを計算してトリミングして各種画像に変換する感じで作れそうだったのでCLIとして作った．
+ 文字列をクリップボードにコピーする pbcopy は知っていたが，画像をコピーするものはないかと探したところ impbcopy があった． これを利用して，実行するとクリップボード中の文字列に対応するTeX形式の画像をクリップボードにコピーするので，サクッと使える感じになった．
+
+本当はPopclipのExtensionとして作りたかったけどうまくいかなかった😇">
+
+<meta name="google-site-verification" content="AyWEWMfqdOijgoPW5yMy188xoQqY46L6pFXyd3Jizyc">
+
+
+<meta property="og:title" content="LaTeXiTのCLIみたいなのを書いた" />
+<meta property="og:description" content="LaTeXiT というTeX形式の数式を入力するとTeX形式の画像を出力するツールを知った．
+研究発表のスライドを作る場合に，TeX形式の画像を貼り付けたいことがあり，早速インストールした．
+最近のVim&#43;LaTeX事情 に書いたように，最近はTexLiveのDockerイメージでLaTeX文書をコンパイルしている．
+LaTeXiTのコンパイル設定をカスタマイズすれば対応できると思ったが，うまくいかなかった． コンパイルスクリプトでは，作業ディレクトリをマウントしてDockerイメージのコンパイルバイナリを走らせている．LaTeXiTが実行するコンパイルコマンドは，一時的に作成した /var/folders/&hellip;/.tex を絶対参照しており，その部分は書き換えようがなかった．
+LaTeXiTの動作は，コンパイル後にBounding boxを計算してトリミングして各種画像に変換する感じで作れそうだったのでCLIとして作った．
+ 文字列をクリップボードにコピーする pbcopy は知っていたが，画像をコピーするものはないかと探したところ impbcopy があった． これを利用して，実行するとクリップボード中の文字列に対応するTeX形式の画像をクリップボードにコピーするので，サクッと使える感じになった．
+
+本当はPopclipのExtensionとして作りたかったけどうまくいかなかった😇" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://itkq.jp/blog/2016/10/27/latexit%E3%81%AEcli%E3%81%BF%E3%81%9F%E3%81%84%E3%81%AA%E3%81%AE%E3%82%92%E6%9B%B8%E3%81%84%E3%81%9F/" /><meta property="article:published_time" content="2016-10-27T22:14:40&#43;09:00"/>
+<meta property="article:modified_time" content="2016-10-27T22:14:40&#43;09:00"/>
+
+
+<title>
+
+
+     LaTeXiTのCLIみたいなのを書いた 
+
+</title>
+<link rel="canonical" href="https://itkq.jp/blog/2016/10/27/latexit%E3%81%AEcli%E3%81%BF%E3%81%9F%E3%81%84%E3%81%AA%E3%81%AE%E3%82%92%E6%9B%B8%E3%81%84%E3%81%9F/">
+
+
+
+
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/styles/github.min.css">
+
+
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Ubuntu+Mono:400,400i,700,700i|Raleway:500">
+
+
+
+    
+    <link rel="stylesheet" href="https://itkq.jp/css/reset.css?t=2020-06-20%2004%3a57%3a44.009139263%20%2b0000%20UTC%20m%3d%2b0.077970904">
+    <link rel="stylesheet" href="https://itkq.jp/css/pygments.css?t=2020-06-20%2004%3a57%3a44.009139263%20%2b0000%20UTC%20m%3d%2b0.077970904">
+    <link rel="stylesheet" href="https://itkq.jp/css/main.css?t=2020-06-20%2004%3a57%3a44.009139263%20%2b0000%20UTC%20m%3d%2b0.077970904">
+    
+        <link rel="stylesheet" href="https://itkq.jp/css/override.css?t=2020-06-20%2004%3a57%3a44.009139263%20%2b0000%20UTC%20m%3d%2b0.077970904">
+    
+
+
+
+
+<link rel="shortcut icon"
+
+    href="https://itkq.jp/img/leaf.ico"
+
+>
+
+
+
+
+
+
+
+
+</head>
+
+
+<body lang="ja">
+
+<section class="header">
+    <div class="container">
+            
+                
+                
+                
+                
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                
+                <a href="https://itkq.jp/"><img class="avatar" src="https://itkq.jp/img/profile.png" srcset="https://itkq.jp/img/profile.png 1x"></a>
+            
+        <div class="content">
+            <a href="https://itkq.jp/"><div class="name">itkq</div></a>
+            
+            <nav>
+                <ul>
+                    
+                        <li class="nav-blog"><a href="https://itkq.jp/blog/"><span>Blog</span></a></li>
+                    
+                        <li class="nav-about"><a href="https://itkq.jp/about/"><span>About</span></a></li>
+                    
+                </ul>
+            </nav>
+        </div>
+    </div>
+</section>
+
+<section class="icons">
+    <div class="container">
+        <div class="content">
+        
+            <a href="https://github.com/itkq" target="_blank" rel="noopener"><img class="icon" src="https://itkq.jp/img/github.svg" alt="github" /></a>
+        
+
+        
+            <a href="https://twitter.com/itkq" target="_blank" rel="noopener"><img class="icon" src="https://itkq.jp/img/twitter.svg" alt="twitter" /></a>
+        
+
+	
+
+        
+
+        
+
+        
+            <a href="//linkedin.com/in/takuya-kosugiyama-107402195/" target="_blank" rel="noopener"><img class="icon" src="https://itkq.jp/img/linkedin.svg" alt="linkedin" /></a>
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+            <a href="mailto:re@itkq.jp"><img class="icon" src="https://itkq.jp/img/email.svg" alt="email" /></a>
+        
+
+        
+
+        
+        </div>
+    </div>
+</section>
+
+
+<section class="main post non-narrow zero-top-spacing">
+    <div class="container">
+        <div class="content">
+            <div class="front-matter">
+                <div class="title-container">
+                    <div class="page-heading">
+
+    LaTeXiTのCLIみたいなのを書いた
+
+
+
+
+
+
+</div>
+
+                    <div class="initials"><a href="https://itkq.jp/">ad</a></div>
+                </div>
+                <div class="meta">
+                    
+                    <div class="date" title='Thu Oct 27 2016 22:14:40 &#43;0900'>Oct 27, 2016</div>
+                    
+                    
+                </div>
+            </div>
+            <div class="markdown">
+                <p><a href="https://www.chachatelier.fr/latexit/"> LaTeXiT </a>というTeX形式の数式を入力するとTeX形式の画像を出力するツールを知った．<br />
+研究発表のスライドを作る場合に，TeX形式の画像を貼り付けたいことがあり，早速インストールした．</p>
+
+<p><a href="http://blog.itkq.jp/post/vim-latex/">最近のVim+LaTeX事情</a> に書いたように，最近はTexLiveのDockerイメージでLaTeX文書をコンパイルしている．<br />
+LaTeXiTのコンパイル設定をカスタマイズすれば対応できると思ったが，うまくいかなかった．
+コンパイルスクリプトでは，作業ディレクトリをマウントしてDockerイメージのコンパイルバイナリを走らせている．LaTeXiTが実行するコンパイルコマンドは，一時的に作成した
+/var/folders/&hellip;/.tex を絶対参照しており，その部分は書き換えようがなかった．</p>
+
+<p>LaTeXiTの動作は，コンパイル後にBounding boxを計算してトリミングして各種画像に変換する感じで作れそうだったのでCLIとして作った．</p>
+
+<script src="https://gist.github.com/itkq/7d12990860ee2d8b9b32a437be278b6a.js"></script>
+
+<p>文字列をクリップボードにコピーする pbcopy は知っていたが，画像をコピーするものはないかと探したところ <a href="https://gist.github.com/beng/806b8420cc16bcf8a07a">impbcopy</a> があった．
+これを利用して，実行するとクリップボード中の文字列に対応するTeX形式の画像をクリップボードにコピーするので，サクッと使える感じになった．</p>
+
+<p><a href="https://itkq.jp/img/latexit-demo.gif"><img src="https://itkq.jp/img/latexit-demo.gif" width="70%"/></a></p>
+
+<p>本当はPopclipのExtensionとして作りたかったけどうまくいかなかった😇</p>
+
+                <br>
+		<p class="back-to-posts"><a href="https://itkq.jp/blog/">Back to posts</a></p>
+            </div>
+            <br>
+            <div class="disqus">
+                <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "itkq-jp" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+            </div>
+            
+        </div>
+    </div>
+</section>
+
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-71205730-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js"></script>
+  
+
+  <script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+  </script>
+
+
+
+
+
+</body>
+</html>
+
