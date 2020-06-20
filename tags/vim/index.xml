@@ -1,48 +1,11 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Vim on itkq.jp</title>
-    <link>https://itkq.jp/tags/vim/</link>
-    <description>Recent content in Vim on itkq.jp</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>ja-JP</language>
-    <lastBuildDate>Sun, 19 Nov 2017 02:51:49 +0900</lastBuildDate>
-    
-	<atom:link href="https://itkq.jp/tags/vim/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-    <item>
-      <title>Vim &#43; LaTeX でいい感じに修論を書く</title>
-      <link>https://itkq.jp/blog/2017/11/19/thesis-vim-latex/</link>
-      <pubDate>Sun, 19 Nov 2017 02:51:49 +0900</pubDate>
-      
-      <guid>https://itkq.jp/blog/2017/11/19/thesis-vim-latex/</guid>
-      <description>そろそろ修論を書く季節になった。もちろん Vim と LaTeX で書くつもりだが、ページ数が多くなるとコンパイルに時間がかかって不都合なので、章ごとに分割コンパイルしたいと考えた。 分割した LaTeX ファイルを subfiles を使ってコンパイルする - Qiita が見つかったが、これまで通り Skim で 1 つのファイルをライブプレビューしたかったので、一時的な .tex ファイルを生成してコンパイルする latexmk のラッパーを書いた。
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Vim on itkq.jp</title><link>https://itkq.jp/tags/vim/</link><description>Recent content in Vim on itkq.jp</description><generator>Hugo -- gohugo.io</generator><language>ja-JP</language><lastBuildDate>Sun, 19 Nov 2017 02:51:49 +0900</lastBuildDate><atom:link href="https://itkq.jp/tags/vim/index.xml" rel="self" type="application/rss+xml"/><item><title>Vim &#43; LaTeX でいい感じに修論を書く</title><link>https://itkq.jp/blog/2017/11/19/thesis-vim-latex/</link><pubDate>Sun, 19 Nov 2017 02:51:49 +0900</pubDate><guid>https://itkq.jp/blog/2017/11/19/thesis-vim-latex/</guid><description>そろそろ修論を書く季節になった。もちろん Vim と LaTeX で書くつもりだが、ページ数が多くなるとコンパイルに時間がかかって不都合なので、章ごとに分割コンパイルしたいと考えた。 分割した LaTeX ファイルを subfiles を使ってコンパイルする - Qiita が見つかったが、これまで通り Skim で 1 つのファイルをライブプレビューしたかったので、一時的な .tex ファイルを生成してコンパイルする latexmk のラッパーを書いた。
 次のようにセッティングしておく。
-$ tree -a . ├── .config │ └── latexmk.yml ├── header.tex ├── introduction.tex ├── main.tex └── related_work.tex 1 directory, 5 files $ cat .config/latexmk.yml output_file: output.tex header: header.tex include_files: - introduction.tex - related_work.tex $ cat main.tex \input{introduction} \input{related_work}  header.tex には \begin{document} より上の設定を書く。実際のラッパースクリプトは以下。 .config/latexmk.yml がある場合は、いい感じに \begin{document} &amp;hellip; \end{document} を生成してコンパイルする。</description>
-    </item>
-    
-    <item>
-      <title>Fluentd syntax for vim 書いてる</title>
-      <link>https://itkq.jp/blog/2017/01/03/fluentd-syntax/</link>
-      <pubDate>Tue, 03 Jan 2017 17:54:56 +0900</pubDate>
-      
-      <guid>https://itkq.jp/blog/2017/01/03/fluentd-syntax/</guid>
-      <description>Fluentdを書く機会があったのだが、Vimがシンタックスハイライトしてくれなかった。
+$ tree -a . ├── .config │ └── latexmk.yml ├── header.tex ├── introduction.tex ├── main.tex └── related_work.tex 1 directory, 5 files $ cat .config/latexmk.yml output_file: output.tex header: header.tex include_files: - introduction.tex - related_work.tex $ cat main.tex \input{introduction} \input{related_work} header.tex には \begin{document} より上の設定を書く。実際のラッパースクリプトは以下。 .config/latexmk.yml がある場合は、いい感じに \begin{document} &amp;hellip; \end{document} を生成してコンパイルする。</description></item><item><title>Fluentd syntax for vim 書いてる</title><link>https://itkq.jp/blog/2017/01/03/fluentd-syntax/</link><pubDate>Tue, 03 Jan 2017 17:54:56 +0900</pubDate><guid>https://itkq.jp/blog/2017/01/03/fluentd-syntax/</guid><description>Fluentdを書く機会があったのだが、Vimがシンタックスハイライトしてくれなかった。
 あれーと思ったけど vim8の新機能 にもFluentdの記述はなかった。
 &amp;ldquo;vim fluentd syntax&amp;rdquo; で検索すると、 https://github.com/yoppi/fluentd.vim がヒットするが、Latest Commit が4年前だったのと、自分で使ってみて馴染まなかったので、自分で書いてみている。
 itkq/fluentd-vim
 vimのhelpを読みつつ、とりあえずできた状態。
-そのうちガッツリFluentdを書くことになりそうなので、アップデートしていきたい。</description>
-    </item>
-    
-    <item>
-      <title>最近のVim&#43;LaTeX事情</title>
-      <link>https://itkq.jp/blog/2016/09/04/vim-latex/</link>
-      <pubDate>Sun, 04 Sep 2016 14:29:25 +0900</pubDate>
-      
-      <guid>https://itkq.jp/blog/2016/09/04/vim-latex/</guid>
-      <description>メインで使っているのはMacBookPro Late 2013だが（そろそろ買い換えたい）， MacBookPro Early 2015をバイト先で支給されて自由に使えることになったので， LaTeX環境を構築しようと思った．
+そのうちガッツリFluentdを書くことになりそうなので、アップデートしていきたい。</description></item><item><title>最近のVim&#43;LaTeX事情</title><link>https://itkq.jp/blog/2016/09/04/vim-latex/</link><pubDate>Sun, 04 Sep 2016 14:29:25 +0900</pubDate><guid>https://itkq.jp/blog/2016/09/04/vim-latex/</guid><description>メインで使っているのはMacBookPro Late 2013だが（そろそろ買い換えたい）， MacBookPro Early 2015をバイト先で支給されて自由に使えることになったので， LaTeX環境を構築しようと思った．
 MacTexをインストールしようと思っていたけど，「それDockerでよくない？」と言われて確かに，となった．
 なぜ今まで気が付かなかったんだろう．
 &amp;ldquo;texlive docker&amp;rdquo; で適当に検索をかけると既存のイメージがヒットした．
@@ -53,9 +16,5 @@ GitHub - itkq/docker-texlive2015
 これまでVimでLaTeXのコンパイルは，Quickrunを使ってlatexmkを呼ぶように設定していた． そのため，Docker上のlatexmkを呼ぶように設定を変更する．
 パスの通った場所に次のスクリプトを作成して実行権限を与える．
 ~/bin/latexmk
-. ~/bin/docker-latex.sh init docker run --rm -v $(pwd):/var/texlive $(get_image_name) latexmk  ~/bin/docker-latex.sh
-#!/usr/bin/env bash function get_machine_name() { echo dev } function get_image_name() { echo texlive2015 } function init() { local MACHINE=$(get_machine_name) if ! docker-machine ls | grep $MACHINE | grep -q &amp;quot;Running&amp;quot;; then docker-machine start $MACHINE fi docker ps &amp;gt; /dev/null 2&amp;gt;&amp;amp;1 if [ $?</description>
-    </item>
-    
-  </channel>
-</rss>
+. ~/bin/docker-latex.sh init docker run --rm -v $(pwd):/var/texlive $(get_image_name) latexmk ~/bin/docker-latex.sh
+#!/usr/bin/env bash function get_machine_name() { echo dev } function get_image_name() { echo texlive2015 } function init() { local MACHINE=$(get_machine_name) if ! docker-machine ls | grep $MACHINE | grep -q &amp;quot;Running&amp;quot;; then docker-machine start $MACHINE fi docker ps &amp;gt; /dev/null 2&amp;gt;&amp;amp;1 if [ $?</description></item></channel></rss>

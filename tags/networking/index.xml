@@ -1,37 +1,9 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Networking on itkq.jp</title>
-    <link>https://itkq.jp/tags/networking/</link>
-    <description>Recent content in Networking on itkq.jp</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>ja-JP</language>
-    <lastBuildDate>Mon, 31 Jul 2017 22:30:43 +0900</lastBuildDate>
-    
-	<atom:link href="https://itkq.jp/tags/networking/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-    <item>
-      <title>BBR: Congestion-Based Congestion Control とは</title>
-      <link>https://itkq.jp/blog/2017/07/31/bbr/</link>
-      <pubDate>Mon, 31 Jul 2017 22:30:43 +0900</pubDate>
-      
-      <guid>https://itkq.jp/blog/2017/07/31/bbr/</guid>
-      <description>最近 TCP BBR congestion control comes to GCP – your Internet just got faster が話題になっていた．しかし，この記事を読んだ時点での自分の BBR についての知識は，「既存のものよりいい感じにしてくれる輻輳制御」ぐらいだった．これではまずいということで，BBR とはなんなのかについて，既存の輻輳制御にも触れながら，元の論文1 をメインにまとめた．自分が理解するための文書であるが，一応としての想定読者は，TCP が輻輳制御を行っていることを知っているぐらいの人である．TCP については，拙著の TCP/IP とパフォーマンス に短くまとめてあるので参照できる．
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Networking on itkq.jp</title><link>https://itkq.jp/tags/networking/</link><description>Recent content in Networking on itkq.jp</description><generator>Hugo -- gohugo.io</generator><language>ja-JP</language><lastBuildDate>Mon, 31 Jul 2017 22:30:43 +0900</lastBuildDate><atom:link href="https://itkq.jp/tags/networking/index.xml" rel="self" type="application/rss+xml"/><item><title>BBR: Congestion-Based Congestion Control とは</title><link>https://itkq.jp/blog/2017/07/31/bbr/</link><pubDate>Mon, 31 Jul 2017 22:30:43 +0900</pubDate><guid>https://itkq.jp/blog/2017/07/31/bbr/</guid><description>最近 TCP BBR congestion control comes to GCP – your Internet just got faster が話題になっていた．しかし，この記事を読んだ時点での自分の BBR についての知識は，「既存のものよりいい感じにしてくれる輻輳制御」ぐらいだった．これではまずいということで，BBR とはなんなのかについて，既存の輻輳制御にも触れながら，元の論文1 をメインにまとめた．自分が理解するための文書であるが，一応としての想定読者は，TCP が輻輳制御を行っていることを知っているぐらいの人である．TCP については，拙著の TCP/IP とパフォーマンス に短くまとめてあるので参照できる．
 免責事項:
 TCP を深く研究しているわけではなく，間違いを記述している可能性があります．コメントで教えていただけると助かります．
 概要 BBR (Bottleneck Bandwidth and Round-trip propagation time) とは，Google が開発した新たな TCP 輻輳制御アルゴリズム．2016年9月に Linux Kernel に取り込まれ，論文は2017年2月に公開された． 既存の輻輳制御とは異なる輻輳検知，観測と推定をループするシステムモデルのアプローチにより，現代のネットワーク環境において高スループット，低レイテンシを発揮する．
 背景 今日，Linux の TCP 輻輳アルゴリズムとして広く用いられているのは CUBIC2 であるが，loss-based (パケットロスを輻輳の判断に用いる) の原理自体は 1970 年代の TCP の誕生から変わっていない．しかし，ネットワークやスイッチの進化により，輻輳を回避するためのこの方式が Bufferbloat というパフォーマンス問題を引き起こすようになった．Bufferbloat は，本質的には Loss-based 輻輳制御アルゴリズムの性能限界を示していた．輻輳を回避しながらも，最大スループットと最小 RTT の達成を目標として設計されたのが BBR である．
-Bufferbloat Bufferbloat とは，非対称な帯域幅のリンクに挟まれたスイッチが引き起こすキューイング遅延による， End-to-End のレイテンシ増加のことをいう． 実際の &amp;ldquo;bloat&amp;rdquo; (むくみ) は，大きい帯域幅から小さい帯域幅へ向かうときに起こる3． 分かりやすい例として，以下の (極端な) last mile で考える．Router にはパケットを貯める送信 FIFO バッファ (以降 bottleneck queue とも書く)がある．</description>
-    </item>
-    
-    <item>
-      <title>TCP/IP とパフォーマンス</title>
-      <link>https://itkq.jp/blog/2017/07/16/tcpip-performance/</link>
-      <pubDate>Sun, 16 Jul 2017 19:44:55 +0900</pubDate>
-      
-      <guid>https://itkq.jp/blog/2017/07/16/tcpip-performance/</guid>
-      <description>この文章は、ハイパフォーマンスブラウザネットワーキングを読んで、改めて TCP/IP を自分の中で整理し、パフォーマンスに関する内容を簡単にまとめたものである。 情報通信ネットワーク特論を受講しておりタイミングが良かったという理由もある。
+Bufferbloat Bufferbloat とは，非対称な帯域幅のリンクに挟まれたスイッチが引き起こすキューイング遅延による， End-to-End のレイテンシ増加のことをいう． 実際の &amp;ldquo;bloat&amp;rdquo; (むくみ) は，大きい帯域幅から小さい帯域幅へ向かうときに起こる3． 分かりやすい例として，以下の (極端な) last mile で考える．Router にはパケットを貯める送信 FIFO バッファ (以降 bottleneck queue とも書く)がある．</description></item><item><title>TCP/IP とパフォーマンス</title><link>https://itkq.jp/blog/2017/07/16/tcpip-performance/</link><pubDate>Sun, 16 Jul 2017 19:44:55 +0900</pubDate><guid>https://itkq.jp/blog/2017/07/16/tcpip-performance/</guid><description>この文章は、ハイパフォーマンスブラウザネットワーキングを読んで、改めて TCP/IP を自分の中で整理し、パフォーマンスに関する内容を簡単にまとめたものである。 情報通信ネットワーク特論を受講しておりタイミングが良かったという理由もある。
 IP IP は、パケット交換によるデータ通信網を実現するためのプロトコルである。The Internet ができる前は、Hop-by-Hop（中間ノード間）で信頼性を確保していた。TCP/IP は、経路到達性と信頼性を IP と TCP の形で分離したプロトコルスイートである。この分離により、複雑なトランスポート機能はエンドシステムだけで行えるようになった。このような設計思想は End-to-End Principle と呼ばれる。
 TCP TCP は コネクション指向であり、Go-back-N ARQ を基本とする輻輳制御プロトコルである。 コネクション指向通信とは、実際にデータをやりとりする前に、通信を確立する通信である。TCP では、three-way handshake を用いてコネクションを確立する。 シーケンス番号と確認応答番号やチェックサムを使った高品質な伝送のための再送制御は、データ通信網においては必須の機能と言え、TCP の本質的な部分ではない。TCP の本質的に重要な役割は、フロー制御と輻輳制御である。 TCP は、ウィンドウによって上記2つを同時に達成している。
 フロー制御 フロー制御は、受信側が処理できるペースで送信するエンドツーエンドのメカニズムである。TCP では、スライディングウィンドウでフロー制御を行う。受信側は送信側に受信ウィンドウサイズ (rwnd) を広告する。通信中は動的にウィンドウサイズを変更できる。
@@ -39,8 +11,4 @@ TCP TCP は コネクション指向であり、Go-back-N ARQ を基本とする
 スロースタート フロー制御だけでは、ネットワーク自体の許容量を制御できず、輻輳が起こる。通信中に、ネットワークの利用可能な帯域幅に調整する必要がある。利用可能な通信容量を推測する唯一の方法は、実際に送受信をすることである。 TCP 接続毎に輻輳ウィンドウサイズ (cwnd) を初期化し、控えめな値からスタートする。
 輻輳制御アルゴリズム スロースタート後は、ACK が帰ってくるたびにウィンドウサイズを大きくする。実際に使用されるウィンドウサイズは、min(rwnd, cwnd) である。TCP では、ウインドウサイズを指数的に増加させる。どこかのタイミングでパケットロスが発生した場合、cwnd を引き下げることで、パケットロスを最小化させる。このときに動作するウインドウサイズを調整するアルゴリズムはいくつかあり、オリジナルは TCP Reno、Linux のデフォルトは TCP CUBIC である。
 TCP のパフォーマンス 主に Web ブラウジングのために考慮すべきパフォーマンス事項と Linux での設定。
-ウインドウサイズ スロースタート (initcwnd) の緩和  RFC 793: 1 セグメント (MSS; Ethernet だと 1500 Byte) RFC 2581: 最高 4 セグメント RFC 6928: 最高 10 セグメント (Linux 3.</description>
-    </item>
-    
-  </channel>
-</rss>
+ウインドウサイズ スロースタート (initcwnd) の緩和 RFC 793: 1 セグメント (MSS; Ethernet だと 1500 Byte) RFC 2581: 最高 4 セグメント RFC 6928: 最高 10 セグメント (Linux 3.</description></item></channel></rss>

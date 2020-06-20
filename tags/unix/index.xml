@@ -1,44 +1,12 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Unix on itkq.jp</title>
-    <link>https://itkq.jp/tags/unix/</link>
-    <description>Recent content in Unix on itkq.jp</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>ja-JP</language>
-    <lastBuildDate>Mon, 01 May 2017 15:14:42 +0900</lastBuildDate>
-    
-	<atom:link href="https://itkq.jp/tags/unix/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-    <item>
-      <title>Unix 以外のオペレーティングシステム</title>
-      <link>https://itkq.jp/blog/2017/05/01/operating-system-comparison/</link>
-      <pubDate>Mon, 01 May 2017 15:14:42 +0900</pubDate>
-      
-      <guid>https://itkq.jp/blog/2017/05/01/operating-system-comparison/</guid>
-      <description>Unix 以外の簡単な歴史と特徴をまとめる。
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Unix on itkq.jp</title><link>https://itkq.jp/tags/unix/</link><description>Recent content in Unix on itkq.jp</description><generator>Hugo -- gohugo.io</generator><language>ja-JP</language><lastBuildDate>Mon, 01 May 2017 15:14:42 +0900</lastBuildDate><atom:link href="https://itkq.jp/tags/unix/index.xml" rel="self" type="application/rss+xml"/><item><title>Unix 以外のオペレーティングシステム</title><link>https://itkq.jp/blog/2017/05/01/operating-system-comparison/</link><pubDate>Mon, 01 May 2017 15:14:42 +0900</pubDate><guid>https://itkq.jp/blog/2017/05/01/operating-system-comparison/</guid><description>Unix 以外の簡単な歴史と特徴をまとめる。
 MacOS Macintosh OS は、先駆的な GUI 研究に刺激されてた 1980年代初期の Apple 社で開発された。世に出たのは 1984年の Macintosh 発売と同時である。
 MacOS は、Mac インターフェースガイドラインという Unix とは大きく異なった思想を持つ。ガイドラインはアプリケーション GUI の表示と動作を詳細に規定している。特に重要なのは、「何かを置いたらそのまま残る」ところである。デスクトップ上のオブジェクトの位置は再起動後も維持される。すべてのプログラムは GUI を持つ。
 設計者の意図した Macintosh の役割は、技術者ではないエンドユーザーを対象とするクライアントオペレーティングシステムである。
 近年、古典的な MacOS はその生涯を終えた。MacOS X は、古い OS のほとんどの機能を取り込んだ上で、バークレーの伝統から派生した Unix OS に融合した。実際には、Darwin というオープンソース Unix カーネルの上に2つのプロプライエタリレイヤ (OpenStep と Mac GUI) を乗せた形になっている。MacOS は UNIX として認証されたオペレーティングシステムである。
 Windows NT Windows NT (New Technology) は、Microsoft の個人用ハイエンド OS またはサーバ用 OS である。NT は付け足しの連続で成長しているため、Unix の「すべてはファイルだ」やMacOS のデスクトップにあたる基本思想を持っていない。強いて言えば「ユーザは閉じ込めておかなければならない」である。NT オペレーティングシステムのターゲットユーザは主として技術者ではないエンドユーザである。
-DOS (1981), Windows 3.1 (1992), Windows 95, Windows NT 4 (1996), Windows 2000, Windows XP (2002), Windows Server 2003 という各世代を経るたびに、基本的な部分が変化してきた。古い方法は時代遅れとみなされ、サポートも打ち切られる。</description>
-    </item>
-    
-    <item>
-      <title>Unix の歴史と思想</title>
-      <link>https://itkq.jp/blog/2017/04/30/unix-history-and-principle/</link>
-      <pubDate>Sun, 30 Apr 2017 22:17:37 +0900</pubDate>
-      
-      <guid>https://itkq.jp/blog/2017/04/30/unix-history-and-principle/</guid>
-      <description>これは、自分がプログラミングを始めた頃に読みたかった（読むべきだった）というつもりの文章である。
+DOS (1981), Windows 3.1 (1992), Windows 95, Windows NT 4 (1996), Windows 2000, Windows XP (2002), Windows Server 2003 という各世代を経るたびに、基本的な部分が変化してきた。古い方法は時代遅れとみなされ、サポートも打ち切られる。</description></item><item><title>Unix の歴史と思想</title><link>https://itkq.jp/blog/2017/04/30/unix-history-and-principle/</link><pubDate>Sun, 30 Apr 2017 22:17:37 +0900</pubDate><guid>https://itkq.jp/blog/2017/04/30/unix-history-and-principle/</guid><description>これは、自分がプログラミングを始めた頃に読みたかった（読むべきだった）というつもりの文章である。
 Unix の歴史 Linux 登場までの歴史を簡単にまとめた。省いているところも多い。
 Unix の誕生 ベル研究所の Ken Tompson が、1969年に開発したゲーム用プラットフォームが起源である。当時はメインフレームで動く TSS が実験されていた (Multics) が、大規模で複雑なプロジェクトだった。 ベル研究所は Multics プロジェクトから脱退したが、彼らは対話的コンピューティングを必要としていた。その後ゲーム開発を可能にするプログラム（＝カーネル）が生み出された。これが Unix の元となった。Unix の語源は、Multics (Multiplexed information and computer system) を意識した UNiplexed Information and Computer System だと言われている。
 ワードプロセッサをサポートする過程で、Unix OS が誕生した。初期の Unix OS はアセンブリ言語で書かれていたが、後に移植性を高めるためにC言語、つまり高水準言語で書き直された。 この頃は主に DEC (Degital Equipment Corporation) の PDP-7 というミニコンピュータで Unix は稼働していた。
 1970年代に、Unix についての論文が ACM に投稿されたことで、世界中の研究機関が Unix に興味を持った。ベル研究所の親会社である AT&amp;amp;T は、電話と関係ない技術だったために、Unix のソースコードを配布することになった。
-BSD Unix ARPANET は、インターネットの起源となった、複数の研究機関を接続したパケット交換ネットワークである。Unix と同時期の 1969年から開始された。当時 ARPANET は PDP-10 で稼働していたが、次世代の VAX シリーズ生産とともに淘汰されつつあった。そこで VAX 上の Unix で動作する TCP/IP プロトコルスタックの実装が必要になった。初期の Unix のネットワークサポートはごく貧弱だった。</description>
-    </item>
-    
-  </channel>
-</rss>
+BSD Unix ARPANET は、インターネットの起源となった、複数の研究機関を接続したパケット交換ネットワークである。Unix と同時期の 1969年から開始された。当時 ARPANET は PDP-10 で稼働していたが、次世代の VAX シリーズ生産とともに淘汰されつつあった。そこで VAX 上の Unix で動作する TCP/IP プロトコルスタックの実装が必要になった。初期の Unix のネットワークサポートはごく貧弱だった。</description></item></channel></rss>

@@ -1,15 +1,4 @@
-<!DOCTYPE html>
-<html lang="ja-JP">
-
-<head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="chrome=1">
-<meta name="HandheldFriendly" content="True">
-<meta name="MobileOptimized" content="320">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="referrer" content="no-referrer">
-<meta name="author" content="itkq">
-<meta name="description" content="メインで使っているのはMacBookPro Late 2013だが（そろそろ買い換えたい）， MacBookPro Early 2015をバイト先で支給されて自由に使えることになったので， LaTeX環境を構築しようと思った．
+<!doctype html><html lang=ja-jp><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="chrome=1"><meta name=HandheldFriendly content=True><meta name=MobileOptimized content=320><meta name=viewport content="width=device-width,initial-scale=1"><meta name=referrer content=no-referrer><meta name=author content=itkq><meta name=description content='メインで使っているのはMacBookPro Late 2013だが（そろそろ買い換えたい）， MacBookPro Early 2015をバイト先で支給されて自由に使えることになったので， LaTeX環境を構築しようと思った．
 MacTexをインストールしようと思っていたけど，「それDockerでよくない？」と言われて確かに，となった．
 なぜ今まで気が付かなかったんだろう．
 &ldquo;texlive docker&rdquo; で適当に検索をかけると既存のイメージがヒットした．
@@ -21,13 +10,7 @@ GitHub - itkq/docker-texlive2015
 パスの通った場所に次のスクリプトを作成して実行権限を与える．
 ~/bin/latexmk
 . ~/bin/docker-latex.sh init docker run --rm -v $(pwd):/var/texlive $(get_image_name) latexmk  ~/bin/docker-latex.sh
-#!/usr/bin/env bash function get_machine_name() { echo dev } function get_image_name() { echo texlive2015 } function init() { local MACHINE=$(get_machine_name) if ! docker-machine ls | grep $MACHINE | grep -q &quot;Running&quot;; then docker-machine start $MACHINE fi docker ps &gt; /dev/null 2&gt;&amp;1 if [ $?">
-
-<meta name="google-site-verification" content="AyWEWMfqdOijgoPW5yMy188xoQqY46L6pFXyd3Jizyc">
-
-
-<meta property="og:title" content="最近のVim&#43;LaTeX事情" />
-<meta property="og:description" content="メインで使っているのはMacBookPro Late 2013だが（そろそろ買い換えたい）， MacBookPro Early 2015をバイト先で支給されて自由に使えることになったので， LaTeX環境を構築しようと思った．
+#!/usr/bin/env bash function get_machine_name() { echo dev } function get_image_name() { echo texlive2015 } function init() { local MACHINE=$(get_machine_name) if ! docker-machine ls | grep $MACHINE | grep -q "Running"; then docker-machine start $MACHINE fi docker ps &gt; /dev/null 2&gt;&amp;1 if [ $?'><meta name=google-site-verification content=AyWEWMfqdOijgoPW5yMy188xoQqY46L6pFXyd3Jizyc><meta property=og:title content=最近のVim&#43;LaTeX事情><meta property=og:description content='メインで使っているのはMacBookPro Late 2013だが（そろそろ買い換えたい）， MacBookPro Early 2015をバイト先で支給されて自由に使えることになったので， LaTeX環境を構築しようと思った．
 MacTexをインストールしようと思っていたけど，「それDockerでよくない？」と言われて確かに，となった．
 なぜ今まで気が付かなかったんだろう．
 &ldquo;texlive docker&rdquo; で適当に検索をかけると既存のイメージがヒットした．
@@ -39,200 +22,18 @@ GitHub - itkq/docker-texlive2015
 パスの通った場所に次のスクリプトを作成して実行権限を与える．
 ~/bin/latexmk
 . ~/bin/docker-latex.sh init docker run --rm -v $(pwd):/var/texlive $(get_image_name) latexmk  ~/bin/docker-latex.sh
-#!/usr/bin/env bash function get_machine_name() { echo dev } function get_image_name() { echo texlive2015 } function init() { local MACHINE=$(get_machine_name) if ! docker-machine ls | grep $MACHINE | grep -q &quot;Running&quot;; then docker-machine start $MACHINE fi docker ps &gt; /dev/null 2&gt;&amp;1 if [ $?" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://itkq.jp/blog/2016/09/04/vim-latex/" /><meta property="article:published_time" content="2016-09-04T14:29:25&#43;09:00"/>
-<meta property="article:modified_time" content="2016-09-04T14:29:25&#43;09:00"/>
-
-
-<title>
-
-
-     最近のVim&#43;LaTeX事情 
-
-</title>
-<link rel="canonical" href="https://itkq.jp/blog/2016/09/04/vim-latex/">
-
-
-
-
-
-
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/styles/github.min.css">
-
-
-
-
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Ubuntu+Mono:400,400i,700,700i|Raleway:500">
-
-
-
-    
-    <link rel="stylesheet" href="https://itkq.jp/css/reset.css?t=2020-06-20%2004%3a57%3a44.009832459%20%2b0000%20UTC%20m%3d%2b0.078664078">
-    <link rel="stylesheet" href="https://itkq.jp/css/pygments.css?t=2020-06-20%2004%3a57%3a44.009832459%20%2b0000%20UTC%20m%3d%2b0.078664078">
-    <link rel="stylesheet" href="https://itkq.jp/css/main.css?t=2020-06-20%2004%3a57%3a44.009832459%20%2b0000%20UTC%20m%3d%2b0.078664078">
-    
-        <link rel="stylesheet" href="https://itkq.jp/css/override.css?t=2020-06-20%2004%3a57%3a44.009832459%20%2b0000%20UTC%20m%3d%2b0.078664078">
-    
-
-
-
-
-<link rel="shortcut icon"
-
-    href="https://itkq.jp/img/leaf.ico"
-
->
-
-
-
-
-
-
-
-
-</head>
-
-
-<body lang="ja">
-
-<section class="header">
-    <div class="container">
-            
-                
-                
-                
-                
-                
-                    
-                
-                    
-                
-                    
-                
-                    
-                
-                    
-                
-                
-                <a href="https://itkq.jp/"><img class="avatar" src="https://itkq.jp/img/profile.png" srcset="https://itkq.jp/img/profile.png 1x"></a>
-            
-        <div class="content">
-            <a href="https://itkq.jp/"><div class="name">itkq</div></a>
-            
-            <nav>
-                <ul>
-                    
-                        <li class="nav-blog"><a href="https://itkq.jp/blog/"><span>Blog</span></a></li>
-                    
-                        <li class="nav-about"><a href="https://itkq.jp/about/"><span>About</span></a></li>
-                    
-                </ul>
-            </nav>
-        </div>
-    </div>
-</section>
-
-<section class="icons">
-    <div class="container">
-        <div class="content">
-        
-            <a href="https://github.com/itkq" target="_blank" rel="noopener"><img class="icon" src="https://itkq.jp/img/github.svg" alt="github" /></a>
-        
-
-        
-            <a href="https://twitter.com/itkq" target="_blank" rel="noopener"><img class="icon" src="https://itkq.jp/img/twitter.svg" alt="twitter" /></a>
-        
-
-	
-
-        
-
-        
-
-        
-            <a href="//linkedin.com/in/takuya-kosugiyama-107402195/" target="_blank" rel="noopener"><img class="icon" src="https://itkq.jp/img/linkedin.svg" alt="linkedin" /></a>
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-            <a href="mailto:re@itkq.jp"><img class="icon" src="https://itkq.jp/img/email.svg" alt="email" /></a>
-        
-
-        
-
-        
-        </div>
-    </div>
-</section>
-
-
-<section class="main post non-narrow zero-top-spacing">
-    <div class="container">
-        <div class="content">
-            <div class="front-matter">
-                <div class="title-container">
-                    <div class="page-heading">
-
-    最近のVim&#43;LaTeX事情
-
-
-
-
-
-
-
-
-</div>
-
-                    <div class="initials"><a href="https://itkq.jp/">ad</a></div>
-                </div>
-                <div class="meta">
-                    
-                    <div class="date" title='Sun Sep 4 2016 14:29:25 &#43;0900'>Sep 4, 2016</div>
-                    
-                    
-                </div>
-            </div>
-            <div class="markdown">
-                <p>メインで使っているのはMacBookPro Late 2013だが（そろそろ買い換えたい），
+#!/usr/bin/env bash function get_machine_name() { echo dev } function get_image_name() { echo texlive2015 } function init() { local MACHINE=$(get_machine_name) if ! docker-machine ls | grep $MACHINE | grep -q "Running"; then docker-machine start $MACHINE fi docker ps &gt; /dev/null 2&gt;&amp;1 if [ $?'><meta property=og:type content=article><meta property=og:url content=https://itkq.jp/blog/2016/09/04/vim-latex/><meta property=article:published_time content=2016-09-04T14:29:25&#43;09:00><meta property=article:modified_time content=2016-09-04T14:29:25&#43;09:00><title>最近のVim&#43;LaTeX事情</title><link rel=canonical href=https://itkq.jp/blog/2016/09/04/vim-latex/><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/styles/github.min.css><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Ubuntu+Mono:400,400i,700,700i|Raleway:500"><link rel=stylesheet href="https://itkq.jp/css/reset.css?t=2020-06-20%2014%3a17%3a11.071621878%20%2b0900%20JST%20m%3d%2b0.104976264"><link rel=stylesheet href="https://itkq.jp/css/pygments.css?t=2020-06-20%2014%3a17%3a11.071621878%20%2b0900%20JST%20m%3d%2b0.104976264"><link rel=stylesheet href="https://itkq.jp/css/main.css?t=2020-06-20%2014%3a17%3a11.071621878%20%2b0900%20JST%20m%3d%2b0.104976264"><link rel=stylesheet href="https://itkq.jp/css/override.css?t=2020-06-20%2014%3a17%3a11.071621878%20%2b0900%20JST%20m%3d%2b0.104976264"><link rel="shortcut icon" href=https://itkq.jp/img/leaf.ico></head><body lang=ja><section class=header><div class=container><a href=https://itkq.jp/><img class=avatar src=https://itkq.jp/img/profile.png srcset="https://itkq.jp/img/profile.png 1x"></a><div class=content><a href=https://itkq.jp/><div class=name>itkq</div></a><nav><ul><li class=nav-blog><a href=https://itkq.jp/blog/><span>Blog</span></a></li><li class=nav-about><a href=https://itkq.jp/about/><span>About</span></a></li></ul></nav></div></div></section><section class=icons><div class=container><div class=content><a href=https://github.com/itkq target=_blank rel=noopener><img class=icon src=https://itkq.jp/img/github.svg alt=github></a>
+<a href=https://twitter.com/itkq target=_blank rel=noopener><img class=icon src=https://itkq.jp/img/twitter.svg alt=twitter></a>
+<a href=//linkedin.com/in/takuya-kosugiyama-107402195/ target=_blank rel=noopener><img class=icon src=https://itkq.jp/img/linkedin.svg alt=linkedin></a>
+<a href=mailto:re@itkq.jp><img class=icon src=https://itkq.jp/img/email.svg alt=email></a></div></div></section><section class="main post non-narrow zero-top-spacing"><div class=container><div class=content><div class=front-matter><div class=title-container><div class=page-heading>最近のVim&#43;LaTeX事情</div><div class=initials><a href=https://itkq.jp/>ad</a></div></div><div class=meta><div class=date title="Sun Sep 4 2016 14:29:25 JST">Sep 4, 2016</div></div></div><div class=markdown><p>メインで使っているのはMacBookPro Late 2013だが（そろそろ買い換えたい），
 MacBookPro Early 2015をバイト先で支給されて自由に使えることになったので，
-LaTeX環境を構築しようと思った．<br />
-MacTexをインストールしようと思っていたけど，「それDockerでよくない？」と言われて確かに，となった．<br />
-なぜ今まで気が付かなかったんだろう．</p>
-
-<p>&ldquo;texlive docker&rdquo; で適当に検索をかけると既存のイメージがヒットした．<br />
-<a href="https://hub.docker.com/r/harshjv/texlive-2015/">harshjv/texlive-2015 public - Docker Hub</a></p>
-
-<p>これをpullして手持ちの.texをコンパイルしてみると，includegraphicsで
-エラーを吐かれて画像が全く出力されなかった．<br />
-どうやらImageMagickあたりが足りていないようだったので，
-必要なパッケージを追加インストールするだけのDockerfileを作ってビルドしたらコンパイル通った．<br />
-<a href="https://github.com/itkq/docker-texlive2015">GitHub - itkq/docker-texlive2015</a></p>
-
-<p>これまでVimでLaTeXのコンパイルは，Quickrunを使ってlatexmkを呼ぶように設定していた．
-そのため，Docker上のlatexmkを呼ぶように設定を変更する．</p>
-
-<p>パスの通った場所に次のスクリプトを作成して実行権限を与える．</p>
-
-<p>~/bin/latexmk</p>
-
-<pre><code class="language-sh">. ~/bin/docker-latex.sh
+LaTeX環境を構築しようと思った．<br>MacTexをインストールしようと思っていたけど，「それDockerでよくない？」と言われて確かに，となった．<br>なぜ今まで気が付かなかったんだろう．</p><p>&ldquo;texlive docker&rdquo; で適当に検索をかけると既存のイメージがヒットした．<br><a href=https://hub.docker.com/r/harshjv/texlive-2015/>harshjv/texlive-2015 public - Docker Hub</a></p><p>これをpullして手持ちの.texをコンパイルしてみると，includegraphicsで
+エラーを吐かれて画像が全く出力されなかった．<br>どうやらImageMagickあたりが足りていないようだったので，
+必要なパッケージを追加インストールするだけのDockerfileを作ってビルドしたらコンパイル通った．<br><a href=https://github.com/itkq/docker-texlive2015>GitHub - itkq/docker-texlive2015</a></p><p>これまでVimでLaTeXのコンパイルは，Quickrunを使ってlatexmkを呼ぶように設定していた．
+そのため，Docker上のlatexmkを呼ぶように設定を変更する．</p><p>パスの通った場所に次のスクリプトを作成して実行権限を与える．</p><p>~/bin/latexmk</p><pre><code class=language-sh>. ~/bin/docker-latex.sh
 init
 docker run --rm -v $(pwd):/var/texlive $(get_image_name) latexmk
-</code></pre>
-
-<p>~/bin/docker-latex.sh</p>
-
-<pre><code class="language-sh">#!/usr/bin/env bash
+</code></pre><p>~/bin/docker-latex.sh</p><pre><code class=language-sh>#!/usr/bin/env bash
 
 function get_machine_name() {
   echo dev
@@ -252,11 +53,7 @@ function init() {
     eval $(docker-machine env $MACHINE)
   fi
 }
-</code></pre>
-
-<p>.vimrc中のQuickrunの設定を次のように変更する．</p>
-
-<pre><code class="language-vim">&quot; Quickrun
+</code></pre><p>.vimrc中のQuickrunの設定を次のように変更する．</p><pre><code class=language-vim>&quot; Quickrun
 let g:quickrun_config = {
   \ &quot;_&quot; : {
   \     &quot;runner&quot; : &quot;vimproc&quot;,
@@ -270,72 +67,7 @@ let g:quickrun_config[&quot;latexmk&quot;] = {
   \ &quot;exec&quot;      : &quot;%c&quot;,
   \ }
 autocmd BufWritePost *.tex :QuickRun latexmk
-</code></pre>
-
-<p>これでローカルの.texファイルを保存する度にDocker上でlatexmkが走るようになった．<br />
-Skimで自動更新プレビューしておくとさらに便利．また，Vim-LaTeXを導入して次の設定をしておくと，\lvでSkimを立ち上げることができる．</p>
-
-<pre><code class="language-vim">let g:Tex_DefaultTargetFormat = 'pdf'
+</code></pre><p>これでローカルの.texファイルを保存する度にDocker上でlatexmkが走るようになった．<br>Skimで自動更新プレビューしておくとさらに便利．また，Vim-LaTeXを導入して次の設定をしておくと，\lvでSkimを立ち上げることができる．</p><pre><code class=language-vim>let g:Tex_DefaultTargetFormat = 'pdf'
 let g:Tex_ViewRule_pdf = 'open -ga /Applications/Skim.app'
-</code></pre>
-
-                <br>
-		<p class="back-to-posts"><a href="https://itkq.jp/blog/">Back to posts</a></p>
-            </div>
-            <br>
-            <div class="disqus">
-                <div id="disqus_thread"></div>
-<script type="application/javascript">
-    var disqus_config = function () {
-    
-    
-    
-    };
-    (function() {
-        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
-            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
-            return;
-        }
-        var d = document, s = d.createElement('script'); s.async = true;
-        s.src = '//' + "itkq-jp" + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-            </div>
-            
-        </div>
-    </div>
-</section>
-
-
-
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-71205730-2', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-
-
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js"></script>
-  
-
-  <script type="text/javascript">
-    hljs.initHighlightingOnLoad();
-  </script>
-
-
-
-
-
-</body>
-</html>
-
+</code></pre><br><p class=back-to-posts><a href=https://itkq.jp/blog/>Back to posts</a></p></div><br><div class=disqus><div id=disqus_thread></div><script type=application/javascript>var disqus_config=function(){};(function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById('disqus_thread').innerHTML='Disqus comments not available by default when the website is previewed locally.';return;}
+var d=document,s=d.createElement('script');s.async=true;s.src='//'+"itkq-jp"+'.disqus.com/embed.js';s.setAttribute('data-timestamp',+new Date());(d.head||d.body).appendChild(s);})();</script><noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></div></div></div></section><script type=application/javascript>var doNotTrack=false;if(!doNotTrack){window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;ga('create','UA-71205730-2','auto');ga('send','pageview');}</script><script async src=https://www.google-analytics.com/analytics.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js></script><script type=text/javascript>hljs.initHighlightingOnLoad();</script></body></html>

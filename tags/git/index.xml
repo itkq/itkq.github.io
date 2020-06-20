@@ -1,61 +1,29 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Git on itkq.jp</title>
-    <link>https://itkq.jp/tags/git/</link>
-    <description>Recent content in Git on itkq.jp</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>ja-JP</language>
-    <lastBuildDate>Sun, 20 Nov 2016 20:36:54 +0900</lastBuildDate>
-    
-	<atom:link href="https://itkq.jp/tags/git/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-    <item>
-      <title>git challenge 4th で優勝してきた</title>
-      <link>https://itkq.jp/blog/2016/11/20/git-challenge/</link>
-      <pubDate>Sun, 20 Nov 2016 20:36:54 +0900</pubDate>
-      
-      <guid>https://itkq.jp/blog/2016/11/20/git-challenge/</guid>
-      <description>git challenge 以前参加した逆求人イベントで、このコンテストをmixiの中の人に教えていただき、興味を持ったので参加した。
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Git on itkq.jp</title><link>https://itkq.jp/tags/git/</link><description>Recent content in Git on itkq.jp</description><generator>Hugo -- gohugo.io</generator><language>ja-JP</language><lastBuildDate>Sun, 20 Nov 2016 20:36:54 +0900</lastBuildDate><atom:link href="https://itkq.jp/tags/git/index.xml" rel="self" type="application/rss+xml"/><item><title>git challenge 4th で優勝してきた</title><link>https://itkq.jp/blog/2016/11/20/git-challenge/</link><pubDate>Sun, 20 Nov 2016 20:36:54 +0900</pubDate><guid>https://itkq.jp/blog/2016/11/20/git-challenge/</guid><description>git challenge 以前参加した逆求人イベントで、このコンテストをmixiの中の人に教えていただき、興味を持ったので参加した。
 git challenge 2016.11.20
 朝 会場はmixiのビルだった。
 第4回git challengeがはじまりました。今日は快晴で、git challenge日和となりました。#mixi_git pic.twitter.com/0aIH0Au6uw
-&amp;mdash; ミクシィグループ 新卒採用公式アカウント (@HR_mixi) 2016年11月20日 
+&amp;mdash; ミクシィグループ 新卒採用公式アカウント (@HR_mixi) 2016年11月20日
 コンテストは2人組のチーム制で、チームは事前に決められていて、 逆求人イベントで一緒したラルフ氏 ( @r_ralph_h ) でした。他に顔見知りはいなかった。 コンテストのチュートリアルをやって、GithubにプッシュするとCIで採点、Slackに通知されるという流れを体験した。
 昼 🍣 のスライドがあったものの、mixiでは 🍣 == 🍛 が true らしく、お昼ごはんはカレーだった。おいしかった。
 コンテスト 戦略は特に無くて、奇数と偶数の問題をそれぞれが担当した。 問題内容は公開NGらしいので触れない。
 コンテスト中はそれっぽいBGMが流れていたが、 全体的な解答ペースが早かったらしく、途中でPPAPなど妨害音楽に切り替わって険しかった。 不評を買ってか、その後九条カレンが登場したので良かった。
 きんいろモザイク対応企業 #mixi_git pic.twitter.com/CF8JTOM4E1
-&amp;mdash; いたこ (@itkq) 2016年11月20日 
+&amp;mdash; いたこ (@itkq) 2016年11月20日
 途中で詰まった問題はあったけれど、チームメイトが解いてくれた。神。 終盤の高難度問題は、解き方は見えたものの時間が足りなかった。
 結果、同率1位で自分のチームを含めた3チームが優勝ということになった。 賞品は後で郵送してもらえるらしい。感謝。
 （同着だったけど）優勝しました！！！ #mixi_git
-&amp;mdash; いたこ (@itkq) 2016年11月20日 
+&amp;mdash; いたこ (@itkq) 2016年11月20日
 懇親会 作問者と会話して直接フィードバックできたり作問の裏話が聞けたので良かった。
 まとめ 接戦だったので楽しかった。 治安のいいGit開発を心掛けたい。
 チームメイトのエントリ ==&amp;gt; mixiのgit challengeに参加したお話
-追記 賞品はメダルとOctcatくんでした。 でかい pic.</description>
-    </item>
-    
-    <item>
-      <title>実用Git 読んだ</title>
-      <link>https://itkq.jp/blog/2016/04/04/%E5%AE%9F%E7%94%A8git-%E8%AA%AD%E3%82%93%E3%81%A0/</link>
-      <pubDate>Mon, 04 Apr 2016 02:20:25 +0900</pubDate>
-      
-      <guid>https://itkq.jp/blog/2016/04/04/%E5%AE%9F%E7%94%A8git-%E8%AA%AD%E3%82%93%E3%81%A0/</guid>
-      <description>最近自分の Git に対する知識の無さを感じてきたので本を読もうと思っていたら、ちょうど借りる機会があったのでまとめた。Git コマンドの操作をより自信を持って行えるようになった気がする。
+追記 賞品はメダルとOctcatくんでした。 でかい pic.</description></item><item><title>実用Git 読んだ</title><link>https://itkq.jp/blog/2016/04/04/%E5%AE%9F%E7%94%A8git-%E8%AA%AD%E3%82%93%E3%81%A0/</link><pubDate>Mon, 04 Apr 2016 02:20:25 +0900</pubDate><guid>https://itkq.jp/blog/2016/04/04/%E5%AE%9F%E7%94%A8git-%E8%AA%AD%E3%82%93%E3%81%A0/</guid><description>最近自分の Git に対する知識の無さを感じてきたので本を読もうと思っていたら、ちょうど借りる機会があったのでまとめた。Git コマンドの操作をより自信を持って行えるようになった気がする。
 Git の基本的な概念 Git リポジトリは、作業ディレクトリと .git ディレクトリから成る。
 git init により生成される Git リポジトリ (.git ディレクトリ) には、リビジョンと履歴の情報がすべて詰まっている。Git リポジトリが保持するデータ構造は、オブジェクト格納領域とインデックスの2つ。
 Git オブジェクト Git オブジェクト格納領域は、オブジェクトの内容に SHA1 を適用して得られたハッシュ値から生成されるユニークな オブジェクト ID (名前) をもつ。 オブジェクト格納領域 (.git/objects) に配置される Git オブジェクトは、次の4種類である。
- blob
+blob
 ファイルの各バージョンは blob (binary large object) で表される。blob にはファイルのデータのみが含まれており、メタデータやファイル名は含まれていない。 Git はファイル名を気にしないため、同じ内容のファイルが複数あっても、それは1つの blob で表される。
- tree
+tree
 tree オブジェクトは、1階層分のディレクトリ情報を表現する。 tree は blob のオブジェクトID とパス名を持っている。 コミットが指す tree オブジェクトの ID さえ分かれば、再帰的に子の tree を辿ることで、そのコミットの状態のファイルをすべて取り出せる。
- commit
+commit
 コミットオブジェクトは、リポジトリに加えられた変更のメタデータを持つ。
- tree の名前 新しいバージョンの作成者 (author) 作成された時間 新しいバージョンをリポジトリに置いた人 (comitter) リビジョンを作った理由の説明 (commit message)    ルートコミット（最初のコミット）以外は1つ以上の親コミットIDをもつ。</description>
-    </item>
-    
-  </channel>
-</rss>
+tree の名前 新しいバージョンの作成者 (author) 作成された時間 新しいバージョンをリポジトリに置いた人 (comitter) リビジョンを作った理由の説明 (commit message) ルートコミット（最初のコミット）以外は1つ以上の親コミットIDをもつ。</description></item></channel></rss>

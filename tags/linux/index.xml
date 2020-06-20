@@ -1,30 +1,7 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Linux on itkq.jp</title>
-    <link>https://itkq.jp/tags/linux/</link>
-    <description>Recent content in Linux on itkq.jp</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>ja-JP</language>
-    <lastBuildDate>Wed, 10 May 2017 16:11:33 +0900</lastBuildDate>
-    
-	<atom:link href="https://itkq.jp/tags/linux/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-    <item>
-      <title>Linux におけるファイル I/O の基礎</title>
-      <link>https://itkq.jp/blog/2017/05/10/linux-file-and-io/</link>
-      <pubDate>Wed, 10 May 2017 16:11:33 +0900</pubDate>
-      
-      <guid>https://itkq.jp/blog/2017/05/10/linux-file-and-io/</guid>
-      <description>すべてがファイルというモデルの Linux (Unix) において、ファイル I/O (以降単に I/O と書く) を知っておいて損はない。 この記事では、基本的なファイルと関連する I/O について、対応する Linux システムコールも併せて説明する。 次回はこれらを実際に Linux 上で確認する予定。
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Linux on itkq.jp</title><link>https://itkq.jp/tags/linux/</link><description>Recent content in Linux on itkq.jp</description><generator>Hugo -- gohugo.io</generator><language>ja-JP</language><lastBuildDate>Wed, 10 May 2017 16:11:33 +0900</lastBuildDate><atom:link href="https://itkq.jp/tags/linux/index.xml" rel="self" type="application/rss+xml"/><item><title>Linux におけるファイル I/O の基礎</title><link>https://itkq.jp/blog/2017/05/10/linux-file-and-io/</link><pubDate>Wed, 10 May 2017 16:11:33 +0900</pubDate><guid>https://itkq.jp/blog/2017/05/10/linux-file-and-io/</guid><description>すべてがファイルというモデルの Linux (Unix) において、ファイル I/O (以降単に I/O と書く) を知っておいて損はない。 この記事では、基本的なファイルと関連する I/O について、対応する Linux システムコールも併せて説明する。 次回はこれらを実際に Linux 上で確認する予定。
 ファイル Unix におけるファイルとは、普通「通常ファイル」のことを指し、バイトがリニアに並んだデータ (byte stream) のことである。 ファイル内のバイトは読み書きが可能で、指定されたバイトから開始する。この開始バイトはファイル内の「位置」と考えることができ、ファイルポジションまたはファイルオフセットという。
 通常ファイルとは別に、スペシャルファイルというファイルとして表現されたカーネルオブジェクトがある。Linux では、スペシャルファイルとしてデバイスノード・名前付きパイプ・ソケットに対応している。名前付きパイプは、FIFO とも呼ばれ、プロセス間通信 (IPC) に使われるファイルである。ソケットは歴史的にも特殊なので、またの機会に説明する。
 ディレクトリとリンク Unix におけるディレクトリは、単にファイル名と対応する inode 番号のリストを保持するものである。ディレクトリが保持するファイル名をディレクトリエントリ、またファイル名と inode の対応をリンクと呼ぶ。
 複数のリンクが同じ inode 番号を指すことも可能である。複数リンク間で、どのリンクが「主」や「元」という概念はなく、すべてのリンクは平等に扱われる。このようなリンクをハードリンクという。ファイルは任意の数のリンクを持つことができる。通常ほとんどのファイルのリンクカウントは 1 であり、1つのディレクトリエントリが1つの inode を指す。 ハードリンクの追加は link(2) で行える。
 リンクの種類には、シンボリックリンクもある。シンボリックリンクは、ファイルシステムがマッピングするものではなく、実行時に解釈される、より上位で処理されるポインタである。 実際には、ディレクトリエントリ追加ではなく、特殊な型を持つ専用ファイルである。 この専用ファイルは、他のファイルのパス名を格納するもので、これをシンボリックリンクのターゲットという。シンボリックリンクのパス名は、実行時にカーネルにより参照先へ置換される。 ハードリンクと異なり、シンボリックリンクはファイルシステムに跨って作成することが可能で、また存在しないファイルに対しても作成可能である。対応するシステムコールは symlink(2) である。 リンク作成の反対は、アンリンク、すなわちパス名の削除である。unlink(2) が対応する。 ディレクトリを削除するには rmdir(2) を用いる。
-デバイスノード Unix におけるデバイスへのアクセスはデバイスノードというスペシャルファイルを介して行われる。 アプリケーションから、デバイスドライバへアクセスするためのデバイスノードに対してファイル I/O を行うと、カーネルは通常のファイル I/O として処理せず、要求をデバイスドライバへ渡す。 デバイスノードはデバイスを抽象化したもので、Unix システムでハードウェアにアクセスする際の標準的なインターフェースとなっている。この設計は、マシン上のハードウェアを統一的に操作できるという美しいインターフェースであり、Unix の大きな功績の1つである。ただし、ネットワークデバイスだけは例外である。 カーネルは、メジャー番号とマイナー番号というデバイスドライバに割り当てられた2つの数字を用いて、カーネル内にロードされたデバイスドライバにマッピングすることにより、要求された処理をどのデバイスドライバに渡すかを決定している。</description>
-    </item>
-    
-  </channel>
-</rss>
+デバイスノード Unix におけるデバイスへのアクセスはデバイスノードというスペシャルファイルを介して行われる。 アプリケーションから、デバイスドライバへアクセスするためのデバイスノードに対してファイル I/O を行うと、カーネルは通常のファイル I/O として処理せず、要求をデバイスドライバへ渡す。 デバイスノードはデバイスを抽象化したもので、Unix システムでハードウェアにアクセスする際の標準的なインターフェースとなっている。この設計は、マシン上のハードウェアを統一的に操作できるという美しいインターフェースであり、Unix の大きな功績の1つである。ただし、ネットワークデバイスだけは例外である。 カーネルは、メジャー番号とマイナー番号というデバイスドライバに割り当てられた2つの数字を用いて、カーネル内にロードされたデバイスドライバにマッピングすることにより、要求された処理をどのデバイスドライバに渡すかを決定している。</description></item></channel></rss>

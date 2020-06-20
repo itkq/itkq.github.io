@@ -1,231 +1,29 @@
-<!DOCTYPE html>
-<html lang="ja-JP">
-
-<head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="chrome=1">
-<meta name="HandheldFriendly" content="True">
-<meta name="MobileOptimized" content="320">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="referrer" content="no-referrer">
-<meta name="author" content="itkq">
-<meta name="description" content="元々は NeoVim を導入しようとしていた．その一環で，dotfiles を良い感じにしようとしていて，mitamae によるプロビジョニング設定の k0kubun/dotfiles から fork したものを整理していた．NeoBundle の NeoVim 対応版である dein.vim を導入する際，curl が必要だった．itamae の Resource ドキュメントを読むと，http_request というリソースがあった．これ使えば Docker の ADDコマンド的なことできるのかなと思ったけど詳細が書いてなくて，そういえば itamae 自体どうやって動いてるんだと気になったので読むことにした．
+<!doctype html><html lang=ja-jp><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="chrome=1"><meta name=HandheldFriendly content=True><meta name=MobileOptimized content=320><meta name=viewport content="width=device-width,initial-scale=1"><meta name=referrer content=no-referrer><meta name=author content=itkq><meta name=description content='元々は NeoVim を導入しようとしていた．その一環で，dotfiles を良い感じにしようとしていて，mitamae によるプロビジョニング設定の k0kubun/dotfiles から fork したものを整理していた．NeoBundle の NeoVim 対応版である dein.vim を導入する際，curl が必要だった．itamae の Resource ドキュメントを読むと，http_request というリソースがあった．これ使えば Docker の ADDコマンド的なことできるのかなと思ったけど詳細が書いてなくて，そういえば itamae 自体どうやって動いてるんだと気になったので読むことにした．
 itamae-kitchen/itamae/
 Code reading bin/itamae Itamae::CLI.start を呼ぶ．
 lib/itamae/cli.rb Itamae::CLI は CLI gem Thor を継承している． 実行環境 (backend_type) は3つあり，local, ssh, docker である．必要としていて，かつ他より単純そうな local を続けて読む．
-def local(*recipe_files) if recipe_files.empty? raise &quot;Please specify recipe files.&quot; end run(recipe_files, :local, options) end  def run(recipe_files, backend_type, options) runner = Runner.run(recipe_files, backend_type, options) if options[:detailed_exitcode] &amp;&amp; runner.">
-
-<meta name="google-site-verification" content="AyWEWMfqdOijgoPW5yMy188xoQqY46L6pFXyd3Jizyc">
-
-
-<meta property="og:title" content="itamae コードリーディング" />
-<meta property="og:description" content="元々は NeoVim を導入しようとしていた．その一環で，dotfiles を良い感じにしようとしていて，mitamae によるプロビジョニング設定の k0kubun/dotfiles から fork したものを整理していた．NeoBundle の NeoVim 対応版である dein.vim を導入する際，curl が必要だった．itamae の Resource ドキュメントを読むと，http_request というリソースがあった．これ使えば Docker の ADDコマンド的なことできるのかなと思ったけど詳細が書いてなくて，そういえば itamae 自体どうやって動いてるんだと気になったので読むことにした．
+def local(*recipe_files) if recipe_files.empty? raise "Please specify recipe files." end run(recipe_files, :local, options) end  def run(recipe_files, backend_type, options) runner = Runner.run(recipe_files, backend_type, options) if options[:detailed_exitcode] &amp;&amp; runner.'><meta name=google-site-verification content=AyWEWMfqdOijgoPW5yMy188xoQqY46L6pFXyd3Jizyc><meta property=og:title content="itamae コードリーディング"><meta property=og:description content='元々は NeoVim を導入しようとしていた．その一環で，dotfiles を良い感じにしようとしていて，mitamae によるプロビジョニング設定の k0kubun/dotfiles から fork したものを整理していた．NeoBundle の NeoVim 対応版である dein.vim を導入する際，curl が必要だった．itamae の Resource ドキュメントを読むと，http_request というリソースがあった．これ使えば Docker の ADDコマンド的なことできるのかなと思ったけど詳細が書いてなくて，そういえば itamae 自体どうやって動いてるんだと気になったので読むことにした．
 itamae-kitchen/itamae/
 Code reading bin/itamae Itamae::CLI.start を呼ぶ．
 lib/itamae/cli.rb Itamae::CLI は CLI gem Thor を継承している． 実行環境 (backend_type) は3つあり，local, ssh, docker である．必要としていて，かつ他より単純そうな local を続けて読む．
-def local(*recipe_files) if recipe_files.empty? raise &quot;Please specify recipe files.&quot; end run(recipe_files, :local, options) end  def run(recipe_files, backend_type, options) runner = Runner.run(recipe_files, backend_type, options) if options[:detailed_exitcode] &amp;&amp; runner." />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://itkq.jp/blog/2017/03/19/itamae-reading/" /><meta property="article:published_time" content="2017-03-19T19:25:53&#43;09:00"/>
-<meta property="article:modified_time" content="2017-03-19T19:25:53&#43;09:00"/>
-
-
-<title>
-
-
-     itamae コードリーディング 
-
-</title>
-<link rel="canonical" href="https://itkq.jp/blog/2017/03/19/itamae-reading/">
-
-
-
-
-
-
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/styles/github.min.css">
-
-
-
-
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Ubuntu+Mono:400,400i,700,700i|Raleway:500">
-
-
-
-    
-    <link rel="stylesheet" href="https://itkq.jp/css/reset.css?t=2020-06-20%2004%3a57%3a44.005402692%20%2b0000%20UTC%20m%3d%2b0.074234367">
-    <link rel="stylesheet" href="https://itkq.jp/css/pygments.css?t=2020-06-20%2004%3a57%3a44.005402692%20%2b0000%20UTC%20m%3d%2b0.074234367">
-    <link rel="stylesheet" href="https://itkq.jp/css/main.css?t=2020-06-20%2004%3a57%3a44.005402692%20%2b0000%20UTC%20m%3d%2b0.074234367">
-    
-        <link rel="stylesheet" href="https://itkq.jp/css/override.css?t=2020-06-20%2004%3a57%3a44.005402692%20%2b0000%20UTC%20m%3d%2b0.074234367">
-    
-
-
-
-
-<link rel="shortcut icon"
-
-    href="https://itkq.jp/img/leaf.ico"
-
->
-
-
-
-
-
-
-
-
-</head>
-
-
-<body lang="ja">
-
-<section class="header">
-    <div class="container">
-            
-                
-                
-                
-                
-                
-                    
-                
-                    
-                
-                    
-                
-                    
-                
-                    
-                
-                
-                <a href="https://itkq.jp/"><img class="avatar" src="https://itkq.jp/img/profile.png" srcset="https://itkq.jp/img/profile.png 1x"></a>
-            
-        <div class="content">
-            <a href="https://itkq.jp/"><div class="name">itkq</div></a>
-            
-            <nav>
-                <ul>
-                    
-                        <li class="nav-blog"><a href="https://itkq.jp/blog/"><span>Blog</span></a></li>
-                    
-                        <li class="nav-about"><a href="https://itkq.jp/about/"><span>About</span></a></li>
-                    
-                </ul>
-            </nav>
-        </div>
-    </div>
-</section>
-
-<section class="icons">
-    <div class="container">
-        <div class="content">
-        
-            <a href="https://github.com/itkq" target="_blank" rel="noopener"><img class="icon" src="https://itkq.jp/img/github.svg" alt="github" /></a>
-        
-
-        
-            <a href="https://twitter.com/itkq" target="_blank" rel="noopener"><img class="icon" src="https://itkq.jp/img/twitter.svg" alt="twitter" /></a>
-        
-
-	
-
-        
-
-        
-
-        
-            <a href="//linkedin.com/in/takuya-kosugiyama-107402195/" target="_blank" rel="noopener"><img class="icon" src="https://itkq.jp/img/linkedin.svg" alt="linkedin" /></a>
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-            <a href="mailto:re@itkq.jp"><img class="icon" src="https://itkq.jp/img/email.svg" alt="email" /></a>
-        
-
-        
-
-        
-        </div>
-    </div>
-</section>
-
-
-<section class="main post non-narrow zero-top-spacing">
-    <div class="container">
-        <div class="content">
-            <div class="front-matter">
-                <div class="title-container">
-                    <div class="page-heading">
-
-    itamae コードリーディング
-
-
-
-
-
-
-
-
-</div>
-
-                    <div class="initials"><a href="https://itkq.jp/">ad</a></div>
-                </div>
-                <div class="meta">
-                    
-                    <div class="date" title='Sun Mar 19 2017 19:25:53 &#43;0900'>Mar 19, 2017</div>
-                    
-                    
-                </div>
-            </div>
-            <div class="markdown">
-                
-
-<p>元々は NeoVim を導入しようとしていた．その一環で，dotfiles を良い感じにしようとしていて，mitamae によるプロビジョニング設定の <a href="https://github.com/k0kubun/dotfiles">k0kubun/dotfiles</a> から fork したものを整理していた．NeoBundle の NeoVim 対応版である dein.vim を導入する際，curl が必要だった．itamae の Resource ドキュメントを読むと，<code>http_request</code> というリソースがあった．これ使えば Docker の ADDコマンド的なことできるのかなと思ったけど詳細が書いてなくて，そういえば itamae 自体どうやって動いてるんだと気になったので読むことにした．</p>
-
-<p><a href="https://github.com/itamae-kitchen/itamae/">itamae-kitchen/itamae/</a></p>
-
-<h1 id="code-reading">Code reading</h1>
-
-<h2 id="bin-itamae">bin/itamae</h2>
-
-<p><code>Itamae::CLI.start</code> を呼ぶ．</p>
-
-<h2 id="lib-itamae-cli-rb">lib/itamae/cli.rb</h2>
-
-<p><code>Itamae::CLI</code> は CLI gem <code>Thor</code> を継承している．
-実行環境 (backend_type) は3つあり，local, ssh, docker である．必要としていて，かつ他より単純そうな local を続けて読む．</p>
-
-<pre><code class="language-ruby">  def local(*recipe_files)
+def local(*recipe_files) if recipe_files.empty? raise "Please specify recipe files." end run(recipe_files, :local, options) end  def run(recipe_files, backend_type, options) runner = Runner.run(recipe_files, backend_type, options) if options[:detailed_exitcode] &amp;&amp; runner.'><meta property=og:type content=article><meta property=og:url content=https://itkq.jp/blog/2017/03/19/itamae-reading/><meta property=article:published_time content=2017-03-19T19:25:53&#43;09:00><meta property=article:modified_time content=2017-03-19T19:25:53&#43;09:00><title>itamae コードリーディング</title><link rel=canonical href=https://itkq.jp/blog/2017/03/19/itamae-reading/><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/styles/github.min.css><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Ubuntu+Mono:400,400i,700,700i|Raleway:500"><link rel=stylesheet href="https://itkq.jp/css/reset.css?t=2020-06-20%2014%3a17%3a11.065607358%20%2b0900%20JST%20m%3d%2b0.098961744"><link rel=stylesheet href="https://itkq.jp/css/pygments.css?t=2020-06-20%2014%3a17%3a11.065607358%20%2b0900%20JST%20m%3d%2b0.098961744"><link rel=stylesheet href="https://itkq.jp/css/main.css?t=2020-06-20%2014%3a17%3a11.065607358%20%2b0900%20JST%20m%3d%2b0.098961744"><link rel=stylesheet href="https://itkq.jp/css/override.css?t=2020-06-20%2014%3a17%3a11.065607358%20%2b0900%20JST%20m%3d%2b0.098961744"><link rel="shortcut icon" href=https://itkq.jp/img/leaf.ico></head><body lang=ja><section class=header><div class=container><a href=https://itkq.jp/><img class=avatar src=https://itkq.jp/img/profile.png srcset="https://itkq.jp/img/profile.png 1x"></a><div class=content><a href=https://itkq.jp/><div class=name>itkq</div></a><nav><ul><li class=nav-blog><a href=https://itkq.jp/blog/><span>Blog</span></a></li><li class=nav-about><a href=https://itkq.jp/about/><span>About</span></a></li></ul></nav></div></div></section><section class=icons><div class=container><div class=content><a href=https://github.com/itkq target=_blank rel=noopener><img class=icon src=https://itkq.jp/img/github.svg alt=github></a>
+<a href=https://twitter.com/itkq target=_blank rel=noopener><img class=icon src=https://itkq.jp/img/twitter.svg alt=twitter></a>
+<a href=//linkedin.com/in/takuya-kosugiyama-107402195/ target=_blank rel=noopener><img class=icon src=https://itkq.jp/img/linkedin.svg alt=linkedin></a>
+<a href=mailto:re@itkq.jp><img class=icon src=https://itkq.jp/img/email.svg alt=email></a></div></div></section><section class="main post non-narrow zero-top-spacing"><div class=container><div class=content><div class=front-matter><div class=title-container><div class=page-heading>itamae コードリーディング</div><div class=initials><a href=https://itkq.jp/>ad</a></div></div><div class=meta><div class=date title="Sun Mar 19 2017 19:25:53 JST">Mar 19, 2017</div></div></div><div class=markdown><p>元々は NeoVim を導入しようとしていた．その一環で，dotfiles を良い感じにしようとしていて，mitamae によるプロビジョニング設定の <a href=https://github.com/k0kubun/dotfiles>k0kubun/dotfiles</a> から fork したものを整理していた．NeoBundle の NeoVim 対応版である dein.vim を導入する際，curl が必要だった．itamae の Resource ドキュメントを読むと，<code>http_request</code> というリソースがあった．これ使えば Docker の ADDコマンド的なことできるのかなと思ったけど詳細が書いてなくて，そういえば itamae 自体どうやって動いてるんだと気になったので読むことにした．</p><p><a href=https://github.com/itamae-kitchen/itamae/>itamae-kitchen/itamae/</a></p><h1 id=code-reading>Code reading</h1><h2 id=bin-itamae>bin/itamae</h2><p><code>Itamae::CLI.start</code> を呼ぶ．</p><h2 id=lib-itamae-cli-rb>lib/itamae/cli.rb</h2><p><code>Itamae::CLI</code> は CLI gem <code>Thor</code> を継承している．
+実行環境 (backend_type) は3つあり，local, ssh, docker である．必要としていて，かつ他より単純そうな local を続けて読む．</p><pre><code class=language-ruby>  def local(*recipe_files)
     if recipe_files.empty?
       raise &quot;Please specify recipe files.&quot;
     end
 
     run(recipe_files, :local, options)
   end
-</code></pre>
-
-<pre><code class="language-ruby">  def run(recipe_files, backend_type, options)
+</code></pre><pre><code class=language-ruby>  def run(recipe_files, backend_type, options)
     runner = Runner.run(recipe_files, backend_type, options)
     if options[:detailed_exitcode] &amp;&amp; runner.diff?
       exit 2
     end
   end
-</code></pre>
-
-<h2 id="lib-itamae-runner-rb-1">lib/itamae/runner.rb (1)</h2>
-
-<p>抽象実行環境のクラス <code>Itamae::Backend</code> を new している．</p>
-
-<pre><code class="language-ruby">class Runner
+</code></pre><h2 id=lib-itamae-runner-rb-1>lib/itamae/runner.rb (1)</h2><p>抽象実行環境のクラス <code>Itamae::Backend</code> を new している．</p><pre><code class=language-ruby>class Runner
   class &lt;&lt; self
     def run(recipe_files, backend_type, options)
       Itamae.logger.info &quot;Starting Itamae...&quot;
@@ -238,23 +36,13 @@ def local(*recipe_files) if recipe_files.empty? raise &quot;Please specify recip
       runner
     end
   end
-</code></pre>
-
-<h2 id="lib-itamae-backend-rb">lib/itamae/backend.rb</h2>
-
-<p>itamae は serverspec のための抽象フレームワークである <a href="https://github.com/mizzy/specinfra">mizzy/specinfra</a> に依存している．local の場合，基本的には <code>/bin/sh</code> を起動して良い感じにコマンド実行して出力を
-得る動作だと思う．</p>
-
-<pre><code class="language-ruby">  def create_specinfra_backend
+</code></pre><h2 id=lib-itamae-backend-rb>lib/itamae/backend.rb</h2><p>itamae は serverspec のための抽象フレームワークである <a href=https://github.com/mizzy/specinfra>mizzy/specinfra</a> に依存している．local の場合，基本的には <code>/bin/sh</code> を起動して良い感じにコマンド実行して出力を
+得る動作だと思う．</p><pre><code class=language-ruby>  def create_specinfra_backend
     Specinfra::Backend::Exec.new(
       shell: @options[:shell],
     )
   end
-</code></pre>
-
-<h2 id="lib-itamae-runner-rb-2">lib/itamae/runner.rb (2)</h2>
-
-<pre><code class="language-ruby">  def initialize(backend, options)
+</code></pre><h2 id=lib-itamae-runner-rb-2>lib/itamae/runner.rb (2)</h2><pre><code class=language-ruby>  def initialize(backend, options)
     @backend = backend
     @options = options
 
@@ -268,12 +56,8 @@ def local(*recipe_files) if recipe_files.empty? raise &quot;Please specify recip
     @backend.run_command([&quot;mkdir&quot;, &quot;-p&quot;, @tmpdir])
     @backend.run_command([&quot;chmod&quot;, &quot;777&quot;, @tmpdir])
   end
-</code></pre>
-
-<p><code>/tmp/itamae_tmp</code> を <code>777</code> で作成する．その後レシピのロード．
-<code>path</code> が名前空間なら gem, そうでなければ ファイルパスを <code>Itamae::Recipe.new</code> に渡す．</p>
-
-<pre><code class="language-ruby">  def load_recipes(paths)
+</code></pre><p><code>/tmp/itamae_tmp</code> を <code>777</code> で作成する．その後レシピのロード．
+<code>path</code> が名前空間なら gem, そうでなければ ファイルパスを <code>Itamae::Recipe.new</code> に渡す．</p><pre><code class=language-ruby>  def load_recipes(paths)
     paths.each do |path|
       expanded_path = File.expand_path(path)
       if path.include?('::')
@@ -286,31 +70,17 @@ def local(*recipe_files) if recipe_files.empty? raise &quot;Please specify recip
       recipe.load
     end
   end
-</code></pre>
-
-<h2 id="lib-itamae-recipe-rb-1">lib/itamae/recipe.rb (1)</h2>
-
-<pre><code class="language-ruby"> def initialize(runner, path)
+</code></pre><h2 id=lib-itamae-recipe-rb-1>lib/itamae/recipe.rb (1)</h2><pre><code class=language-ruby> def initialize(runner, path)
     @runner = runner
     @path = path
     @delayed_notifications = []
     @children = RecipeChildren.new
   end
-</code></pre>
-
-<pre><code class="language-ruby">  def load(vars = {})
+</code></pre><pre><code class=language-ruby>  def load(vars = {})
     context = EvalContext.new(self, vars)
     context.instance_eval(File.read(path), path, 1)
   end
-</code></pre>
-
-<p><code>EvalContext</code> が登場する．<code>BasicObject#instance_eval</code> は，Rubyコードの文字列と，レシーバのコンテキストを含むブロックを評価する．このメソッドにより，レシピファイルの内容を1行目から評価していく．</p>
-
-<h3 id="evalcontext">EvalContext</h3>
-
-<p><code>Basic#respond_to_missing?</code> は <code>BasicObject#method_missing</code> で反応するメソッドを定義．</p>
-
-<pre><code class="language-ruby">    class EvalContext
+</code></pre><p><code>EvalContext</code> が登場する．<code>BasicObject#instance_eval</code> は，Rubyコードの文字列と，レシーバのコンテキストを含むブロックを評価する．このメソッドにより，レシピファイルの内容を1行目から評価していく．</p><h3 id=evalcontext>EvalContext</h3><p><code>Basic#respond_to_missing?</code> は <code>BasicObject#method_missing</code> で反応するメソッドを定義．</p><pre><code class=language-ruby>    class EvalContext
       def initialize(recipe, vars)
         @recipe = recipe
 
@@ -325,11 +95,7 @@ def local(*recipe_files) if recipe_files.empty? raise &quot;Please specify recip
       rescue NameError
         false
       end
-</code></pre>
-
-<p><code>[resource] do ... end</code> のための <code>BasicObject#method_missing</code>．</p>
-
-<pre><code class="language-ruby">      def method_missing(*args, &amp;block)
+</code></pre><p><code>[resource] do ... end</code> のための <code>BasicObject#method_missing</code>．</p><pre><code class=language-ruby>      def method_missing(*args, &amp;block)
         super unless args.size == 2
 
         method, name = args
@@ -342,19 +108,9 @@ def local(*recipe_files) if recipe_files.empty? raise &quot;Please specify recip
         resource = klass.new(@recipe, name, &amp;block)
         @recipe.children &lt;&lt; resource
       end
-</code></pre>
-
-<p>なんで <code>args.size == 2</code> なのかと思ったけどリファレンスによると</p>
-
-<pre><code class="language-ruby">  def method_missing(method_name [, *args [, &amp;block]])
-</code></pre>
-
-<p>で method_name も含まれていたからだった．ちょっとわかりづらかった．
-続いて <code>Itamae::Resource#get_resource_class</code> が呼ばれる．</p>
-
-<h2 id="lib-itamae-resource-rb">lib/itamae/resource.rb</h2>
-
-<pre><code class="language-ruby">  module Resource
+</code></pre><p>なんで <code>args.size == 2</code> なのかと思ったけどリファレンスによると</p><pre><code class=language-ruby>  def method_missing(method_name [, *args [, &amp;block]])
+</code></pre><p>で method_name も含まれていたからだった．ちょっとわかりづらかった．
+続いて <code>Itamae::Resource#get_resource_class</code> が呼ばれる．</p><h2 id=lib-itamae-resource-rb>lib/itamae/resource.rb</h2><pre><code class=language-ruby>  module Resource
     class &lt;&lt; self
       def to_camel_case(str)
         str.split('_').map {|part| part.capitalize}.join
@@ -371,32 +127,12 @@ def local(*recipe_files) if recipe_files.empty? raise &quot;Please specify recip
           end
         end
       end
-</code></pre>
-
-<p><code>Module#const_get</code> は定数の値を取り出す．メソッドを文字列化してCamelケースに変換してアクセスする．</p>
-
-<h2 id="lib-itamae-recipe-rb-2">lib/itamae/recipe.rb (2)</h2>
-
-<p>取得した <code>Itamae::Resource::</code> 以下のクラスに，ブロックを渡して new する．
-インスタンス変数 <code>@children</code> (<code>RecipeChildren</code>) に突っ込んでいく．</p>
-
-<pre><code class="language-ruby">        resource = klass.new(@recipe, name, &amp;block)
+</code></pre><p><code>Module#const_get</code> は定数の値を取り出す．メソッドを文字列化してCamelケースに変換してアクセスする．</p><h2 id=lib-itamae-recipe-rb-2>lib/itamae/recipe.rb (2)</h2><p>取得した <code>Itamae::Resource::</code> 以下のクラスに，ブロックを渡して new する．
+インスタンス変数 <code>@children</code> (<code>RecipeChildren</code>) に突っ込んでいく．</p><pre><code class=language-ruby>        resource = klass.new(@recipe, name, &amp;block)
         @recipe.children &lt;&lt; resource
-</code></pre>
-
-<h2 id="lib-itamae-recipe-chilren-rb-1">lib/itamae/recipe_chilren.rb (1)</h2>
-
-<p>当然ながら <code>Array</code> を継承している．</p>
-
-<pre><code class="language-ruby">module Itamae
+</code></pre><h2 id=lib-itamae-recipe-chilren-rb-1>lib/itamae/recipe_chilren.rb (1)</h2><p>当然ながら <code>Array</code> を継承している．</p><pre><code class=language-ruby>module Itamae
   class RecipeChildren &lt; Array
-</code></pre>
-
-<h2 id="lib-itamae-runner-rb-3">lib/itamae/runner.rb (3)</h2>
-
-<p>レシピをロードした．続いて実行．</p>
-
-<pre><code class="language-ruby">class Runner
+</code></pre><h2 id=lib-itamae-runner-rb-3>lib/itamae/runner.rb (3)</h2><p>レシピをロードした．続いて実行．</p><pre><code class=language-ruby>class Runner
   class &lt;&lt; self
     def run(recipe_files, backend_type, options)
       ...
@@ -418,25 +154,13 @@ def local(*recipe_files) if recipe_files.empty? raise &quot;Please specify recip
       save_profile(profile)
     end
   end
-</code></pre>
-
-<h2 id="lib-itamae-recipe-chilren-rb-2">lib/itamae/recipe_chilren.rb (2)</h2>
-
-<p>各リソースについて実行．</p>
-
-<pre><code class="language-ruby">  class RecipeChildren
+</code></pre><h2 id=lib-itamae-recipe-chilren-rb-2>lib/itamae/recipe_chilren.rb (2)</h2><p>各リソースについて実行．</p><pre><code class=language-ruby>  class RecipeChildren
     def run
       self.each do |resource|
         resource.run
       end
     end
-</code></pre>
-
-<h2 id="lib-itamae-resource-base-rb">lib/itamae/resource/base.rb</h2>
-
-<p>リソースは <code>Itamae::Resource::Base</code> を継承して実装されている．</p>
-
-<pre><code class="language-ruby">module Itamae
+</code></pre><h2 id=lib-itamae-resource-base-rb>lib/itamae/resource/base.rb</h2><p>リソースは <code>Itamae::Resource::Base</code> を継承して実装されている．</p><pre><code class=language-ruby>module Itamae
   module Resource
     class Base
       def initialize(recipe, resource_name, &amp;block)
@@ -457,11 +181,7 @@ def local(*recipe_files) if recipe_files.empty? raise &quot;Please specify recip
 
         process_attributes
       end
-</code></pre>
-
-<p>ここでも <code>EvalContext</code> が登場する．<code>Object#tap</code> は，レシーバ自身を返すメソッド．良い感じに簡潔に書きたい場合に使うっぽい．</p>
-
-<pre><code class="language-ruby">      class EvalContext
+</code></pre><p>ここでも <code>EvalContext</code> が登場する．<code>Object#tap</code> は，レシーバ自身を返すメソッド．良い感じに簡潔に書きたい場合に使うっぽい．</p><pre><code class=language-ruby>      class EvalContext
         ...
         
         def initialize(resource)
@@ -490,11 +210,7 @@ def local(*recipe_files) if recipe_files.empty? raise &quot;Please specify recip
 
           super
         end
-</code></pre>
-
-<p><code>Itamae::Resource::Base#defined_attributes</code> によって，attribute を定義できる．サブクラスからは呼ぶと上書きではなく追加で定義される．</p>
-
-<pre><code class="language-ruby">      class &lt;&lt; self
+</code></pre><p><code>Itamae::Resource::Base#defined_attributes</code> によって，attribute を定義できる．サブクラスからは呼ぶと上書きではなく追加で定義される．</p><pre><code class=language-ruby>      class &lt;&lt; self
         attr_reader :defined_attributes
 
         def define_attribute(name, options)
@@ -502,9 +218,7 @@ def local(*recipe_files) if recipe_files.empty? raise &quot;Please specify recip
           @defined_attributes[name.to_sym] = current.merge(options)
         end
       end
-</code></pre>
-
-<pre><code class="language-ruby">      def run(specific_action = nil)
+</code></pre><pre><code class=language-ruby>      def run(specific_action = nil)
         runner.handler.event(:resource, resource_type: resource_type, resource_name: resource_name) do
           Itamae.logger.debug &quot;#{resource_type}[#{resource_name}]&quot;
 
@@ -535,13 +249,9 @@ def local(*recipe_files) if recipe_files.empty? raise &quot;Please specify recip
         Itamae.logger.error &quot;#{resource_type}[#{resource_name}] Failed.&quot;
         exit 2
       end
-</code></pre>
-
-<p><code>Itamae::Runner#handler</code> は <code>Itamae::HandlerProxy</code> のインスタンスである．
+</code></pre><p><code>Itamae::Runner#handler</code> は <code>Itamae::HandlerProxy</code> のインスタンスである．
 Proxy パターンであり，ロギングしているだけ．
-実際の処理は <code>Itamae::Resource::Base#run_action</code> が行う．</p>
-
-<pre><code class="language-ruby">      def run_action(action)
+実際の処理は <code>Itamae::Resource::Base#run_action</code> が行う．</p><pre><code class=language-ruby>      def run_action(action)
         runner.handler.event(:action, action: action) do
           original_attributes = @attributes # preserve and restore later
           @current_action = action
@@ -587,72 +297,6 @@ Proxy パターンであり，ロギングしているだけ．
           @attributes = original_attributes
         end
       end
-</code></pre>
-
-<p><code>method_name = &quot;action_#{action}&quot;</code> というメソッドを実装してアクションを追加できる．<code>#pre_action</code>, <code>#set_current_attributes</code> などサブクラスで使えるフックが用意されている．
-コマンドの発行は，サブクラスにて <code>#run_command</code> を使う．</p>
-
-<h1 id="http-request-リソース">http_request リソース</h1>
-
-<p>上記を踏まえて，lib/resources/http_request.rb を読んだら，単純に HTTP request を送るもので，HTTP でファイルを取ってくる感じではなかった．<code>file</code> リソースにもそんな感じの機能はなかったので，<code>execute</code> リソースでやってくださいということだと理解した．</p>
-
-                <br>
-		<p class="back-to-posts"><a href="https://itkq.jp/blog/">Back to posts</a></p>
-            </div>
-            <br>
-            <div class="disqus">
-                <div id="disqus_thread"></div>
-<script type="application/javascript">
-    var disqus_config = function () {
-    
-    
-    
-    };
-    (function() {
-        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
-            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
-            return;
-        }
-        var d = document, s = d.createElement('script'); s.async = true;
-        s.src = '//' + "itkq-jp" + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-            </div>
-            
-        </div>
-    </div>
-</section>
-
-
-
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-71205730-2', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-
-
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js"></script>
-  
-
-  <script type="text/javascript">
-    hljs.initHighlightingOnLoad();
-  </script>
-
-
-
-
-
-</body>
-</html>
-
+</code></pre><p><code>method_name = &quot;action_#{action}&quot;</code> というメソッドを実装してアクションを追加できる．<code>#pre_action</code>, <code>#set_current_attributes</code> などサブクラスで使えるフックが用意されている．
+コマンドの発行は，サブクラスにて <code>#run_command</code> を使う．</p><h1 id=http-request-リソース>http_request リソース</h1><p>上記を踏まえて，lib/resources/http_request.rb を読んだら，単純に HTTP request を送るもので，HTTP でファイルを取ってくる感じではなかった．<code>file</code> リソースにもそんな感じの機能はなかったので，<code>execute</code> リソースでやってくださいということだと理解した．</p><br><p class=back-to-posts><a href=https://itkq.jp/blog/>Back to posts</a></p></div><br><div class=disqus><div id=disqus_thread></div><script type=application/javascript>var disqus_config=function(){};(function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById('disqus_thread').innerHTML='Disqus comments not available by default when the website is previewed locally.';return;}
+var d=document,s=d.createElement('script');s.async=true;s.src='//'+"itkq-jp"+'.disqus.com/embed.js';s.setAttribute('data-timestamp',+new Date());(d.head||d.body).appendChild(s);})();</script><noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></div></div></div></section><script type=application/javascript>var doNotTrack=false;if(!doNotTrack){window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;ga('create','UA-71205730-2','auto');ga('send','pageview');}</script><script async src=https://www.google-analytics.com/analytics.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js></script><script type=text/javascript>hljs.initHighlightingOnLoad();</script></body></html>

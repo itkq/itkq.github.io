@@ -1,57 +1,25 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Sql on itkq.jp</title>
-    <link>https://itkq.jp/tags/sql/</link>
-    <description>Recent content in Sql on itkq.jp</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>ja-JP</language>
-    <lastBuildDate>Wed, 15 Mar 2017 19:19:27 +0900</lastBuildDate>
-    
-	<atom:link href="https://itkq.jp/tags/sql/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-    <item>
-      <title>SQL実践入門 読んだ</title>
-      <link>https://itkq.jp/blog/2017/03/15/sql-practice/</link>
-      <pubDate>Wed, 15 Mar 2017 19:19:27 +0900</pubDate>
-      
-      <guid>https://itkq.jp/blog/2017/03/15/sql-practice/</guid>
-      <description>メモです．
-3章 式の条件分岐  SQLのパフォーマンスは，テーブルスキャンによる I/O を減らすことが重要． 手続き的な WHERE, UNION による条件分岐，テーブルフルスキャンが複数回行われる．同テーブル内では，SELECT 句で CASE WHEN で条件分岐させるとクエリの可読性，実行計画共に良くなることあるので，考えなしに UNION を使うのは危険． ただし，インデックスが使える場合は，「UNION による複数回のインデックススキャン」と「OR または IN による1回のフルスキャン」の勝負になり，UNION の方が速い場合もある．  4章 集約とカット GROUP BY には「集約」と「カット」の機能がある．「カット」とはパーティションをつくること．ウィンドウ関数の PARTITION BY はカットのための機能．
- 最近のオプティマイザは，GROUP BY による集約は，指定された列のハッシュ値によってグループ化している．古典的なソートより高速である． GROUP BY では，ハッシュかソートいずれの場合でも，メモリを多く使用するため，ワーキングメモリを使い切ってしまうこと（TEMP落ち）に注意． SELECT 句で指定するキーと，GROUP BY 句で指定するキーを同じくすることでカットできる．  5章 手続きSQL SQL実行のオーバーヘッド：
- SQL文のネットワーク伝送
- データベースへの接続
- SQL文のパース
- SQL文の実行計画生成および評価
- 結果セットのネットワーク伝送
-  1と5は，同一ネットワーク上であればほぼ無視できる．2はコネクションプールで対応できる．このうち，3と4が支配的である． ある処理を達成するために，逐次的な「軽いSQL」によるロジックと，一度の「重いSQL」によるロジックがある．
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Sql on itkq.jp</title><link>https://itkq.jp/tags/sql/</link><description>Recent content in Sql on itkq.jp</description><generator>Hugo -- gohugo.io</generator><language>ja-JP</language><lastBuildDate>Wed, 15 Mar 2017 19:19:27 +0900</lastBuildDate><atom:link href="https://itkq.jp/tags/sql/index.xml" rel="self" type="application/rss+xml"/><item><title>SQL実践入門 読んだ</title><link>https://itkq.jp/blog/2017/03/15/sql-practice/</link><pubDate>Wed, 15 Mar 2017 19:19:27 +0900</pubDate><guid>https://itkq.jp/blog/2017/03/15/sql-practice/</guid><description>メモです．
+3章 式の条件分岐 SQLのパフォーマンスは，テーブルスキャンによる I/O を減らすことが重要． 手続き的な WHERE, UNION による条件分岐，テーブルフルスキャンが複数回行われる．同テーブル内では，SELECT 句で CASE WHEN で条件分岐させるとクエリの可読性，実行計画共に良くなることあるので，考えなしに UNION を使うのは危険． ただし，インデックスが使える場合は，「UNION による複数回のインデックススキャン」と「OR または IN による1回のフルスキャン」の勝負になり，UNION の方が速い場合もある． 4章 集約とカット GROUP BY には「集約」と「カット」の機能がある．「カット」とはパーティションをつくること．ウィンドウ関数の PARTITION BY はカットのための機能．
+最近のオプティマイザは，GROUP BY による集約は，指定された列のハッシュ値によってグループ化している．古典的なソートより高速である． GROUP BY では，ハッシュかソートいずれの場合でも，メモリを多く使用するため，ワーキングメモリを使い切ってしまうこと（TEMP落ち）に注意． SELECT 句で指定するキーと，GROUP BY 句で指定するキーを同じくすることでカットできる． 5章 手続きSQL SQL実行のオーバーヘッド：
+SQL文のネットワーク伝送
+データベースへの接続
+SQL文のパース
+SQL文の実行計画生成および評価
+結果セットのネットワーク伝送
+1と5は，同一ネットワーク上であればほぼ無視できる．2はコネクションプールで対応できる．このうち，3と4が支配的である． ある処理を達成するために，逐次的な「軽いSQL」によるロジックと，一度の「重いSQL」によるロジックがある．
 軽いSQLによる問題：
- DBのストレージは普通RAIDで構成され，I/O負荷を分散できるが，軽いSQLは，並列分散による恩恵が受けづらい
- DBは，重いSQLを高速化するように進化する．軽いSQLはそもそもチューニングポテンシャルがない
-  一方で軽いSQLの利点：</description>
-    </item>
-    
-    <item>
-      <title>SQLアンチパターン 読んだ</title>
-      <link>https://itkq.jp/blog/2017/01/01/sql-antipattern/</link>
-      <pubDate>Sun, 01 Jan 2017 12:38:21 +0900</pubDate>
-      
-      <guid>https://itkq.jp/blog/2017/01/01/sql-antipattern/</guid>
-      <description>インターネットに読めと言われている気がしたので読んだ。
+DBのストレージは普通RAIDで構成され，I/O負荷を分散できるが，軽いSQLは，並列分散による恩恵が受けづらい
+DBは，重いSQLを高速化するように進化する．軽いSQLはそもそもチューニングポテンシャルがない
+一方で軽いSQLの利点：</description></item><item><title>SQLアンチパターン 読んだ</title><link>https://itkq.jp/blog/2017/01/01/sql-antipattern/</link><pubDate>Sun, 01 Jan 2017 12:38:21 +0900</pubDate><guid>https://itkq.jp/blog/2017/01/01/sql-antipattern/</guid><description>インターネットに読めと言われている気がしたので読んだ。
 論理設計 一意性と参照整合性に留意する。交差テーブルや従属テーブルを導入する。これは理解できた。
 個人的には、ORMはクエリを意識しづらいし使いたくない。
 リレーショナルモデルでは、正規化により重複を完全に除去して、結合して頑張ることが正しいとされている。
 しかし、実際にはRDBMSは完全なリレーショナルモデルではなく、 結合操作によってパフォーマンスが出ないことがある。
 そのために、あえて正規化をしない「非正規化」の存在を知った。 が、具体的にどの状況で使うのか良くわかっていない。
-物理設計  FLOAT型は丸め誤差を避けられないので、科学演算でない限りはNUMERIC型を使う
- マスタテーブルは参照テーブルにして、参照元から外部キー指定する トランザクション処理を考慮して、画像はBLOBとしてデータベース内部で管理する インデックスを貼る場合、闇雲に貼るのではなく、スロークエリログとクエリ実行計画をよく見てから考える  画像の扱い方に関して、最近はS3などのストレージに委譲することが多いため 一概には言えないと思った。
+物理設計 FLOAT型は丸め誤差を避けられないので、科学演算でない限りはNUMERIC型を使う
+マスタテーブルは参照テーブルにして、参照元から外部キー指定する トランザクション処理を考慮して、画像はBLOBとしてデータベース内部で管理する インデックスを貼る場合、闇雲に貼るのではなく、スロークエリログとクエリ実行計画をよく見てから考える 画像の扱い方に関して、最近はS3などのストレージに委譲することが多いため 一概には言えないと思った。
 正直、アンビギュアスグループはよくわからなかった…。また読みます
-クエリ  NULLはUnknownであり、値ではない。NULLの代替を使うのはダメ パフォーマンスのために、全文検索はサードパーティのエンジンを使う DBへのアクセスは減らすべきだが、可読性・複雑性の緩和のために分割クエリを使う 列名は明示する  なんでそもそもNULLが出てきたんだっけ？という問いに自身で明確に答えられなかったので、『理論から学ぶデータベース実践入門』を再読する必要がありそう。
-アプリケーション  セキュリティのためにパスワードはソルト足してハッシュ化、パスワードリセットはトークンで SQLインジェクションを防ぐためにプリペアドステートメントを使う データベースAPIの戻り値を確認 SQLも文章化・バージョン管理・テストをやる データベース処理をカプセル化するドメインモデルを用意する  まとめ 冗長性を排除し、整合性を確保するのが正規化であるが、パフォーマンスは考慮していない。
+クエリ NULLはUnknownであり、値ではない。NULLの代替を使うのはダメ パフォーマンスのために、全文検索はサードパーティのエンジンを使う DBへのアクセスは減らすべきだが、可読性・複雑性の緩和のために分割クエリを使う 列名は明示する なんでそもそもNULLが出てきたんだっけ？という問いに自身で明確に答えられなかったので、『理論から学ぶデータベース実践入門』を再読する必要がありそう。
+アプリケーション セキュリティのためにパスワードはソルト足してハッシュ化、パスワードリセットはトークンで SQLインジェクションを防ぐためにプリペアドステートメントを使う データベースAPIの戻り値を確認 SQLも文章化・バージョン管理・テストをやる データベース処理をカプセル化するドメインモデルを用意する まとめ 冗長性を排除し、整合性を確保するのが正規化であるが、パフォーマンスは考慮していない。
 基本的には整合性を考慮したテーブル設計・クエリ設計をすべきだが、規模感やパフォーマンスのため非正規化することもあり得る。
-正規化段階はちゃんと覚える。</description>
-    </item>
-    
-  </channel>
-</rss>
+正規化段階はちゃんと覚える。</description></item></channel></rss>
