@@ -1,115 +1,110 @@
-<!doctype html><html lang=ja-jp><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="chrome=1"><meta name=HandheldFriendly content=True><meta name=MobileOptimized content=320><meta name=viewport content="width=device-width,initial-scale=1"><meta name=referrer content=no-referrer><meta name=author content=itkq><meta name=description content="経緯 複数アカウントを使う僕にとって重宝している Twitter クライアント「Tweetbot for Mac」だが、1つだけ弱点がある。 それは、ツイート投稿画面 (⌘&#43;N) でアカウントの切り替え方法がマウスによる操作しかないことだ。 
-アイコンをクリック、screen_name を選択クリックの2ステップ必要になる。 折角 Global New Tweet Key を備えていても、マウス操作が必要になってしまう。
+<!doctype html><html lang=ja-jp><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="chrome=1"><meta name=HandheldFriendly content="True"><meta name=MobileOptimized content="320"><meta name=viewport content="width=device-width,initial-scale=1"><meta name=referrer content="no-referrer"><meta name=author content="itkq"><meta name=description content="経緯 複数アカウントを使う僕にとって重宝している Twitter クライアント「Tweetbot for Mac」だが、1つだけ弱点がある。 それは、ツイート投稿画面 (⌘+N) でアカウントの切り替え方法がマウスによる操作しかないことだ。 アイコンをクリック、screen_name を選択クリックの2ステップ必要になる。 折角 Global New Tweet Key を備えていても、マウス操作が必要になってしまう。
 ということをぼやいていたら次のような意見を頂いた。
-
 なるほどやってみることにした。
- Twitter アイコンクリック
- screen_name を選択して Enter
+  Twitter アイコンクリック
+  screen_name を選択して Enter
   をショートカット1つで行う。
 JavaScript for Automation (JXA) Apple Script という OS X 独自の自動化スクリプトがあるが、Yosemite (OS X 10.10) から JavaScript でも書けるようになったらしい。
-Macのキーボード入力、マウスクリックをJavaScriptで (JXA) - Qiita を参考に、Tweetbot のツイート投稿画面の Twitter アイコンの UIElement をクリックしようとしたが、できなかった。 単純なボタンでの実装ではないからだろうか&hellip;
+Macのキーボード入力、マウスクリックをJavaScriptで (JXA) - Qiita を参考に、Tweetbot のツイート投稿画面の Twitter アイコンの UIElement をクリックしようとしたが、できなかった。 単純なボタンでの実装ではないからだろうか&mldr;
 cliclick マウス操作のエミュレータである cliclick を使うことにした。Homebrew でインストール。
-$ brew install cliclick  コマンドラインから、座標を与えることでマウス操作が行える。UIElement は position() で座標が取れるため、JXA と cliclick を組み合わせて自動化の見通しが立った。"><meta name=google-site-verification content=AyWEWMfqdOijgoPW5yMy188xoQqY46L6pFXyd3Jizyc><meta property=og:title content="Tweetbot for Mac のツイート投稿画面でアカウントを切り替えるショートカット"><meta property=og:description content="経緯 複数アカウントを使う僕にとって重宝している Twitter クライアント「Tweetbot for Mac」だが、1つだけ弱点がある。 それは、ツイート投稿画面 (⌘&#43;N) でアカウントの切り替え方法がマウスによる操作しかないことだ。 
-アイコンをクリック、screen_name を選択クリックの2ステップ必要になる。 折角 Global New Tweet Key を備えていても、マウス操作が必要になってしまう。
+$ brew install cliclick コマンドラインから、座標を与えることでマウス操作が行える。UIElement は position() で座標が取れるため、JXA と cliclick を組み合わせて自動化の見通しが立った。"><meta name=google-site-verification content="AyWEWMfqdOijgoPW5yMy188xoQqY46L6pFXyd3Jizyc"><meta property="og:title" content="Tweetbot for Mac のツイート投稿画面でアカウントを切り替えるショートカット"><meta property="og:description" content="経緯 複数アカウントを使う僕にとって重宝している Twitter クライアント「Tweetbot for Mac」だが、1つだけ弱点がある。 それは、ツイート投稿画面 (⌘+N) でアカウントの切り替え方法がマウスによる操作しかないことだ。 アイコンをクリック、screen_name を選択クリックの2ステップ必要になる。 折角 Global New Tweet Key を備えていても、マウス操作が必要になってしまう。
 ということをぼやいていたら次のような意見を頂いた。
-
 なるほどやってみることにした。
- Twitter アイコンクリック
- screen_name を選択して Enter
+  Twitter アイコンクリック
+  screen_name を選択して Enter
   をショートカット1つで行う。
 JavaScript for Automation (JXA) Apple Script という OS X 独自の自動化スクリプトがあるが、Yosemite (OS X 10.10) から JavaScript でも書けるようになったらしい。
-Macのキーボード入力、マウスクリックをJavaScriptで (JXA) - Qiita を参考に、Tweetbot のツイート投稿画面の Twitter アイコンの UIElement をクリックしようとしたが、できなかった。 単純なボタンでの実装ではないからだろうか&hellip;
+Macのキーボード入力、マウスクリックをJavaScriptで (JXA) - Qiita を参考に、Tweetbot のツイート投稿画面の Twitter アイコンの UIElement をクリックしようとしたが、できなかった。 単純なボタンでの実装ではないからだろうか&mldr;
 cliclick マウス操作のエミュレータである cliclick を使うことにした。Homebrew でインストール。
-$ brew install cliclick  コマンドラインから、座標を与えることでマウス操作が行える。UIElement は position() で座標が取れるため、JXA と cliclick を組み合わせて自動化の見通しが立った。"><meta property=og:type content=article><meta property=og:url content=https://itkq.jp/blog/2015/12/09/tweetbot-shortcut/><meta property=article:published_time content=2015-12-09T04:08:58&#43;09:00><meta property=article:modified_time content=2015-12-09T04:08:58&#43;09:00><title>Tweetbot for Mac のツイート投稿画面でアカウントを切り替えるショートカット</title><link rel=canonical href=https://itkq.jp/blog/2015/12/09/tweetbot-shortcut/><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/styles/github.min.css><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Ubuntu+Mono:400,400i,700,700i|Raleway:500"><link rel=stylesheet href="https://itkq.jp/css/reset.css?t=2020-06-20%2014%3a17%3a11.080222863%20%2b0900%20JST%20m%3d%2b0.113577249"><link rel=stylesheet href="https://itkq.jp/css/pygments.css?t=2020-06-20%2014%3a17%3a11.080222863%20%2b0900%20JST%20m%3d%2b0.113577249"><link rel=stylesheet href="https://itkq.jp/css/main.css?t=2020-06-20%2014%3a17%3a11.080222863%20%2b0900%20JST%20m%3d%2b0.113577249"><link rel=stylesheet href="https://itkq.jp/css/override.css?t=2020-06-20%2014%3a17%3a11.080222863%20%2b0900%20JST%20m%3d%2b0.113577249"><link rel="shortcut icon" href=https://itkq.jp/img/leaf.ico></head><body lang=ja><section class=header><div class=container><a href=https://itkq.jp/><img class=avatar src=https://itkq.jp/img/profile.png srcset="https://itkq.jp/img/profile.png 1x"></a><div class=content><a href=https://itkq.jp/><div class=name>itkq</div></a><nav><ul><li class=nav-blog><a href=https://itkq.jp/blog/><span>Blog</span></a></li><li class=nav-about><a href=https://itkq.jp/about/><span>About</span></a></li></ul></nav></div></div></section><section class=icons><div class=container><div class=content><a href=https://github.com/itkq target=_blank rel=noopener><img class=icon src=https://itkq.jp/img/github.svg alt=github></a>
+$ brew install cliclick コマンドラインから、座標を与えることでマウス操作が行える。UIElement は position() で座標が取れるため、JXA と cliclick を組み合わせて自動化の見通しが立った。"><meta property="og:type" content="article"><meta property="og:url" content="https://itkq.jp/blog/2015/12/09/tweetbot-shortcut/"><meta property="article:published_time" content="2015-12-09T04:08:58+09:00"><meta property="article:modified_time" content="2015-12-09T04:08:58+09:00"><title>Tweetbot for Mac のツイート投稿画面でアカウントを切り替えるショートカット</title><link rel=canonical href=https://itkq.jp/blog/2015/12/09/tweetbot-shortcut/><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/styles/github.min.css><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Ubuntu+Mono:400,400i,700,700i|Raleway:500"><link rel=stylesheet href="https://itkq.jp/css/reset.css?t=2020-06-20%2014%3a23%3a48.113624248%20%2b0900%20JST%20m%3d%2b0.112402615"><link rel=stylesheet href="https://itkq.jp/css/pygments.css?t=2020-06-20%2014%3a23%3a48.113624248%20%2b0900%20JST%20m%3d%2b0.112402615"><link rel=stylesheet href="https://itkq.jp/css/main.css?t=2020-06-20%2014%3a23%3a48.113624248%20%2b0900%20JST%20m%3d%2b0.112402615"><link rel=stylesheet href="https://itkq.jp/css/override.css?t=2020-06-20%2014%3a23%3a48.113624248%20%2b0900%20JST%20m%3d%2b0.112402615"><link rel="shortcut icon" href=https://itkq.jp/img/leaf.ico></head><body lang=ja><section class=header><div class=container><a href=https://itkq.jp/><img class=avatar src=https://itkq.jp/img/profile.png srcset="https://itkq.jp/img/profile.png 1x"></a><div class=content><a href=https://itkq.jp/><div class=name>itkq</div></a><nav><ul><li class=nav-blog><a href=https://itkq.jp/blog/><span>Blog</span></a></li><li class=nav-about><a href=https://itkq.jp/about/><span>About</span></a></li></ul></nav></div></div></section><section class=icons><div class=container><div class=content><a href=https://github.com/itkq target=_blank rel=noopener><img class=icon src=https://itkq.jp/img/github.svg alt=github></a>
 <a href=https://twitter.com/itkq target=_blank rel=noopener><img class=icon src=https://itkq.jp/img/twitter.svg alt=twitter></a>
 <a href=//linkedin.com/in/takuya-kosugiyama-107402195/ target=_blank rel=noopener><img class=icon src=https://itkq.jp/img/linkedin.svg alt=linkedin></a>
 <a href=mailto:re@itkq.jp><img class=icon src=https://itkq.jp/img/email.svg alt=email></a></div></div></section><section class="main post non-narrow zero-top-spacing"><div class=container><div class=content><div class=front-matter><div class=title-container><div class=page-heading>Tweetbot for Mac のツイート投稿画面でアカウントを切り替えるショートカット</div><div class=initials><a href=https://itkq.jp/>ad</a></div></div><div class=meta><div class=date title="Wed Dec 9 2015 04:08:58 JST">Dec 9, 2015</div></div></div><div class=markdown><h2 id=経緯>経緯</h2><p>複数アカウントを使う僕にとって重宝している Twitter クライアント「Tweetbot for Mac」だが、1つだけ弱点がある。
-それは、ツイート投稿画面 (⌘+N) でアカウントの切り替え方法がマウスによる操作しかないことだ。
-<a href=https://itkq.jp/img/2015-12-10_12.39.29.png><img src=https://itkq.jp/img/2015-12-10_12.39.29.png width=100%></a></p><p>アイコンをクリック、screen_name を選択クリックの2ステップ必要になる。
-折角 Global New Tweet Key を備えていても、マウス操作が必要になってしまう。</p><p>ということをぼやいていたら次のような意見を頂いた。</p><p><a href=https://itkq.jp/img/2015-12-10_12.44.39.png><img src=https://itkq.jp/img/2015-12-10_12.44.39.png width=100%></a></p><p>なるほどやってみることにした。</p><ol><li><p>Twitter アイコンクリック</p></li><li><p>screen_name を選択して Enter</p></li></ol><p>をショートカット1つで行う。</p><h2 id=javascript-for-automation-jxa>JavaScript for Automation (JXA)</h2><p>Apple Script という OS X 独自の自動化スクリプトがあるが、Yosemite (OS X 10.10) から JavaScript でも書けるようになったらしい。</p><p><a href=http://qiita.com/zakuroishikuro/items/afab0e33ad2030ba2f92>Macのキーボード入力、マウスクリックをJavaScriptで (JXA) - Qiita</a> を参考に、Tweetbot のツイート投稿画面の Twitter アイコンの UIElement をクリックしようとしたが、できなかった。
-単純なボタンでの実装ではないからだろうか&hellip;</p><h2 id=cliclick>cliclick</h2><p>マウス操作のエミュレータである cliclick を使うことにした。Homebrew でインストール。</p><pre><code class=language-sh>$ brew install cliclick
-</code></pre><p>コマンドラインから、座標を与えることでマウス操作が行える。UIElement は position() で座標が取れるため、JXA と cliclick を組み合わせて自動化の見通しが立った。</p><h2 id=jxa-cliclick>JXA + cliclick</h2><p>tweetbot-switch-account.sh に実行権限を与えて適当な場所に置く。中身は以下。</p><pre><code class=language-sh>#!/bin/sh
-echo &quot;
-se = Application('System Events');
-tb = se.processes.byName('Tweetbot');
-app = Application.currentApplication();
-app.includeStandardAdditions = true;
-tb.frontmost = true;
+それは、ツイート投稿画面 (⌘+N) でアカウントの切り替え方法がマウスによる操作しかないことだ。</p><p>アイコンをクリック、screen_name を選択クリックの2ステップ必要になる。
+折角 Global New Tweet Key を備えていても、マウス操作が必要になってしまう。</p><p>ということをぼやいていたら次のような意見を頂いた。</p><p></p><p>なるほどやってみることにした。</p><ol><li><p>Twitter アイコンクリック</p></li><li><p>screen_name を選択して Enter</p></li></ol><p>をショートカット1つで行う。</p><h2 id=javascript-for-automation-jxa>JavaScript for Automation (JXA)</h2><p>Apple Script という OS X 独自の自動化スクリプトがあるが、Yosemite (OS X 10.10) から JavaScript でも書けるようになったらしい。</p><p><a href=http://qiita.com/zakuroishikuro/items/afab0e33ad2030ba2f92>Macのキーボード入力、マウスクリックをJavaScriptで (JXA) - Qiita</a> を参考に、Tweetbot のツイート投稿画面の Twitter アイコンの UIElement をクリックしようとしたが、できなかった。
+単純なボタンでの実装ではないからだろうか&mldr;</p><h2 id=cliclick>cliclick</h2><p>マウス操作のエミュレータである cliclick を使うことにした。Homebrew でインストール。</p><div class=highlight><pre class=chroma><code class=language-sh data-lang=sh>$ brew install cliclick
+</code></pre></div><p>コマンドラインから、座標を与えることでマウス操作が行える。UIElement は position() で座標が取れるため、JXA と cliclick を組み合わせて自動化の見通しが立った。</p><h2 id=jxa--cliclick>JXA + cliclick</h2><p>tweetbot-switch-account.sh に実行権限を与えて適当な場所に置く。中身は以下。</p><div class=highlight><pre class=chroma><code class=language-sh data-lang=sh><span class=cp>#!/bin/sh
+</span><span class=cp></span><span class=nb>echo</span> <span class=s2>&#34;
+</span><span class=s2>se = Application(&#39;System Events&#39;);
+</span><span class=s2>tb = se.processes.byName(&#39;Tweetbot&#39;);
+</span><span class=s2>app = Application.currentApplication();
+</span><span class=s2>app.includeStandardAdditions = true;
+</span><span class=s2>tb.frontmost = true;
+</span><span class=s2>
+</span><span class=s2>[x, y] = tb.uiElements[&#39;New Tweet&#39;].uiElements[4].uiElements[0].position().map(function(elem, idx, array){ return Number(elem)  });
+</span><span class=s2>x += 25;
+</span><span class=s2>y += 25;
+</span><span class=s2>now_pos = app.doShellScript(&#39;/usr/local/bin/cliclick p:.&#39;).split(&#39;: &#39;)[1];
+</span><span class=s2>app.doShellScript(&#39;/usr/local/bin/cliclick c:&#39; + x + &#39;,&#39; + y);
+</span><span class=s2>app.doShellScript(&#39;/usr/local/bin/cliclick m:&#39; + now_pos);
+</span><span class=s2>for (i = 0; i &lt; </span><span class=nv>$1</span><span class=s2>; i++){
+</span><span class=s2>  se.keyCode(125); // down arrow
+</span><span class=s2>}
+</span><span class=s2>se.keyCode(36);  // enter
+</span><span class=s2>&#34;</span> <span class=p>|</span> osascript -l JavaScript -
+</code></pre></div><p>アイコンをクリックした後、マウスポインタがアイコンの位置にあり邪魔に見えたため、最初にマウスポインタの位置を記憶しておき、移動させることをしている。引数によって何回下にカーソルを移動するか決めている。</p><p>ツイート投稿画面を開いておき、<code>/path/to/tweetbot-switch-account.sh 2</code> などと実行すると、他のアカウントが選択できるようになった。</p><h3 id=karabiner>Karabiner</h3><p>これをショートカット1つで行うために、Karabiner の private.xml の最後に以下を追加した。</p><div class=highlight><pre class=chroma><code class=language-xml data-lang=xml><span class=nt>&lt;item&gt;</span>
+    <span class=nt>&lt;name&gt;</span>Tweetbot<span class=nt>&lt;/name&gt;</span>
+    <span class=nt>&lt;appdef&gt;</span>
+        <span class=nt>&lt;appname&gt;</span>TWEETBOT<span class=nt>&lt;/appname&gt;</span>
+        <span class=nt>&lt;equal&gt;</span>com.tapbots.TweetbotMac<span class=nt>&lt;/equal&gt;</span>
+    <span class=nt>&lt;/appdef&gt;</span>
+    <span class=nt>&lt;windownamedef&gt;</span>
+        <span class=nt>&lt;name&gt;</span>NEW_TWEET<span class=nt>&lt;/name&gt;</span>
+        <span class=nt>&lt;regex&gt;</span>New Tweet<span class=nt>&lt;/regex&gt;</span>
+    <span class=nt>&lt;/windownamedef&gt;</span>
+    <span class=nt>&lt;vkopenurldef&gt;</span>
+        <span class=nt>&lt;name&gt;</span>KeyCode::VK_OPEN_URL_SHELL_switch_1<span class=nt>&lt;/name&gt;</span>
+        <span class=nt>&lt;url</span> <span class=na>type=</span><span class=s>&#34;shell&#34;</span><span class=nt>&gt;</span>
+          <span class=cp>&lt;![CDATA[ /path/to/tweetbot-switch-account.sh 1 ]]&gt;</span>
+        <span class=nt>&lt;/url&gt;</span>
+    <span class=nt>&lt;/vkopenurldef&gt;</span>
+    <span class=nt>&lt;vkopenurldef&gt;</span>
+        <span class=nt>&lt;name&gt;</span>KeyCode::VK_OPEN_URL_SHELL_switch_2<span class=nt>&lt;/name&gt;</span>
+        <span class=nt>&lt;url</span> <span class=na>type=</span><span class=s>&#34;shell&#34;</span><span class=nt>&gt;</span>
+          <span class=cp>&lt;![CDATA[ /path/to/tweetbot-switch-account.sh 2 ]]&gt;</span>
+        <span class=nt>&lt;/url&gt;</span>
+    <span class=nt>&lt;/vkopenurldef&gt;</span>
+    <span class=nt>&lt;vkopenurldef&gt;</span>
+        <span class=nt>&lt;name&gt;</span>KeyCode::VK_OPEN_URL_SHELL_switch_3<span class=nt>&lt;/name&gt;</span>
+        <span class=nt>&lt;url</span> <span class=na>type=</span><span class=s>&#34;shell&#34;</span><span class=nt>&gt;</span>
+          <span class=cp>&lt;![CDATA[ /path/to/tweetbot-switch-account.sh 3 ]]&gt;</span>
+        <span class=nt>&lt;/url&gt;</span>
+    <span class=nt>&lt;/vkopenurldef&gt;</span>
 
-[x, y] = tb.uiElements['New Tweet'].uiElements[4].uiElements[0].position().map(function(elem, idx, array){ return Number(elem)  });
-x += 25;
-y += 25;
-now_pos = app.doShellScript('/usr/local/bin/cliclick p:.').split(': ')[1];
-app.doShellScript('/usr/local/bin/cliclick c:' + x + ',' + y);
-app.doShellScript('/usr/local/bin/cliclick m:' + now_pos);
-for (i = 0; i &lt; $1; i++){
-  se.keyCode(125); // down arrow
-}
-se.keyCode(36);  // enter
-&quot; | osascript -l JavaScript -
-</code></pre><p>アイコンをクリックした後、マウスポインタがアイコンの位置にあり邪魔に見えたため、最初にマウスポインタの位置を記憶しておき、移動させることをしている。引数によって何回下にカーソルを移動するか決めている。</p><p>ツイート投稿画面を開いておき、<code>/path/to/tweetbot-switch-account.sh 2</code> などと実行すると、他のアカウントが選択できるようになった。</p><h3 id=karabiner>Karabiner</h3><p>これをショートカット1つで行うために、Karabiner の private.xml の最後に以下を追加した。</p><pre><code class=language-xml>&lt;item&gt;
-    &lt;name&gt;Tweetbot&lt;/name&gt;
-    &lt;appdef&gt;
-        &lt;appname&gt;TWEETBOT&lt;/appname&gt;
-        &lt;equal&gt;com.tapbots.TweetbotMac&lt;/equal&gt;
-    &lt;/appdef&gt;
-    &lt;windownamedef&gt;
-        &lt;name&gt;NEW_TWEET&lt;/name&gt;
-        &lt;regex&gt;New Tweet&lt;/regex&gt;
-    &lt;/windownamedef&gt;
-    &lt;vkopenurldef&gt;
-        &lt;name&gt;KeyCode::VK_OPEN_URL_SHELL_switch_1&lt;/name&gt;
-        &lt;url type=&quot;shell&quot;&gt;
-          &lt;![CDATA[ /path/to/tweetbot-switch-account.sh 1 ]]&gt;
-        &lt;/url&gt;
-    &lt;/vkopenurldef&gt;
-    &lt;vkopenurldef&gt;
-        &lt;name&gt;KeyCode::VK_OPEN_URL_SHELL_switch_2&lt;/name&gt;
-        &lt;url type=&quot;shell&quot;&gt;
-          &lt;![CDATA[ /path/to/tweetbot-switch-account.sh 2 ]]&gt;
-        &lt;/url&gt;
-    &lt;/vkopenurldef&gt;
-    &lt;vkopenurldef&gt;
-        &lt;name&gt;KeyCode::VK_OPEN_URL_SHELL_switch_3&lt;/name&gt;
-        &lt;url type=&quot;shell&quot;&gt;
-          &lt;![CDATA[ /path/to/tweetbot-switch-account.sh 3 ]]&gt;
-        &lt;/url&gt;
-    &lt;/vkopenurldef&gt;
-
-    &lt;item&gt;
-        &lt;name&gt;Switch to 1st account&lt;/name&gt;
-        &lt;identifier&gt;remap.tweetbot_switch_account_1&lt;/identifier&gt;
-        &lt;only&gt;TWEETBOT&lt;/only&gt;
-        &lt;windowname_only&gt;NEW_TWEET&lt;/windowname_only&gt;
-        &lt;autogen&gt;
+    <span class=nt>&lt;item&gt;</span>
+        <span class=nt>&lt;name&gt;</span>Switch to 1st account<span class=nt>&lt;/name&gt;</span>
+        <span class=nt>&lt;identifier&gt;</span>remap.tweetbot_switch_account_1<span class=nt>&lt;/identifier&gt;</span>
+        <span class=nt>&lt;only&gt;</span>TWEETBOT<span class=nt>&lt;/only&gt;</span>
+        <span class=nt>&lt;windowname_only&gt;</span>NEW_TWEET<span class=nt>&lt;/windowname_only&gt;</span>
+        <span class=nt>&lt;autogen&gt;</span>
             __KeyToKey__
             KeyCode::KEY_1, ModifierFlag::COMMAND_L,
             KeyCode::VK_OPEN_URL_SHELL_switch_1
-        &lt;/autogen&gt;
-    &lt;/item&gt;
-    &lt;item&gt;
-        &lt;name&gt;Switch to 2nd account&lt;/name&gt;
-        &lt;identifier&gt;remap.tweetbot_switch_account_2&lt;/identifier&gt;
-        &lt;only&gt;TWEETBOT&lt;/only&gt;
-        &lt;windowname_only&gt;NEW_TWEET&lt;/windowname_only&gt;
-        &lt;autogen&gt;
+        <span class=nt>&lt;/autogen&gt;</span>
+    <span class=nt>&lt;/item&gt;</span>
+    <span class=nt>&lt;item&gt;</span>
+        <span class=nt>&lt;name&gt;</span>Switch to 2nd account<span class=nt>&lt;/name&gt;</span>
+        <span class=nt>&lt;identifier&gt;</span>remap.tweetbot_switch_account_2<span class=nt>&lt;/identifier&gt;</span>
+        <span class=nt>&lt;only&gt;</span>TWEETBOT<span class=nt>&lt;/only&gt;</span>
+        <span class=nt>&lt;windowname_only&gt;</span>NEW_TWEET<span class=nt>&lt;/windowname_only&gt;</span>
+        <span class=nt>&lt;autogen&gt;</span>
             __KeyToKey__
             KeyCode::KEY_2, ModifierFlag::COMMAND_L,
             KeyCode::VK_OPEN_URL_SHELL_switch_2
-        &lt;/autogen&gt;
-    &lt;/item&gt;
-    &lt;item&gt;
-        &lt;name&gt;Switch to 3rd account&lt;/name&gt;
-        &lt;identifier&gt;remap.tweetbot_switch_account_3&lt;/identifier&gt;
-        &lt;only&gt;TWEETBOT&lt;/only&gt;
-        &lt;windowname_only&gt;NEW_TWEET&lt;/windowname_only&gt;
-        &lt;autogen&gt;
+        <span class=nt>&lt;/autogen&gt;</span>
+    <span class=nt>&lt;/item&gt;</span>
+    <span class=nt>&lt;item&gt;</span>
+        <span class=nt>&lt;name&gt;</span>Switch to 3rd account<span class=nt>&lt;/name&gt;</span>
+        <span class=nt>&lt;identifier&gt;</span>remap.tweetbot_switch_account_3<span class=nt>&lt;/identifier&gt;</span>
+        <span class=nt>&lt;only&gt;</span>TWEETBOT<span class=nt>&lt;/only&gt;</span>
+        <span class=nt>&lt;windowname_only&gt;</span>NEW_TWEET<span class=nt>&lt;/windowname_only&gt;</span>
+        <span class=nt>&lt;autogen&gt;</span>
             __KeyToKey__
             KeyCode::KEY_3, ModifierFlag::COMMAND_L,
             KeyCode::VK_OPEN_URL_SHELL_switch_3
-        &lt;/autogen&gt;
-    &lt;/item&gt;
-&lt;/item&gt;
-</code></pre><p>「Reload XML」の後、追加された Tweetbot の下の各項目をチェックすることで、
+        <span class=nt>&lt;/autogen&gt;</span>
+    <span class=nt>&lt;/item&gt;</span>
+<span class=nt>&lt;/item&gt;</span>
+</code></pre></div><p>「Reload XML」の後、追加された Tweetbot の下の各項目をチェックすることで、
 &ldquo;⌘+[123]&rdquo; でアカウントを選択できるようになった。</p><h2 id=最後に>最後に</h2><p>ショートカットつけてくれって Tapbots に要望出したら</p><blockquote><p>We&rsquo;ll consider this as a feature request :)</p></blockquote><p>と一応返信があったので、いずれ実装されることを期待しておきます。</p><h2 id=参考>参考</h2><p><a href=http://qiita.com/zakuroishikuro/items/afab0e33ad2030ba2f92>Macのキーボード入力、マウスクリックをJavaScriptで (JXA) - Qiita</a><br><a href=http://tonbi.jp/AppleScript/JavaScript/>鳶嶋工房 / AppleScript / JavaScript for Automation (JXA)</a><br><a href=https://developer.apple.com/library/mac/releasenotes/InterapplicationCommunication/RN-JavaScriptForAutomation/Articles/Introduction.html>Introduction to JavaScript for Automation Release Note</a><br><a href=http://qiita.com/altitude3190/items/bbef986ff8dd288b2641>Karabiner の private.xml 設定方法 - Qiita</a><br><a href=https://pqrs.org/osx/karabiner/xml.html.ja>private.xml Reference Manual</a></p><br><p class=back-to-posts><a href=https://itkq.jp/blog/>Back to posts</a></p></div><br><div class=disqus><div id=disqus_thread></div><script type=application/javascript>var disqus_config=function(){};(function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById('disqus_thread').innerHTML='Disqus comments not available by default when the website is previewed locally.';return;}
 var d=document,s=d.createElement('script');s.async=true;s.src='//'+"itkq-jp"+'.disqus.com/embed.js';s.setAttribute('data-timestamp',+new Date());(d.head||d.body).appendChild(s);})();</script><noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></div></div></div></section><script type=application/javascript>var doNotTrack=false;if(!doNotTrack){window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;ga('create','UA-71205730-2','auto');ga('send','pageview');}</script><script async src=https://www.google-analytics.com/analytics.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js></script><script type=text/javascript>hljs.initHighlightingOnLoad();</script></body></html>

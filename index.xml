@@ -21,7 +21,7 @@
 ちょうどその頃に turingcomplete.fm を聞いて、OS を学びたい気持ちになった。そうして始めたのが MIT の 6.828: Operating System Engineering の授業である。JOS という xv6 ライクな小さい x86 OS のスケルトンが用意されており、必要な部分を実装していくことが課題である。シェルの動作までを完成させた後、最終課題としてパケット送受信かオリジナル機能を実装して終了ということになっている。
 選択した理由 30日OS本も検討していて図書館で借りた。書くべきコードはインターネットですべて入手可能だったため、本を眺めてなんとなく分かった気持ちになって終わる予想ができた。とにかく手を動かしたほうが絶対いいという確信があった。一方 JOS は、OS の動作原理を学ぶものなので、ハードウェアに近い部分の実装は与えられ、Operating Systems Engieering の文脈で重要だとされる部分に集中でき、かつ手を動かす必要がある。まさに自分の求めている題材だと感じた。課題にはテストケースが付属しており、実装が正しいかどうかはある程度確認できることも良い。OS を自作したいというより OS を学びたい気持ちが強かった。
 目的 必要が生じた時に Linux のソースコードの該当部分を探して、その内容を理解できるように OS の知識を体系的に得ること
-学べたこと 3&amp;frasl;31 までに Lab 5 までを終えた時点で挙げた (粒度は雑)。作業ログ
+学べたこと 3/31 までに Lab 5 までを終えた時点で挙げた (粒度は雑)。作業ログ
 x86 OS Lab 1: Booting a PC 物理アドレス空間 real-mode, protected-mode kernel 起動までの流れ CPU が起動するとまず BIOS (0xffff0) に jump BIOS は boot sector を (0x7c00 ~ 0x7cff) に読み込み、32-bit protected-mode にスイッチして 0x7c00 に jump して boot loader が起動 kernel を 1 page 分読み込み ELF header を検証し、program segment をそれぞれ読み込む ELF header に埋め込まれた entry point をコールして kernel が起動 Lab 2: Memory Management 物理ページ MMU Virtual address, Linear address, Physical address Page Directory, Page Table Page Table 管理 ページと対応する構造体で参照を管理する Page Directory Entry =&amp;gt; Page Table Entry =&amp;gt; PageInfo =&amp;gt; 物理ページ カーネルアドレス空間 (レイアウトは与えられている) Lab 3: User Environments User-mode environment, または “process“ の状態表現 プロセスの仮想アドレス空間のセットアップ システムコールの割り込みハンドリング Interrupt Descriptor Table (IDT) セグメント毎の privilege level trapframe の表現方法 page fault ハンドリング メモリ保護: アドレス範囲と PTE 属性 Lab 4: Preemptive Multitasking Symmetric Multiprocessing (SMP): 全プロセッサが等価にリソースを触れる Bootstrap Processor (BSP) が他のプロセッサ (Application Processors; APs) を起こす それぞれのプロセッサが割り込みコントローラ (LAPIC) を持ち、LAPIC で各プロセッサを判断する APs は real-mode で起動するため初期化が必要 CPU 毎の kernel stack 領域 big kernel lock (spin lock) spin lock の実体はアトミックに値を交換する命令 xchg 素朴な Round-Robin Scheduling の実体 (プロセスの状態遷移) Unix-like fork() のためのシステムコール、fork の中身 ページマッピングのコピーとCOW属性、User-level page fault handling による Copy-on-Write 再帰的に page fault できるような exception stack を使った仕組み Hardware clock interrupts を使った preemptive multitasking Inter-Process communication (IPC) のメッセージを送受信するシステムコールによる実装 Lab 5: File System, Spawn and Shell セクタとブロック メタ情報を格納する superblocks ファイルに対応するブロックの表現: 直接参照と間接参照によって大容量のファイルも扱うことができる JOS ではカーネルにディスクアクセス機能を実装していないので、ユーザーレベルの environment (プロセス) として実装する ディスク割り込みではなくポーリングを使う Programmed I/O (PIO) ベースのアクセス 仮想アドレスへのファイルマッピングはデマンドページングによるブロックキャッシュ ビットマップでブロックの使用を表現 サーバークライアントモデルのファイルシステムインターフェース “Exokernel” 的な spawn: open して elf を読み込み、fork する。child の trapframe (eip や privilege level ) を設定する file descriptor table のアドレス領域は、PTE を共有することで file descriptor を共有する シェルプロセスの実装 I/O redirection, pipe の実装 プログラミング技術 C言語のポインタ: スタックやメモリを触った途端に理解できる インラインアセンブラ アセンブリレベルの calling convention 学ばなかった (知らなくても課題は解ける) こと ELF フォーマットの詳細 必要以外の x86 instructions QEMU CMOS RAM hardware 詳しく知りたくなったこと Linux のプロセスとスレッドの実装 Linux プロセススケジューリングのアルゴリズム Linux のファイルシステム パーティションの中身 x86_64 との差分 UNIX-style の exec 感想 実際に手を動かしていくと、コードとの対応も取れ理解が進むように思えた。学びたい気持ちはあるけど題材がない場合、このような教材を使って無理やり学ぶという選択肢もアリだなと思った。</description></item><item><title>クックパッド株式会社に新卒入社した</title><link>https://itkq.jp/blog/2018/04/02/join-cookpad/</link><pubDate>Mon, 02 Apr 2018 23:02:18 +0900</pubDate><guid>https://itkq.jp/blog/2018/04/02/join-cookpad/</guid><description>全体会議の自己紹介で、普段は喋れないが酒を飲むと喋れます、そしてこれは社会人になったので克服したいと話したら、その後のウェルカムパーティーで喋れる? 酒飲んでる? と人々が話しかけてくれたので良かった。</description></item><item><title>採用学を読んだ</title><link>https://itkq.jp/blog/2018/03/06/scientific-adopt/</link><pubDate>Tue, 06 Mar 2018 00:24:12 +0900</pubDate><guid>https://itkq.jp/blog/2018/03/06/scientific-adopt/</guid><description>採用学を読んだ。この本では、採用を定義した上で、現代の日本における採用事情の考察・最近の採用手法の変化・より良い採用のための考え方などが述べられており、一読すべき価値のある本だと思う。
 この記事では、一応新卒採用を経験した身として、就活時に浮かんだいくつかの疑問を、採用学を読んで上で改めて考えていく。それが正解かどうかは分からない。書き終えてみると当たり前のことを言っているようにも見える。
 新卒一括採用が一般的である理由 欧米では必要なときに必要な人材を雇用する「欠員補充」の採用が一般的なのに対し、なぜ日本ではある定められた時期に一斉に次の新社会人が就活をする「新卒一括採用」が一般的なのだろうか。
@@ -40,8 +40,7 @@ x86 OS Lab 1: Booting a PC 物理アドレス空間 real-mode, protected-mode ke
 一般的に考えて、優先すべき目的は (1) である。(1) の達成のために人材が大幅に足りない企業、例えば
 急激に成長している 従業員数が多い (1000~) ため相対的に離職者も多い は、(1) 達成の手段として新卒採用を用いることは合理的と言えそうだ。選考のプロセスで多様性を考慮できていれば同時に (2) の達成も見込まれる。次に、(2) 達成のために新卒採用をする企業は、
 創業年数が長く従業員数もそれなりに多い などが挙げられそうだ。そのため、創業年数が短く従業員数も多くない中小企業 (ベンチャー企業?) が新卒採用を行うのには何か別の目的があると考えられる。
-本中で述べられている一般的な新卒採用は、現時点での候補者の実務能力を測れないが故に、実務能力の期待を評価する。しかし、新卒の段階でも実務に直結する能力があれば新卒採用を行う理由として成立する。私が就職先として考えていた IT 業界 (いわゆる Web) では、PC を用いたプログラミングテストや面接でのコーディングが選考フローに組み込まれているのが普通だった。すなわちこの業界の新卒採用は、実務能力の期待しか測れない大部分の新卒採用と大きく体質が異なっている。
-ということでなぜ一般的に、また Web の業界で新卒を採用するのか、という疑問は以上で説明できた。なお労働者を違法で酷使するといったいわゆるブラック企業はここでは考慮していない。</description></item><item><title>2017 年振り返り</title><link>https://itkq.jp/blog/2017/12/31/about-2017/</link><pubDate>Sun, 31 Dec 2017 00:51:52 +0900</pubDate><guid>https://itkq.jp/blog/2017/12/31/about-2017/</guid><description>去年の目標はこちら。
+本中で述べられている一般的な新卒採用は、現時点での候補者の実務能力を測れないが故に、実務能力の期待を評価する。しかし、新卒の段階でも実務に直結する能力があれば新卒採用を行う理由として成立する。私が就職先として考えていた IT 業界 (いわゆる Web) では、PC を用いたプログラミングテストや面接でのコーディングが選考フローに組み込まれているのが普通だった。すなわちこの業界の新卒採用は、実務能力の期待しか測れない大部分の新卒採用と大きく体質が異なっている。</description></item><item><title>2017 年振り返り</title><link>https://itkq.jp/blog/2017/12/31/about-2017/</link><pubDate>Sun, 31 Dec 2017 00:51:52 +0900</pubDate><guid>https://itkq.jp/blog/2017/12/31/about-2017/</guid><description>去年の目標はこちら。
 就職 「就職先を決める」という目標は、内定受諾という形で達成された。就活を通して、相対的には自分は就活についてよく考えていたようで、表面的な苦労は少なかったように思う。2017 年前半は、就活、ひいては人生を考えることが多かった。自分で独自に考えては、他人にぶつけて意見を聞いてまた考えるということがほとんどで、もっと本を読んだりして、一般的に通じる知識を身につければよかったかなと今になっては思う。
 入社エントリはまた書くので詳細はその時に。
 研究 「卒業したいので研究をやる」という目標のもと、研究をそこそこやった。業績は、昨年末から含めて、
@@ -68,9 +67,10 @@ Web システムの限界と学術的価値 Web の用途は広がるばかり�
 まとめると、どうやっていい感じにマイクロサービスのコンテナをスケールしていくのという話である。コンテナが究極に早く起動すれば、リアクティブオートスケールと、コンテナを時々ぶっ壊すといった Chaos Engineering を合わせれば解決する気はしている。しかし現実にはそうなっていないので、長期的に見た、最高のスケール、キャパシティプランニングのために、まず1つのサービスのパフォーマンスを数値化し、サービス同士の依存関係も数値化することについて考えた。
 待ち行列とキャパシティの関係から考えてみる、本番と同等に再現するなら shadowing は全パターンやらないといけない、その場合 shadowing を受ける先が大変そう、パケットをポートミラーリングすればいいのでは、でも L7 の情報はどうする、など議論が発生して、masayoshi さんにはサーベイのためのキーワードを教えてもらったり、充実していたと思う。構想はあるがなにもできていない、という状況だったので炎上じゃんと思っていたのだが、15 分みっちり議論があったり、おもしろかったと言われたので良かった。今後も自分で考えつつ色んな人と話をしていきたい。
 感想 招待講演 tomomii さんの招待講演は、こういう話を話せるということ、こういう話を受けいれる場であったことにまず驚いた。人事でありながら臆すること無く自分の専門外に領域に突っ込んでいくことが凄いし、それを相手に受け入れられるもらえる人柄や雰囲気あってこそだと思った。
-個は、東洋哲学の道で生き、失敗をそれでよしとする、失敗を恐れない心構えであることが必要で、組織は、自分の専門領域を極めながらも、専門外の人と議論をしてさらにブラッシュアップし、個が互いに相互し合うことが必要、という内容だと思う。特に専門外の人と話すことによるインスピレーションは、実際に起きていたので驚くばかりである。もともと多数の学部や専門が存在する、大学という機関は、まさにここでいう組織を目指しているものだと改めて思う。しかし、現実には交流がなかったり、しがらみに囚われたり、年功序列の世界だったりする。WSA 研では、大学であるような壁を取っ払って、楽しい・面白いという根源的な動機で、個を増強する組織を目指しているのだなと感じた。参加者全員が発表する、15 分発表 / 15 分質疑のタイムスケジュールも理にかなっている。</description></item><item><title>Vim &#43; LaTeX でいい感じに修論を書く</title><link>https://itkq.jp/blog/2017/11/19/thesis-vim-latex/</link><pubDate>Sun, 19 Nov 2017 02:51:49 +0900</pubDate><guid>https://itkq.jp/blog/2017/11/19/thesis-vim-latex/</guid><description>そろそろ修論を書く季節になった。もちろん Vim と LaTeX で書くつもりだが、ページ数が多くなるとコンパイルに時間がかかって不都合なので、章ごとに分割コンパイルしたいと考えた。 分割した LaTeX ファイルを subfiles を使ってコンパイルする - Qiita が見つかったが、これまで通り Skim で 1 つのファイルをライブプレビューしたかったので、一時的な .tex ファイルを生成してコンパイルする latexmk のラッパーを書いた。
+個は、東洋哲学の道で生き、失敗をそれでよしとする、失敗を恐れない心構えであることが必要で、組織は、自分の専門領域を極めながらも、専門外の人と議論をしてさらにブラッシュアップし、個が互いに相互し合うことが必要、という内容だと思う。特に専門外の人と話すことによるインスピレーションは、実際に起きていたので驚くばかりである。もともと多数の学部や専門が存在する、大学という機関は、まさにここでいう組織を目指しているものだと改めて思う。しかし、現実には交流がなかったり、しがらみに囚われたり、年功序列の世界だったりする。WSA 研では、大学であるような壁を取っ払って、楽しい・面白いという根源的な動機で、個を増強する組織を目指しているのだなと感じた。参加者全員が発表する、15 分発表 / 15 分質疑のタイムスケジュールも理にかなっている。
+振り返りが重要とも言っていて、有益性、成果、価値を考えてみることによって、組織の存在意義、具体的には次回の開催に繋がるとのことだった。当たり前のようだが、皆が皆当たり前にできているとは言えないと思う。当たり前にするためにも、この記事を書いている。</description></item><item><title>Vim + LaTeX でいい感じに修論を書く</title><link>https://itkq.jp/blog/2017/11/19/thesis-vim-latex/</link><pubDate>Sun, 19 Nov 2017 02:51:49 +0900</pubDate><guid>https://itkq.jp/blog/2017/11/19/thesis-vim-latex/</guid><description>そろそろ修論を書く季節になった。もちろん Vim と LaTeX で書くつもりだが、ページ数が多くなるとコンパイルに時間がかかって不都合なので、章ごとに分割コンパイルしたいと考えた。 分割した LaTeX ファイルを subfiles を使ってコンパイルする - Qiita が見つかったが、これまで通り Skim で 1 つのファイルをライブプレビューしたかったので、一時的な .tex ファイルを生成してコンパイルする latexmk のラッパーを書いた。
 次のようにセッティングしておく。
-$ tree -a . ├── .config │ └── latexmk.yml ├── header.tex ├── introduction.tex ├── main.tex └── related_work.tex 1 directory, 5 files $ cat .config/latexmk.yml output_file: output.tex header: header.tex include_files: - introduction.tex - related_work.tex $ cat main.tex \input{introduction} \input{related_work} header.tex には \begin{document} より上の設定を書く。実際のラッパースクリプトは以下。 .config/latexmk.yml がある場合は、いい感じに \begin{document} &amp;hellip; \end{document} を生成してコンパイルする。</description></item><item><title>BBR: Congestion-Based Congestion Control とは</title><link>https://itkq.jp/blog/2017/07/31/bbr/</link><pubDate>Mon, 31 Jul 2017 22:30:43 +0900</pubDate><guid>https://itkq.jp/blog/2017/07/31/bbr/</guid><description>最近 TCP BBR congestion control comes to GCP – your Internet just got faster が話題になっていた．しかし，この記事を読んだ時点での自分の BBR についての知識は，「既存のものよりいい感じにしてくれる輻輳制御」ぐらいだった．これではまずいということで，BBR とはなんなのかについて，既存の輻輳制御にも触れながら，元の論文1 をメインにまとめた．自分が理解するための文書であるが，一応としての想定読者は，TCP が輻輳制御を行っていることを知っているぐらいの人である．TCP については，拙著の TCP/IP とパフォーマンス に短くまとめてあるので参照できる．
+$ tree -a . ├── .config │ └── latexmk.yml ├── header.tex ├── introduction.tex ├── main.tex └── related_work.tex 1 directory, 5 files $ cat .config/latexmk.yml output_file: output.tex header: header.tex include_files: - introduction.tex - related_work.tex $ cat main.tex \input{introduction} \input{related_work} header.tex には \begin{document} より上の設定を書く。実際のラッパースクリプトは以下。 .config/latexmk.yml がある場合は、いい感じに \begin{document} &amp;hellip; \end{document} を生成してコンパイルする。</description></item><item><title>BBR: Congestion-Based Congestion Control とは</title><link>https://itkq.jp/blog/2017/07/31/bbr/</link><pubDate>Mon, 31 Jul 2017 22:30:43 +0900</pubDate><guid>https://itkq.jp/blog/2017/07/31/bbr/</guid><description>最近 [TCP BBR congestion control comes to GCP – your Internet just got faster](https://cloudplatform.googleblog.com/2017/07/TCP-BBR-congestion-control-comes-to-GCP-your-Internet-just-got-faster .html) が話題になっていた．しかし，この記事を読んだ時点での自分の BBR についての知識は，「既存のものよりいい感じにしてくれる輻輳制御」ぐらいだった．これではまずいということで，BBR とはなんなのかについて，既存の輻輳制御にも触れながら，元の論文1 をメインにまとめた．自分が理解するための文書であるが，一応としての想定読者は，TCP が輻輳制御を行っていることを知っているぐらいの人である．TCP については，拙著の TCP/IP とパフォーマンス に短くまとめてあるので参照できる．
 免責事項:
 TCP を深く研究しているわけではなく，間違いを記述している可能性があります．コメントで教えていただけると助かります．
 概要 BBR (Bottleneck Bandwidth and Round-trip propagation time) とは，Google が開発した新たな TCP 輻輳制御アルゴリズム．2016年9月に Linux Kernel に取り込まれ，論文は2017年2月に公開された． 既存の輻輳制御とは異なる輻輳検知，観測と推定をループするシステムモデルのアプローチにより，現代のネットワーク環境において高スループット，低レイテンシを発揮する．
@@ -99,7 +99,8 @@ TCP のパフォーマンス 主に Web ブラウジングのために考慮す�
 ディレクトリとリンク Unix におけるディレクトリは、単にファイル名と対応する inode 番号のリストを保持するものである。ディレクトリが保持するファイル名をディレクトリエントリ、またファイル名と inode の対応をリンクと呼ぶ。
 複数のリンクが同じ inode 番号を指すことも可能である。複数リンク間で、どのリンクが「主」や「元」という概念はなく、すべてのリンクは平等に扱われる。このようなリンクをハードリンクという。ファイルは任意の数のリンクを持つことができる。通常ほとんどのファイルのリンクカウントは 1 であり、1つのディレクトリエントリが1つの inode を指す。 ハードリンクの追加は link(2) で行える。
 リンクの種類には、シンボリックリンクもある。シンボリックリンクは、ファイルシステムがマッピングするものではなく、実行時に解釈される、より上位で処理されるポインタである。 実際には、ディレクトリエントリ追加ではなく、特殊な型を持つ専用ファイルである。 この専用ファイルは、他のファイルのパス名を格納するもので、これをシンボリックリンクのターゲットという。シンボリックリンクのパス名は、実行時にカーネルにより参照先へ置換される。 ハードリンクと異なり、シンボリックリンクはファイルシステムに跨って作成することが可能で、また存在しないファイルに対しても作成可能である。対応するシステムコールは symlink(2) である。 リンク作成の反対は、アンリンク、すなわちパス名の削除である。unlink(2) が対応する。 ディレクトリを削除するには rmdir(2) を用いる。
-デバイスノード Unix におけるデバイスへのアクセスはデバイスノードというスペシャルファイルを介して行われる。 アプリケーションから、デバイスドライバへアクセスするためのデバイスノードに対してファイル I/O を行うと、カーネルは通常のファイル I/O として処理せず、要求をデバイスドライバへ渡す。 デバイスノードはデバイスを抽象化したもので、Unix システムでハードウェアにアクセスする際の標準的なインターフェースとなっている。この設計は、マシン上のハードウェアを統一的に操作できるという美しいインターフェースであり、Unix の大きな功績の1つである。ただし、ネットワークデバイスだけは例外である。 カーネルは、メジャー番号とマイナー番号というデバイスドライバに割り当てられた2つの数字を用いて、カーネル内にロードされたデバイスドライバにマッピングすることにより、要求された処理をどのデバイスドライバに渡すかを決定している。</description></item><item><title>Unix 以外のオペレーティングシステム</title><link>https://itkq.jp/blog/2017/05/01/operating-system-comparison/</link><pubDate>Mon, 01 May 2017 15:14:42 +0900</pubDate><guid>https://itkq.jp/blog/2017/05/01/operating-system-comparison/</guid><description>Unix 以外の簡単な歴史と特徴をまとめる。
+デバイスノード Unix におけるデバイスへのアクセスはデバイスノードというスペシャルファイルを介して行われる。 アプリケーションから、デバイスドライバへアクセスするためのデバイスノードに対してファイル I/O を行うと、カーネルは通常のファイル I/O として処理せず、要求をデバイスドライバへ渡す。 デバイスノードはデバイスを抽象化したもので、Unix システムでハードウェアにアクセスする際の標準的なインターフェースとなっている。この設計は、マシン上のハードウェアを統一的に操作できるという美しいインターフェースであり、Unix の大きな功績の1つである。ただし、ネットワークデバイスだけは例外である。 カーネルは、メジャー番号とマイナー番号というデバイスドライバに割り当てられた2つの数字を用いて、カーネル内にロードされたデバイスドライバにマッピングすることにより、要求された処理をどのデバイスドライバに渡すかを決定している。
+デバイスノードは主にキャラクタデバイスとブロックデバイスの2つに分類される。 キャラクタデバイスの典型はキーボードで、バイトがリニアに並んだものとしてアクセスし、デバイスドライバがキューにデータを1つずつ挿入し、ユーザ空間からキューのデータを読み取る。 対照的に、ブロックデバイスはデータをバイト配列としてアクセスするものであり、通常はストレージデバイスである。 デバイスドライバは、シーク可能なデバイスにデータバイトをマッピングし、ユーザ空間からはバイト配列内ならばどのバイトにもアクセス可能である。 ブロックデバイスへのアクセスはセクタという通常 2 の累乗 (512 バイトが多い) で表される単位で行われ、すべての I/O は1つまたは複数のセクタ単位で行われる。</description></item><item><title>Unix 以外のオペレーティングシステム</title><link>https://itkq.jp/blog/2017/05/01/operating-system-comparison/</link><pubDate>Mon, 01 May 2017 15:14:42 +0900</pubDate><guid>https://itkq.jp/blog/2017/05/01/operating-system-comparison/</guid><description>Unix 以外の簡単な歴史と特徴をまとめる。
 MacOS Macintosh OS は、先駆的な GUI 研究に刺激されてた 1980年代初期の Apple 社で開発された。世に出たのは 1984年の Macintosh 発売と同時である。
 MacOS は、Mac インターフェースガイドラインという Unix とは大きく異なった思想を持つ。ガイドラインはアプリケーション GUI の表示と動作を詳細に規定している。特に重要なのは、「何かを置いたらそのまま残る」ところである。デスクトップ上のオブジェクトの位置は再起動後も維持される。すべてのプログラムは GUI を持つ。
 設計者の意図した Macintosh の役割は、技術者ではないエンドユーザーを対象とするクライアントオペレーティングシステムである。
@@ -114,25 +115,20 @@ BSD Unix ARPANET は、インターネットの起源となった、複数の研
 itamae-kitchen/itamae/
 Code reading bin/itamae Itamae::CLI.start を呼ぶ．
 lib/itamae/cli.rb Itamae::CLI は CLI gem Thor を継承している． 実行環境 (backend_type) は3つあり，local, ssh, docker である．必要としていて，かつ他より単純そうな local を続けて読む．
-def local(*recipe_files) if recipe_files.empty? raise &amp;quot;Please specify recipe files.&amp;quot; end run(recipe_files, :local, options) end def run(recipe_files, backend_type, options) runner = Runner.run(recipe_files, backend_type, options) if options[:detailed_exitcode] &amp;amp;&amp;amp; runner.</description></item><item><title>SQL実践入門 読んだ</title><link>https://itkq.jp/blog/2017/03/15/sql-practice/</link><pubDate>Wed, 15 Mar 2017 19:19:27 +0900</pubDate><guid>https://itkq.jp/blog/2017/03/15/sql-practice/</guid><description>メモです．
+def local(*recipe_files) if recipe_files.empty? raise &amp;#34;Please specify recipe files.&amp;#34; end run(recipe_files, :local, options) end def run(recipe_files, backend_type, options) runner = Runner.run(recipe_files, backend_type, options) if options[:detailed_exitcode] &amp;amp;&amp;amp; runner.</description></item><item><title>SQL実践入門 読んだ</title><link>https://itkq.jp/blog/2017/03/15/sql-practice/</link><pubDate>Wed, 15 Mar 2017 19:19:27 +0900</pubDate><guid>https://itkq.jp/blog/2017/03/15/sql-practice/</guid><description>メモです．
 3章 式の条件分岐 SQLのパフォーマンスは，テーブルスキャンによる I/O を減らすことが重要． 手続き的な WHERE, UNION による条件分岐，テーブルフルスキャンが複数回行われる．同テーブル内では，SELECT 句で CASE WHEN で条件分岐させるとクエリの可読性，実行計画共に良くなることあるので，考えなしに UNION を使うのは危険． ただし，インデックスが使える場合は，「UNION による複数回のインデックススキャン」と「OR または IN による1回のフルスキャン」の勝負になり，UNION の方が速い場合もある． 4章 集約とカット GROUP BY には「集約」と「カット」の機能がある．「カット」とはパーティションをつくること．ウィンドウ関数の PARTITION BY はカットのための機能．
 最近のオプティマイザは，GROUP BY による集約は，指定された列のハッシュ値によってグループ化している．古典的なソートより高速である． GROUP BY では，ハッシュかソートいずれの場合でも，メモリを多く使用するため，ワーキングメモリを使い切ってしまうこと（TEMP落ち）に注意． SELECT 句で指定するキーと，GROUP BY 句で指定するキーを同じくすることでカットできる． 5章 手続きSQL SQL実行のオーバーヘッド：
-SQL文のネットワーク伝送
-データベースへの接続
-SQL文のパース
-SQL文の実行計画生成および評価
-結果セットのネットワーク伝送
-1と5は，同一ネットワーク上であればほぼ無視できる．2はコネクションプールで対応できる．このうち，3と4が支配的である． ある処理を達成するために，逐次的な「軽いSQL」によるロジックと，一度の「重いSQL」によるロジックがある．
+SQL文のネットワーク伝送 データベースへの接続 SQL文のパース SQL文の実行計画生成および評価 結果セットのネットワーク伝送 1と5は，同一ネットワーク上であればほぼ無視できる．2はコネクションプールで対応できる．このうち，3と4が支配的である． ある処理を達成するために，逐次的な「軽いSQL」によるロジックと，一度の「重いSQL」によるロジックがある．
 軽いSQLによる問題：
-DBのストレージは普通RAIDで構成され，I/O負荷を分散できるが，軽いSQLは，並列分散による恩恵が受けづらい
-DBは，重いSQLを高速化するように進化する．軽いSQLはそもそもチューニングポテンシャルがない
-一方で軽いSQLの利点：</description></item><item><title>About</title><link>https://itkq.jp/about/</link><pubDate>Fri, 17 Feb 2017 18:42:21 +0900</pubDate><guid>https://itkq.jp/about/</guid><description>Software Engineer. Likes automation and animation. Interested in SRE and Chaos Engineering.
-Experience Apr. 2018 - in present Software Engineer (SRE group) @ Cookpad Inc. Dec. 2016 - Mar. 2018 Part-time Software Engineer @ Cookpad Inc. Education Apr. 2016 - Mar. 2018 Masters of ICE @ Tokyo Institute of Technology Apr. 2014 - Mar. 2016 Bachelor of CS @ Tokyo Institute of Technology Certification Aug.</description></item><item><title>Fluentd syntax for vim 書いてる</title><link>https://itkq.jp/blog/2017/01/03/fluentd-syntax/</link><pubDate>Tue, 03 Jan 2017 17:54:56 +0900</pubDate><guid>https://itkq.jp/blog/2017/01/03/fluentd-syntax/</guid><description>Fluentdを書く機会があったのだが、Vimがシンタックスハイライトしてくれなかった。
+DBのストレージは普通RAIDで構成され，I/O負荷を分散できるが，軽いSQLは，並列分散による恩恵が受けづらい DBは，重いSQLを高速化するように進化する．軽いSQLは_そもそもチューニングポテンシャルがない_ 一方で軽いSQLの利点：
+実行計画が安定し，処理時間が相対的に見積もりやすい トランザクション粒度を調整できる 一撃でループ処理をするSQLの書き方：
+ウィンドウ関数と CASE 式を使う CASE 式の WHEN は短絡評価 隣接リスト的なデータ構造に対しては，Recurvie Union による再帰クエリが有効 6章 結合 結合は3種類：</description></item><item><title>About</title><link>https://itkq.jp/about/</link><pubDate>Fri, 17 Feb 2017 18:42:21 +0900</pubDate><guid>https://itkq.jp/about/</guid><description>Software Engineer. Likes automation and animation. Interested in SRE and Chaos Engineering.
+Experience Education Certification Links Keybase Medium Scrapbox Hatena Blog Eventernote Annict Wishlist</description></item><item><title>Fluentd syntax for vim 書いてる</title><link>https://itkq.jp/blog/2017/01/03/fluentd-syntax/</link><pubDate>Tue, 03 Jan 2017 17:54:56 +0900</pubDate><guid>https://itkq.jp/blog/2017/01/03/fluentd-syntax/</guid><description>Fluentdを書く機会があったのだが、Vimがシンタックスハイライトしてくれなかった。
 あれーと思ったけど vim8の新機能 にもFluentdの記述はなかった。
 &amp;ldquo;vim fluentd syntax&amp;rdquo; で検索すると、 https://github.com/yoppi/fluentd.vim がヒットするが、Latest Commit が4年前だったのと、自分で使ってみて馴染まなかったので、自分で書いてみている。
 itkq/fluentd-vim
 vimのhelpを読みつつ、とりあえずできた状態。
-そのうちガッツリFluentdを書くことになりそうなので、アップデートしていきたい。</description></item><item><title>2017年の抱負</title><link>https://itkq.jp/blog/2017/01/03/2017-goal/</link><pubDate>Tue, 03 Jan 2017 15:52:28 +0900</pubDate><guid>https://itkq.jp/blog/2017/01/03/2017-goal/</guid><description> 去年 だめだめ
+そのうちガッツリFluentdを書くことになりそうなので、アップデートしていきたい。</description></item><item><title>2017年の抱負</title><link>https://itkq.jp/blog/2017/01/03/2017-goal/</link><pubDate>Tue, 03 Jan 2017 15:52:28 +0900</pubDate><guid>https://itkq.jp/blog/2017/01/03/2017-goal/</guid><description>去年 だめだめ
 やりたかったこと 英語
 やれてない 日経ニュースを英語で聞ける LissN を聞く時期があったけど、忙しいとか言い訳してたら習慣が終わった 関数型プログラミング
 やれてない プログラミングの基礎を読んだ Scala関数型デザイン&amp;amp;プログラミング Scalazコントリビューターによる関数型徹底ガイドでつんでる 学部卒業
@@ -154,8 +150,7 @@ CAP定理は、Consistency, Availability, Partition Tolerance の3つを同時�
 Redisとmemcachedしか触ったことがなかったので、とりあえず他の種類と特徴ぐらいは覚えておきたい。
 データベースアーキテクチャに正解はないので、論理的な選択が必要。
 DevOps この本は2010年に出版されたものだが、2010年にもうDevOpsという言葉があったことに驚いた。
-&amp;ldquo;DevOps&amp;rdquo;という単語が初出の発表(2009)では、開発と運用が互いのことを思いやるために、6つのツールと4つのカルチャーが挙げられていた。
-10+ Deploys Per Day: Dev and Ops Cooperation at Flickr de John Allspaw
+&amp;ldquo;DevOps&amp;quot;という単語が初出の発表(2009)では、開発と運用が互いのことを思いやるために、6つのツールと4つのカルチャーが挙げられていた。
 自分の中では、DevOpsがすでに当たり前として受け入れてしまっているが、 これらのツールやカルチャーが無かった頃、そもそもなぜ開発と運用は分かれていたのだろうかと思った。 開発と運用が衝突する構図自体は理解できる。
 雑に調べてみると、ITの内部統制によって、適切な権限管理の観点から、開発と運用を分離することが義務付けられているらしい。
 アジャイル開発が積極的に用いられるようになってから、とにかく速くサイクルを回すために、自動テスト・継続的デプロイ・メトリクス可視化などの技術が発達し、それらの技術を共有するためのカルチャーも含めたプラクティスをDevOpsと呼ぶようになった、という感じなのだろうか。
@@ -165,14 +160,18 @@ DevOps この本は2010年に出版されたものだが、2010年にもうDevOp
 結局どう決めればいいのかは、SLAに基づく運用ポリシーよる。 するとSLAの決め方が重要になってくる。
 Webシステムに必要なのは「一貫性」ではなく「可用性」と結論づけていた。 まずは顧客を継続的に留めることが重要である。 また、レスポンスタイムは顧客の印象評価に直結することが示されている。
 ビジネス、マーケティング目線のメトリクスももちろん必要。 これらのメトリクスをベースにしてSLAを決定する。
-オペレーションの仕事は、全てのアーキテクチャを正常に運用し、収集したメトリクスをステークホルダに翻訳すること。 ウェブオペレーションは、常に危険があり、「絶対」はない。 つまり、本質的には進化は無限に続くということで、 日々発展する技術、アーキテクチャ、メトリクスをキャッチアップする必要がある。</description></item><item><title>SQLアンチパターン 読んだ</title><link>https://itkq.jp/blog/2017/01/01/sql-antipattern/</link><pubDate>Sun, 01 Jan 2017 12:38:21 +0900</pubDate><guid>https://itkq.jp/blog/2017/01/01/sql-antipattern/</guid><description>インターネットに読めと言われている気がしたので読んだ。
+オペレーションの仕事は、全てのアーキテクチャを正常に運用し、収集したメトリクスをステークホルダに翻訳すること。 ウェブオペレーションは、常に危険があり、「絶対」はない。 つまり、本質的には進化は無限に続くということで、 日々発展する技術、アーキテクチャ、メトリクスをキャッチアップする必要がある。
+考えたこと 自分が考える、運用チーム(SRE)が存在する理由は、インフラをコード化し、プロダクションと等しい開発環境と素早い柔軟なデプロイを提供することで、開発にかかるオーバーヘッドを削減し、開発チームには創造的で生産的な業務に集中してもらうことだと考えていた。
+DevOpsを成功させる鍵は、サービスの安定性は全員の責任と認識すること、と書かれていた。 また、「サイトの安定性の責任が運用チームだけのものではないとすると、従来の運用チームの役割は消えてしまうのか？」という疑問に対しては、「サイトを稼働させる専門家としての存在」と答えている。 運用チームは、最初にアラートを受け取り、プロダクションの問題の経験もあるサイトの安定性に絶えず提案する役割がある。 DevOpsによって、運用における運用チームの負担は確実に減る。 そこで、運用チームは、一時しのぎで障害に対応するのではなく、長期的に成長するインフラを管理するような本質的なタスクに集中できる。
+「たった一度だけデプロイする」ことが目的なら、 インフラをコード化するオーバーヘッドは確実にあるため、 コード化するデメリットのほうが大きいかもしれない。 しかし、現実的には継続的にデプロイするし、DevOpsのデメリットは ほとんど無いように思う。
+開発と運用がお互いに、真に生産的な業務を行うために、DevOpsはもっと当たり前になっていくだろう。
+&amp;ldquo;アプリケーションはインフラであり、インフラはアプリケーションである&amp;rdquo; と書かれている通り、インフラレイヤーとアプリケーションレイヤーは近くなっている。 コードを書けないインフラ屋は必要とされない未来になると思うので、アプリケーションまで広く興味を持ち、コードを書けるようになりたい。</description></item><item><title>SQLアンチパターン 読んだ</title><link>https://itkq.jp/blog/2017/01/01/sql-antipattern/</link><pubDate>Sun, 01 Jan 2017 12:38:21 +0900</pubDate><guid>https://itkq.jp/blog/2017/01/01/sql-antipattern/</guid><description>インターネットに読めと言われている気がしたので読んだ。
 論理設計 一意性と参照整合性に留意する。交差テーブルや従属テーブルを導入する。これは理解できた。
 個人的には、ORMはクエリを意識しづらいし使いたくない。
 リレーショナルモデルでは、正規化により重複を完全に除去して、結合して頑張ることが正しいとされている。
 しかし、実際にはRDBMSは完全なリレーショナルモデルではなく、 結合操作によってパフォーマンスが出ないことがある。
 そのために、あえて正規化をしない「非正規化」の存在を知った。 が、具体的にどの状況で使うのか良くわかっていない。
-物理設計 FLOAT型は丸め誤差を避けられないので、科学演算でない限りはNUMERIC型を使う
-マスタテーブルは参照テーブルにして、参照元から外部キー指定する トランザクション処理を考慮して、画像はBLOBとしてデータベース内部で管理する インデックスを貼る場合、闇雲に貼るのではなく、スロークエリログとクエリ実行計画をよく見てから考える 画像の扱い方に関して、最近はS3などのストレージに委譲することが多いため 一概には言えないと思った。
+物理設計 FLOAT型は丸め誤差を避けられないので、科学演算でない限りはNUMERIC型を使う マスタテーブルは参照テーブルにして、参照元から外部キー指定する トランザクション処理を考慮して、画像はBLOBとしてデータベース内部で管理する インデックスを貼る場合、闇雲に貼るのではなく、スロークエリログとクエリ実行計画をよく見てから考える 画像の扱い方に関して、最近はS3などのストレージに委譲することが多いため 一概には言えないと思った。
 正直、アンビギュアスグループはよくわからなかった…。また読みます
 クエリ NULLはUnknownであり、値ではない。NULLの代替を使うのはダメ パフォーマンスのために、全文検索はサードパーティのエンジンを使う DBへのアクセスは減らすべきだが、可読性・複雑性の緩和のために分割クエリを使う 列名は明示する なんでそもそもNULLが出てきたんだっけ？という問いに自身で明確に答えられなかったので、『理論から学ぶデータベース実践入門』を再読する必要がありそう。
 アプリケーション セキュリティのためにパスワードはソルト足してハッシュ化、パスワードリセットはトークンで SQLインジェクションを防ぐためにプリペアドステートメントを使う データベースAPIの戻り値を確認 SQLも文章化・バージョン管理・テストをやる データベース処理をカプセル化するドメインモデルを用意する まとめ 冗長性を排除し、整合性を確保するのが正規化であるが、パフォーマンスは考慮していない。
@@ -180,22 +179,16 @@ Webシステムに必要なのは「一貫性」ではなく「可用性」と�
 正規化段階はちゃんと覚える。</description></item><item><title>git challenge 4th で優勝してきた</title><link>https://itkq.jp/blog/2016/11/20/git-challenge/</link><pubDate>Sun, 20 Nov 2016 20:36:54 +0900</pubDate><guid>https://itkq.jp/blog/2016/11/20/git-challenge/</guid><description>git challenge 以前参加した逆求人イベントで、このコンテストをmixiの中の人に教えていただき、興味を持ったので参加した。
 git challenge 2016.11.20
 朝 会場はmixiのビルだった。
-第4回git challengeがはじまりました。今日は快晴で、git challenge日和となりました。#mixi_git pic.twitter.com/0aIH0Au6uw
-&amp;mdash; ミクシィグループ 新卒採用公式アカウント (@HR_mixi) 2016年11月20日
 コンテストは2人組のチーム制で、チームは事前に決められていて、 逆求人イベントで一緒したラルフ氏 ( @r_ralph_h ) でした。他に顔見知りはいなかった。 コンテストのチュートリアルをやって、GithubにプッシュするとCIで採点、Slackに通知されるという流れを体験した。
 昼 🍣 のスライドがあったものの、mixiでは 🍣 == 🍛 が true らしく、お昼ごはんはカレーだった。おいしかった。
 コンテスト 戦略は特に無くて、奇数と偶数の問題をそれぞれが担当した。 問題内容は公開NGらしいので触れない。
 コンテスト中はそれっぽいBGMが流れていたが、 全体的な解答ペースが早かったらしく、途中でPPAPなど妨害音楽に切り替わって険しかった。 不評を買ってか、その後九条カレンが登場したので良かった。
-きんいろモザイク対応企業 #mixi_git pic.twitter.com/CF8JTOM4E1
-&amp;mdash; いたこ (@itkq) 2016年11月20日
 途中で詰まった問題はあったけれど、チームメイトが解いてくれた。神。 終盤の高難度問題は、解き方は見えたものの時間が足りなかった。
 結果、同率1位で自分のチームを含めた3チームが優勝ということになった。 賞品は後で郵送してもらえるらしい。感謝。
-（同着だったけど）優勝しました！！！ #mixi_git
-&amp;mdash; いたこ (@itkq) 2016年11月20日
 懇親会 作問者と会話して直接フィードバックできたり作問の裏話が聞けたので良かった。
 まとめ 接戦だったので楽しかった。 治安のいいGit開発を心掛けたい。
 チームメイトのエントリ ==&amp;gt; mixiのgit challengeに参加したお話
-追記 賞品はメダルとOctcatくんでした。 でかい pic.</description></item><item><title>LaTeXiTのCLIみたいなのを書いた</title><link>https://itkq.jp/blog/2016/10/27/latexit%E3%81%AEcli%E3%81%BF%E3%81%9F%E3%81%84%E3%81%AA%E3%81%AE%E3%82%92%E6%9B%B8%E3%81%84%E3%81%9F/</link><pubDate>Thu, 27 Oct 2016 22:14:40 +0900</pubDate><guid>https://itkq.jp/blog/2016/10/27/latexit%E3%81%AEcli%E3%81%BF%E3%81%9F%E3%81%84%E3%81%AA%E3%81%AE%E3%82%92%E6%9B%B8%E3%81%84%E3%81%9F/</guid><description>LaTeXiT というTeX形式の数式を入力するとTeX形式の画像を出力するツールを知った．
+追記 賞品はメダルとOctcatくんでした。</description></item><item><title>LaTeXiTのCLIみたいなのを書いた</title><link>https://itkq.jp/blog/2016/10/27/latexit%E3%81%AEcli%E3%81%BF%E3%81%9F%E3%81%84%E3%81%AA%E3%81%AE%E3%82%92%E6%9B%B8%E3%81%84%E3%81%9F/</link><pubDate>Thu, 27 Oct 2016 22:14:40 +0900</pubDate><guid>https://itkq.jp/blog/2016/10/27/latexit%E3%81%AEcli%E3%81%BF%E3%81%9F%E3%81%84%E3%81%AA%E3%81%AE%E3%82%92%E6%9B%B8%E3%81%84%E3%81%9F/</guid><description>LaTeXiT というTeX形式の数式を入力するとTeX形式の画像を出力するツールを知った．
 研究発表のスライドを作る場合に，TeX形式の画像を貼り付けたいことがあり，早速インストールした．
 最近のVim+LaTeX事情 に書いたように，最近はTexLiveのDockerイメージでLaTeX文書をコンパイルしている．
 LaTeXiTのコンパイル設定をカスタマイズすれば対応できると思ったが，うまくいかなかった． コンパイルスクリプトでは，作業ディレクトリをマウントしてDockerイメージのコンパイルバイナリを走らせている．LaTeXiTが実行するコンパイルコマンドは，一時的に作成した /var/folders/&amp;hellip;/.tex を絶対参照しており，その部分は書き換えようがなかった．
@@ -227,7 +220,7 @@ LaTeXiTの動作は，コンパイル後にBounding boxを計算してトリミ�
 はやく読みたい．
 &amp;ldquo;アジャイルレトロスペクティブズ　強いチームを育てる「ふりかえり」の手引き&amp;rdquo; アジャイルを理解するためにまずこっちから読む．
 &amp;ldquo;人を動かす&amp;rdquo; なぜ購入したのかよく覚えていないけどお金を無駄にしないためにも読む．
-所感 あと2冊ぐらいは読みたかった．</description></item><item><title>最近のVim&#43;LaTeX事情</title><link>https://itkq.jp/blog/2016/09/04/vim-latex/</link><pubDate>Sun, 04 Sep 2016 14:29:25 +0900</pubDate><guid>https://itkq.jp/blog/2016/09/04/vim-latex/</guid><description>メインで使っているのはMacBookPro Late 2013だが（そろそろ買い換えたい）， MacBookPro Early 2015をバイト先で支給されて自由に使えることになったので， LaTeX環境を構築しようと思った．
+所感 あと2冊ぐらいは読みたかった．</description></item><item><title>最近のVim+LaTeX事情</title><link>https://itkq.jp/blog/2016/09/04/vim-latex/</link><pubDate>Sun, 04 Sep 2016 14:29:25 +0900</pubDate><guid>https://itkq.jp/blog/2016/09/04/vim-latex/</guid><description>メインで使っているのはMacBookPro Late 2013だが（そろそろ買い換えたい）， MacBookPro Early 2015をバイト先で支給されて自由に使えることになったので， LaTeX環境を構築しようと思った．
 MacTexをインストールしようと思っていたけど，「それDockerでよくない？」と言われて確かに，となった．
 なぜ今まで気が付かなかったんだろう．
 &amp;ldquo;texlive docker&amp;rdquo; で適当に検索をかけると既存のイメージがヒットした．
@@ -239,7 +232,7 @@ GitHub - itkq/docker-texlive2015
 パスの通った場所に次のスクリプトを作成して実行権限を与える．
 ~/bin/latexmk
 . ~/bin/docker-latex.sh init docker run --rm -v $(pwd):/var/texlive $(get_image_name) latexmk ~/bin/docker-latex.sh
-#!/usr/bin/env bash function get_machine_name() { echo dev } function get_image_name() { echo texlive2015 } function init() { local MACHINE=$(get_machine_name) if ! docker-machine ls | grep $MACHINE | grep -q &amp;quot;Running&amp;quot;; then docker-machine start $MACHINE fi docker ps &amp;gt; /dev/null 2&amp;gt;&amp;amp;1 if [ $?</description></item><item><title>実用Git 読んだ</title><link>https://itkq.jp/blog/2016/04/04/%E5%AE%9F%E7%94%A8git-%E8%AA%AD%E3%82%93%E3%81%A0/</link><pubDate>Mon, 04 Apr 2016 02:20:25 +0900</pubDate><guid>https://itkq.jp/blog/2016/04/04/%E5%AE%9F%E7%94%A8git-%E8%AA%AD%E3%82%93%E3%81%A0/</guid><description>最近自分の Git に対する知識の無さを感じてきたので本を読もうと思っていたら、ちょうど借りる機会があったのでまとめた。Git コマンドの操作をより自信を持って行えるようになった気がする。
+#!/usr/bin/env bash function get_machine_name() { echo dev } function get_image_name() { echo texlive2015 } function init() { local MACHINE=$(get_machine_name) if ! docker-machine ls | grep $MACHINE | grep -q &amp;#34;Running&amp;#34;; then docker-machine start $MACHINE fi docker ps &amp;gt; /dev/null 2&amp;gt;&amp;amp;1 if [ $?</description></item><item><title>実用Git 読んだ</title><link>https://itkq.jp/blog/2016/04/04/%E5%AE%9F%E7%94%A8git-%E8%AA%AD%E3%82%93%E3%81%A0/</link><pubDate>Mon, 04 Apr 2016 02:20:25 +0900</pubDate><guid>https://itkq.jp/blog/2016/04/04/%E5%AE%9F%E7%94%A8git-%E8%AA%AD%E3%82%93%E3%81%A0/</guid><description>最近自分の Git に対する知識の無さを感じてきたので本を読もうと思っていたら、ちょうど借りる機会があったのでまとめた。Git コマンドの操作をより自信を持って行えるようになった気がする。
 Git の基本的な概念 Git リポジトリは、作業ディレクトリと .git ディレクトリから成る。
 git init により生成される Git リポジトリ (.git ディレクトリ) には、リビジョンと履歴の情報がすべて詰まっている。Git リポジトリが保持するデータ構造は、オブジェクト格納領域とインデックスの2つ。
 Git オブジェクト Git オブジェクト格納領域は、オブジェクトの内容に SHA1 を適用して得られたハッシュ値から生成されるユニークな オブジェクト ID (名前) をもつ。 オブジェクト格納領域 (.git/objects) に配置される Git オブジェクトは、次の4種類である。
@@ -248,8 +241,7 @@ blob
 tree
 tree オブジェクトは、1階層分のディレクトリ情報を表現する。 tree は blob のオブジェクトID とパス名を持っている。 コミットが指す tree オブジェクトの ID さえ分かれば、再帰的に子の tree を辿ることで、そのコミットの状態のファイルをすべて取り出せる。
 commit
-コミットオブジェクトは、リポジトリに加えられた変更のメタデータを持つ。
-tree の名前 新しいバージョンの作成者 (author) 作成された時間 新しいバージョンをリポジトリに置いた人 (comitter) リビジョンを作った理由の説明 (commit message) ルートコミット（最初のコミット）以外は1つ以上の親コミットIDをもつ。</description></item><item><title>2016年の抱負</title><link>https://itkq.jp/blog/2016/01/06/2016-goal/</link><pubDate>Wed, 06 Jan 2016 19:23:21 +0900</pubDate><guid>https://itkq.jp/blog/2016/01/06/2016-goal/</guid><description>英語を学ぶ 現時点の英語力 TOEICは800そこそこ、英検2級所持という尺度しか思いつかなかったが、理系大学4年生の平均は上回っているだろうか。
+コミットオブジェクトは、リポジトリに加えられた変更のメタデータを持つ。</description></item><item><title>2016年の抱負</title><link>https://itkq.jp/blog/2016/01/06/2016-goal/</link><pubDate>Wed, 06 Jan 2016 19:23:21 +0900</pubDate><guid>https://itkq.jp/blog/2016/01/06/2016-goal/</guid><description>英語を学ぶ 現時点の英語力 TOEICは800そこそこ、英検2級所持という尺度しか思いつかなかったが、理系大学4年生の平均は上回っているだろうか。
 リーディング
 技術系、特にプログラミングに関するの英文はゆっくりだが読める。その他の英文は積極的に避けたい気持ち。
 リスニング
@@ -268,9 +260,7 @@ tree の名前 新しいバージョンの作成者 (author) 作成された時�
 関数型言語を学ぶ これまでの経験 高専の3年か4年の時に、Emacs Lisp を授業でほんのちょっとだけやって、cons セルは覚えた記憶がある。 完全に担当教員の趣味で教えられたんだと思う。
 大学3年で、単位変換できなかった2年次の実験（ただのタイムアタック）を履修したが、 ここで Scheme を初めて使った。末尾再帰ぐらいまではそこそこに理解したが、 時間割の関係で、本来なら実験とセットで履修すべきプログラミングの講義を捨ててしまったためか、 以降（無限ストリームや継続）は十分に理解できないまま課題を消化していった。
 関数型言語の特徴は分かったつもりであったが、現実の問題に対して 関数型言語ではどのように書くことができて、どこが優秀なのかがほとんどイメージできずにいた。 自主的に関数型言語を使ったことはなかったし、本当にただの「分かったつもり」だった。
-なぜ関数型言語 現在配属している研究室が入っている西8号館で、LT が行われるとの情報を Twitter で仕入れたので、興味本位で参加した。 参加者のメインは M2 の先輩で、発表は興味深いし、発表の合間の議論も面白くて、尊敬できる人たちだった。
-12月にあった LT では、Haskell の話があって、モナドって結局何なのとか、Optional 型がどうとか、Map と flatMap って何が違うのみたいな議論があった。 関数型言語の経験が乏しい僕はさっぱりだったが、そこで取り上げられていた問題がWebアプリだったので、 関数型言語でもWebアプリ書けるのか、という気持ちになった。</description></item><item><title>Tweetbot for Mac のツイート投稿画面でアカウントを切り替えるショートカット</title><link>https://itkq.jp/blog/2015/12/09/tweetbot-shortcut/</link><pubDate>Wed, 09 Dec 2015 04:08:58 +0900</pubDate><guid>https://itkq.jp/blog/2015/12/09/tweetbot-shortcut/</guid><description>経緯 複数アカウントを使う僕にとって重宝している Twitter クライアント「Tweetbot for Mac」だが、1つだけ弱点がある。 それは、ツイート投稿画面 (⌘+N) でアカウントの切り替え方法がマウスによる操作しかないことだ。
-アイコンをクリック、screen_name を選択クリックの2ステップ必要になる。 折角 Global New Tweet Key を備えていても、マウス操作が必要になってしまう。
+なぜ関数型言語 現在配属している研究室が入っている西8号館で、LT が行われるとの情報を Twitter で仕入れたので、興味本位で参加した。 参加者のメインは M2 の先輩で、発表は興味深いし、発表の合間の議論も面白くて、尊敬できる人たちだった。</description></item><item><title>Tweetbot for Mac のツイート投稿画面でアカウントを切り替えるショートカット</title><link>https://itkq.jp/blog/2015/12/09/tweetbot-shortcut/</link><pubDate>Wed, 09 Dec 2015 04:08:58 +0900</pubDate><guid>https://itkq.jp/blog/2015/12/09/tweetbot-shortcut/</guid><description>経緯 複数アカウントを使う僕にとって重宝している Twitter クライアント「Tweetbot for Mac」だが、1つだけ弱点がある。 それは、ツイート投稿画面 (⌘+N) でアカウントの切り替え方法がマウスによる操作しかないことだ。 アイコンをクリック、screen_name を選択クリックの2ステップ必要になる。 折角 Global New Tweet Key を備えていても、マウス操作が必要になってしまう。
 ということをぼやいていたら次のような意見を頂いた。
 なるほどやってみることにした。
 Twitter アイコンクリック
@@ -298,5 +288,4 @@ shiki @itkq
 あと @nemupm とは本戦で顔合わせなので楽しみです。
 予選のリポジトリ: nemupm/isucon5-qualifier
 以下チームメイトのエントリ:
-ISUCON5予選 学生枠５位だけど突破できた
-ISUCON予選を学生枠でギリギリ通過する技術</description></item><item><title/><link>https://itkq.jp/likes_and_dislikes/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://itkq.jp/likes_and_dislikes/</guid><description> 好き カロリーメイト (フルーツ味) 苦手 梅干し 紹興酒 麦焼酎 女性声優の隈を認識してしまうこと アレルギー そば (粉)</description></item><item><title/><link>https://itkq.jp/revision/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://itkq.jp/revision/</guid><description/></item></channel></rss>
+ISUCON5予選 学生枠５位だけど突破できた</description></item><item><title/><link>https://itkq.jp/likes_and_dislikes/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://itkq.jp/likes_and_dislikes/</guid><description>好き カロリーメイト (フルーツ味) 苦手 梅干し 紹興酒 麦焼酎 女性声優の隈を認識してしまうこと アレルギー そば (粉)</description></item><item><title/><link>https://itkq.jp/revision/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://itkq.jp/revision/</guid><description/></item></channel></rss>

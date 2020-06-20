@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Life on itkq.jp</title><link>https://itkq.jp/tags/life/</link><description>Recent content in Life on itkq.jp</description><generator>Hugo -- gohugo.io</generator><language>ja-JP</language><lastBuildDate>Tue, 03 Jan 2017 15:52:28 +0900</lastBuildDate><atom:link href="https://itkq.jp/tags/life/index.xml" rel="self" type="application/rss+xml"/><item><title>2017年の抱負</title><link>https://itkq.jp/blog/2017/01/03/2017-goal/</link><pubDate>Tue, 03 Jan 2017 15:52:28 +0900</pubDate><guid>https://itkq.jp/blog/2017/01/03/2017-goal/</guid><description> 去年 だめだめ
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Life on itkq.jp</title><link>https://itkq.jp/tags/life/</link><description>Recent content in Life on itkq.jp</description><generator>Hugo -- gohugo.io</generator><language>ja-JP</language><lastBuildDate>Tue, 03 Jan 2017 15:52:28 +0900</lastBuildDate><atom:link href="https://itkq.jp/tags/life/index.xml" rel="self" type="application/rss+xml"/><item><title>2017年の抱負</title><link>https://itkq.jp/blog/2017/01/03/2017-goal/</link><pubDate>Tue, 03 Jan 2017 15:52:28 +0900</pubDate><guid>https://itkq.jp/blog/2017/01/03/2017-goal/</guid><description>去年 だめだめ
 やりたかったこと 英語
 やれてない 日経ニュースを英語で聞ける LissN を聞く時期があったけど、忙しいとか言い訳してたら習慣が終わった 関数型プログラミング
 やれてない プログラミングの基礎を読んだ Scala関数型デザイン&amp;amp;プログラミング Scalazコントリビューターによる関数型徹底ガイドでつんでる 学部卒業
@@ -26,5 +26,4 @@
 関数型言語を学ぶ これまでの経験 高専の3年か4年の時に、Emacs Lisp を授業でほんのちょっとだけやって、cons セルは覚えた記憶がある。 完全に担当教員の趣味で教えられたんだと思う。
 大学3年で、単位変換できなかった2年次の実験（ただのタイムアタック）を履修したが、 ここで Scheme を初めて使った。末尾再帰ぐらいまではそこそこに理解したが、 時間割の関係で、本来なら実験とセットで履修すべきプログラミングの講義を捨ててしまったためか、 以降（無限ストリームや継続）は十分に理解できないまま課題を消化していった。
 関数型言語の特徴は分かったつもりであったが、現実の問題に対して 関数型言語ではどのように書くことができて、どこが優秀なのかがほとんどイメージできずにいた。 自主的に関数型言語を使ったことはなかったし、本当にただの「分かったつもり」だった。
-なぜ関数型言語 現在配属している研究室が入っている西8号館で、LT が行われるとの情報を Twitter で仕入れたので、興味本位で参加した。 参加者のメインは M2 の先輩で、発表は興味深いし、発表の合間の議論も面白くて、尊敬できる人たちだった。
-12月にあった LT では、Haskell の話があって、モナドって結局何なのとか、Optional 型がどうとか、Map と flatMap って何が違うのみたいな議論があった。 関数型言語の経験が乏しい僕はさっぱりだったが、そこで取り上げられていた問題がWebアプリだったので、 関数型言語でもWebアプリ書けるのか、という気持ちになった。</description></item></channel></rss>
+なぜ関数型言語 現在配属している研究室が入っている西8号館で、LT が行われるとの情報を Twitter で仕入れたので、興味本位で参加した。 参加者のメインは M2 の先輩で、発表は興味深いし、発表の合間の議論も面白くて、尊敬できる人たちだった。</description></item></channel></rss>
