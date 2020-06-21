@@ -1,12 +1,9 @@
-<!doctype html><html lang=ja-jp><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="chrome=1"><meta name=HandheldFriendly content="True"><meta name=MobileOptimized content="320"><meta name=viewport content="width=device-width,initial-scale=1"><meta name=referrer content="no-referrer"><meta name=author content="itkq"><meta name=description content="そろそろ修論を書く季節になった。もちろん Vim と LaTeX で書くつもりだが、ページ数が多くなるとコンパイルに時間がかかって不都合なので、章ごとに分割コンパイルしたいと考えた。 分割した LaTeX ファイルを subfiles を使ってコンパイルする - Qiita が見つかったが、これまで通り Skim で 1 つのファイルをライブプレビューしたかったので、一時的な .tex ファイルを生成してコンパイルする latexmk のラッパーを書いた。
-次のようにセッティングしておく。
-$ tree -a . ├── .config │ └── latexmk.yml ├── header.tex ├── introduction.tex ├── main.tex └── related_work.tex 1 directory, 5 files $ cat .config/latexmk.yml output_file: output.tex header: header.tex include_files: - introduction.tex - related_work.tex $ cat main.tex \input{introduction} \input{related_work} header.tex には \begin{document} より上の設定を書く。実際のラッパースクリプトは以下。 .config/latexmk.yml がある場合は、いい感じに \begin{document} &mldr; \end{document} を生成してコンパイルする。"><meta name=google-site-verification content="AyWEWMfqdOijgoPW5yMy188xoQqY46L6pFXyd3Jizyc"><meta property="og:title" content="Vim + LaTeX でいい感じに修論を書く"><meta property="og:description" content="そろそろ修論を書く季節になった。もちろん Vim と LaTeX で書くつもりだが、ページ数が多くなるとコンパイルに時間がかかって不都合なので、章ごとに分割コンパイルしたいと考えた。 分割した LaTeX ファイルを subfiles を使ってコンパイルする - Qiita が見つかったが、これまで通り Skim で 1 つのファイルをライブプレビューしたかったので、一時的な .tex ファイルを生成してコンパイルする latexmk のラッパーを書いた。
-次のようにセッティングしておく。
-$ tree -a . ├── .config │ └── latexmk.yml ├── header.tex ├── introduction.tex ├── main.tex └── related_work.tex 1 directory, 5 files $ cat .config/latexmk.yml output_file: output.tex header: header.tex include_files: - introduction.tex - related_work.tex $ cat main.tex \input{introduction} \input{related_work} header.tex には \begin{document} より上の設定を書く。実際のラッパースクリプトは以下。 .config/latexmk.yml がある場合は、いい感じに \begin{document} &mldr; \end{document} を生成してコンパイルする。"><meta property="og:type" content="article"><meta property="og:url" content="https://itkq.jp/blog/2017/11/19/thesis-vim-latex/"><meta property="article:published_time" content="2017-11-19T02:51:49+09:00"><meta property="article:modified_time" content="2017-11-19T02:51:49+09:00"><title>Vim + LaTeX でいい感じに修論を書く</title><link rel=canonical href=https://itkq.jp/blog/2017/11/19/thesis-vim-latex/><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/styles/github.min.css><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Ubuntu+Mono:400,400i,700,700i|Raleway:500"><link rel=stylesheet href="https://itkq.jp/css/reset.css?t=2020-06-20%2016%3a32%3a17.762934255%20%2b0900%20JST%20m%3d%2b0.127383107"><link rel=stylesheet href="https://itkq.jp/css/pygments.css?t=2020-06-20%2016%3a32%3a17.762934255%20%2b0900%20JST%20m%3d%2b0.127383107"><link rel=stylesheet href="https://itkq.jp/css/main.css?t=2020-06-20%2016%3a32%3a17.762934255%20%2b0900%20JST%20m%3d%2b0.127383107"><link rel=stylesheet href="https://itkq.jp/css/override.css?t=2020-06-20%2016%3a32%3a17.762934255%20%2b0900%20JST%20m%3d%2b0.127383107"><link rel="shortcut icon" href=https://itkq.jp/img/leaf.ico></head><body lang=ja><section class=header><div class=container><a href=https://itkq.jp/><img class=avatar src=https://itkq.jp/img/profile.png srcset="https://itkq.jp/img/profile.png 1x"></a><div class=content><a href=https://itkq.jp/><div class=name>itkq</div></a><nav><ul><li class=nav-blog><a href=https://itkq.jp/blog/><span>Blog</span></a></li><li class=nav-about><a href=https://itkq.jp/about/><span>About</span></a></li></ul></nav></div></div></section><section class=icons><div class=container><div class=content><a href=https://github.com/itkq target=_blank rel=noopener><img class=icon src=https://itkq.jp/img/github.svg alt=github></a>
-<a href=https://twitter.com/itkq target=_blank rel=noopener><img class=icon src=https://itkq.jp/img/twitter.svg alt=twitter></a>
-<a href=//linkedin.com/in/takuya-kosugiyama-107402195/ target=_blank rel=noopener><img class=icon src=https://itkq.jp/img/linkedin.svg alt=linkedin></a>
-<a href=mailto:re@itkq.jp><img class=icon src=https://itkq.jp/img/email.svg alt=email></a></div></div></section><section class="main post non-narrow zero-top-spacing"><div class=container><div class=content><div class=front-matter><div class=title-container><div class=page-heading>Vim + LaTeX でいい感じに修論を書く</div><div class=initials><a href=https://itkq.jp/>ad</a></div></div><div class=meta><div class=date title="Sun Nov 19 2017 02:51:49 JST">Nov 19, 2017</div></div></div><div class=markdown><p>そろそろ修論を書く季節になった。もちろん Vim と LaTeX で書くつもりだが、ページ数が多くなるとコンパイルに時間がかかって不都合なので、章ごとに分割コンパイルしたいと考えた。
-<a href=https://qiita.com/sankichi92/items/1e113fcf6cc045eb64f7>分割した LaTeX ファイルを subfiles を使ってコンパイルする - Qiita</a> が見つかったが、これまで通り Skim で 1 つのファイルをライブプレビューしたかったので、一時的な .tex ファイルを生成してコンパイルする latexmk のラッパーを書いた。</p><p>次のようにセッティングしておく。</p><pre><code>$ tree -a
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=HandheldFriendly content="True"><meta http-equiv=x-ua-compatible content="IE=edge"><meta http-equiv=cache-control content="no-transform"><meta http-equiv=cache-control content="no-siteapp"><meta name=generator content="Hugo 0.71.1"><link rel="shortcut icon" href=https://cdn.jsdelivr.net/gh/amzrk2/poal-jsdelivr@1.2.0/favicons/favicon.ico><title>Vim + LaTeX でいい感じに修論を書く - itkq.jp</title><meta name=keywords content="Vim,LaTeX"><meta property="og:title" content="Vim + LaTeX でいい感じに修論を書く"><meta property="og:description" content="そろそろ修論を書く季節になった。もちろん Vim と LaTeX で書くつもりだが、ページ数が多くなるとコンパイルに時間がかかって不都合なので、章ごとに分割コンパイルしたいと考えた。
+分割した LaTeX ファイルを subfiles を使ってコンパイルする - Qiita が見つかったが、これまで通り Skim で 1 つのファイルをライブプレビューしたかったので、一時的な .tex ファイルを生成してコンパイルする latexmk のラッパーを書いた。"><meta property="og:type" content="article"><meta property="og:url" content="https://itkq.jp/blog/2017/11/19/thesis-vim-latex/"><meta property="article:published_time" content="2017-11-19T02:51:49+09:00"><meta property="article:modified_time" content="2017-11-19T02:51:49+09:00"><meta name=twitter:card content="summary"><meta name=twitter:title content="Vim + LaTeX でいい感じに修論を書く"><meta name=twitter:description content="そろそろ修論を書く季節になった。もちろん Vim と LaTeX で書くつもりだが、ページ数が多くなるとコンパイルに時間がかかって不都合なので、章ごとに分割コンパイルしたいと考えた。
+分割した LaTeX ファイルを subfiles を使ってコンパイルする - Qiita が見つかったが、これまで通り Skim で 1 つのファイルをライブプレビューしたかったので、一時的な .tex ファイルを生成してコンパイルする latexmk のラッパーを書いた。"><style>@media(prefers-color-scheme:dark){body[data-theme=auto] img{filter:brightness(60%)}}body[data-theme=dark] img{filter:brightness(60%)}</style><link rel=stylesheet href=https://itkq.jp/assets/css/fuji-custom.min.css></head><body data-theme=auto><script data-cfasync=false>var fujiThemeData=localStorage.getItem('fuji_data-theme');if(!fujiThemeData){localStorage.setItem('fuji_data-theme','auto');}else{if(fujiThemeData!=='auto'){document.body.setAttribute('data-theme',fujiThemeData==='dark'?'dark':'light');}}</script><script data-cfasync=false>function browserDetection(ua){if(ua.indexOf('MSIE ')>0||ua.indexOf('Trident/')>0){return true;}
+return false;}
+var ua=window.navigator.userAgent;if(browserDetection(ua)){window.location.href('https:\/\/itkq.jp\/ie\/');}</script><header><div class="container-lg clearfix"><div class="col-12 header"><a class=title-main href=https://itkq.jp/>itkq.jp</a></div></div></header><main><div class="container-lg clearfix"><div class="col-12 col-md-9 float-left content"><article><h2 class="post-item post-title"><a href=https://itkq.jp/blog/2017/11/19/thesis-vim-latex/>Vim + LaTeX でいい感じに修論を書く</a></h2><div class="post-item post-meta"><span><ion-icon name=today></ion-icon>&nbsp;2017-11-19</span><span><ion-icon name=pricetags></ion-icon>&nbsp;<a href=https://itkq.jp/tags/vim>Vim</a>&nbsp;<a href=https://itkq.jp/tags/latex>LaTeX</a>&nbsp;</span></div><div class="post-content markdown-body"><p>そろそろ修論を書く季節になった。もちろん Vim と LaTeX で書くつもりだが、ページ数が多くなるとコンパイルに時間がかかって不都合なので、章ごとに分割コンパイルしたいと考えた。
+<a href=https://qiita.com/sankichi92/items/1e113fcf6cc045eb64f7 target=_blank>分割した LaTeX ファイルを subfiles を使ってコンパイルする - Qiita</a> が見つかったが、これまで通り Skim で 1 つのファイルをライブプレビューしたかったので、一時的な .tex ファイルを生成してコンパイルする latexmk のラッパーを書いた。</p><p>次のようにセッティングしておく。</p><pre><code>$ tree -a
 .
 ├── .config
 │   └── latexmk.yml
@@ -28,54 +25,79 @@ $ cat main.tex
 \input{introduction}
 \input{related_work}
 </code></pre><p>header.tex には <code>\begin{document}</code> より上の設定を書く。実際のラッパースクリプトは以下。
-.config/latexmk.yml がある場合は、いい感じに <code>\begin{document}</code> &mldr; <code>\end{document}</code> を生成してコンパイルする。</p><div class=highlight><pre class=chroma><code class=language-rb data-lang=rb><span class=ch>#!/usr/bin/env ruby</span>
+.config/latexmk.yml がある場合は、いい感じに <code>\begin{document}</code> &mldr; <code>\end{document}</code> を生成してコンパイルする。</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-rb data-lang=rb><span style=color:#75715e>#!/usr/bin/env ruby</span>
 
-<span class=nb>require</span> <span class=s1>&#39;yaml&#39;</span>
+require <span style=color:#e6db74>&#39;yaml&#39;</span>
 
-<span class=no>CONFIG_PATH</span> <span class=o>=</span> <span class=s1>&#39;./.config/latexmk.yml&#39;</span>
-<span class=no>LATEXMK_PATH</span> <span class=o>=</span> <span class=s1>&#39;/Users/itkq/my_bin/latexmk&#39;</span>
+<span style=color:#66d9ef>CONFIG_PATH</span> <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;./.config/latexmk.yml&#39;</span>
+<span style=color:#66d9ef>LATEXMK_PATH</span> <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;/Users/itkq/my_bin/latexmk&#39;</span>
 
-<span class=k>def</span> <span class=nf>remove_tex_ext</span><span class=p>(</span><span class=n>filename</span><span class=p>)</span>
-  <span class=no>File</span><span class=o>.</span><span class=n>basename</span><span class=p>(</span><span class=n>filename</span><span class=p>,</span> <span class=s2>&#34;.tex&#34;</span><span class=p>)</span>
-<span class=k>end</span>
+<span style=color:#66d9ef>def</span> <span style=color:#a6e22e>remove_tex_ext</span>(filename)
+  <span style=color:#66d9ef>File</span><span style=color:#f92672>.</span>basename(filename, <span style=color:#e6db74>&#34;.tex&#34;</span>)
+<span style=color:#66d9ef>end</span>
 
-<span class=k>unless</span> <span class=no>File</span><span class=o>.</span><span class=n>exist?</span><span class=p>(</span><span class=no>CONFIG_PATH</span><span class=p>)</span>
-  <span class=sb>`</span><span class=si>#{</span><span class=no>LATEXMK_PATH</span><span class=si>}</span><span class=sb> </span><span class=si>#{</span><span class=no>ARGV</span><span class=o>.</span><span class=n>join</span><span class=p>(</span><span class=s2>&#34; &#34;</span><span class=p>)</span><span class=si>}</span><span class=sb>`</span>
-  <span class=nb>exit</span> <span class=vg>$?</span>
-<span class=k>end</span>
+<span style=color:#66d9ef>unless</span> <span style=color:#66d9ef>File</span><span style=color:#f92672>.</span>exist?(<span style=color:#66d9ef>CONFIG_PATH</span>)
+  <span style=color:#e6db74>`</span><span style=color:#e6db74>#{</span><span style=color:#66d9ef>LATEXMK_PATH</span><span style=color:#e6db74>}</span><span style=color:#e6db74> </span><span style=color:#e6db74>#{</span><span style=color:#66d9ef>ARGV</span><span style=color:#f92672>.</span>join(<span style=color:#e6db74>&#34; &#34;</span>)<span style=color:#e6db74>}</span><span style=color:#e6db74>`</span>
+  exit $?
+<span style=color:#66d9ef>end</span>
 
-<span class=n>yaml</span> <span class=o>=</span> <span class=no>YAML</span><span class=o>.</span><span class=n>load_file</span><span class=p>(</span><span class=no>CONFIG_PATH</span><span class=p>)</span>
-<span class=n>output_file</span> <span class=o>=</span> <span class=n>yaml</span><span class=o>[</span><span class=s2>&#34;output_file&#34;</span><span class=o>]</span> <span class=o>||</span> <span class=s2>&#34;./output.tex&#34;</span>
-<span class=n>header</span> <span class=o>=</span> <span class=n>yaml</span><span class=o>[</span><span class=s2>&#34;header&#34;</span><span class=o>]</span> <span class=o>||</span> <span class=s2>&#34;./header.tex&#34;</span>
-<span class=n>include_files</span> <span class=o>=</span> <span class=n>yaml</span><span class=o>[</span><span class=s2>&#34;include_files&#34;</span><span class=o>]</span>
+yaml <span style=color:#f92672>=</span> <span style=color:#66d9ef>YAML</span><span style=color:#f92672>.</span>load_file(<span style=color:#66d9ef>CONFIG_PATH</span>)
+output_file <span style=color:#f92672>=</span> yaml<span style=color:#f92672>[</span><span style=color:#e6db74>&#34;output_file&#34;</span><span style=color:#f92672>]</span> <span style=color:#f92672>||</span> <span style=color:#e6db74>&#34;./output.tex&#34;</span>
+header <span style=color:#f92672>=</span> yaml<span style=color:#f92672>[</span><span style=color:#e6db74>&#34;header&#34;</span><span style=color:#f92672>]</span> <span style=color:#f92672>||</span> <span style=color:#e6db74>&#34;./header.tex&#34;</span>
+include_files <span style=color:#f92672>=</span> yaml<span style=color:#f92672>[</span><span style=color:#e6db74>&#34;include_files&#34;</span><span style=color:#f92672>]</span>
 
-<span class=n>input_file</span> <span class=o>=</span> <span class=no>File</span><span class=o>.</span><span class=n>basename</span><span class=p>(</span><span class=no>ARGV</span><span class=o>[</span><span class=mi>0</span><span class=o>]</span><span class=p>)</span>
-<span class=nb>exit</span> <span class=mi>0</span> <span class=k>if</span> <span class=n>input_file</span> <span class=o>==</span> <span class=n>header</span>
+input_file <span style=color:#f92672>=</span> <span style=color:#66d9ef>File</span><span style=color:#f92672>.</span>basename(<span style=color:#66d9ef>ARGV</span><span style=color:#f92672>[</span><span style=color:#ae81ff>0</span><span style=color:#f92672>]</span>)
+exit <span style=color:#ae81ff>0</span> <span style=color:#66d9ef>if</span> input_file <span style=color:#f92672>==</span> header
 
-<span class=n>includes</span> <span class=o>=</span> <span class=k>if</span> <span class=n>include_files</span><span class=o>.</span><span class=n>include?</span><span class=p>(</span><span class=n>input_file</span><span class=p>)</span>
-             <span class=s2>&#34;</span><span class=se>\\</span><span class=s2>input{</span><span class=si>#{</span><span class=n>remove_tex_ext</span><span class=p>(</span><span class=n>input_file</span><span class=p>)</span><span class=si>}</span><span class=s2>}&#34;</span>
-           <span class=k>else</span>
-             <span class=n>include_files</span><span class=o>.</span><span class=n>map</span><span class=p>{</span><span class=o>|</span><span class=n>f</span><span class=o>|</span> <span class=s2>&#34;</span><span class=se>\\</span><span class=s2>input{</span><span class=si>#{</span><span class=n>remove_tex_ext</span><span class=p>(</span><span class=n>f</span><span class=p>)</span><span class=si>}</span><span class=s2>}&#34;</span><span class=p>}</span><span class=o>.</span><span class=n>join</span><span class=p>(</span><span class=s2>&#34;</span><span class=se>\n</span><span class=s2>&#34;</span><span class=p>)</span>
-           <span class=k>end</span>
+includes <span style=color:#f92672>=</span> <span style=color:#66d9ef>if</span> include_files<span style=color:#f92672>.</span>include?(input_file)
+             <span style=color:#e6db74>&#34;</span><span style=color:#ae81ff>\\</span><span style=color:#e6db74>input{</span><span style=color:#e6db74>#{</span>remove_tex_ext(input_file)<span style=color:#e6db74>}</span><span style=color:#e6db74>}&#34;</span>
+           <span style=color:#66d9ef>else</span>
+             include_files<span style=color:#f92672>.</span>map{<span style=color:#f92672>|</span>f<span style=color:#f92672>|</span> <span style=color:#e6db74>&#34;</span><span style=color:#ae81ff>\\</span><span style=color:#e6db74>input{</span><span style=color:#e6db74>#{</span>remove_tex_ext(f)<span style=color:#e6db74>}</span><span style=color:#e6db74>}&#34;</span>}<span style=color:#f92672>.</span>join(<span style=color:#e6db74>&#34;</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>)
+           <span style=color:#66d9ef>end</span>
 
-<span class=n>body</span> <span class=o>=</span> <span class=s>&lt;&lt;EOF
-</span><span class=s></span><span class=p>\\</span><span class=k>begin</span><span class=p>{</span><span class=n>document</span><span class=p>}</span>
-<span class=c1>#{includes}</span>
-<span class=p>\\</span><span class=k>end</span><span class=p>{</span><span class=n>document</span><span class=p>}</span>
-<span class=no>EOF</span>
+body <span style=color:#f92672>=</span> <span style=color:#e6db74>&lt;&lt;EOF
+</span><span style=color:#e6db74></span>\\<span style=color:#66d9ef>begin</span>{document}
+<span style=color:#75715e>#{includes}</span>
+\\<span style=color:#66d9ef>end</span>{document}
+<span style=color:#66d9ef>EOF</span>
 
-<span class=n>output</span> <span class=o>=</span> <span class=no>File</span><span class=o>.</span><span class=n>read</span><span class=p>(</span><span class=n>header</span><span class=p>)</span> <span class=o>+</span> <span class=n>body</span>
-<span class=no>File</span><span class=o>.</span><span class=n>write</span><span class=p>(</span><span class=n>output_file</span><span class=p>,</span> <span class=n>output</span><span class=p>)</span>
+output <span style=color:#f92672>=</span> <span style=color:#66d9ef>File</span><span style=color:#f92672>.</span>read(header) <span style=color:#f92672>+</span> body
+<span style=color:#66d9ef>File</span><span style=color:#f92672>.</span>write(output_file, output)
 
-<span class=sb>`</span><span class=si>#{</span><span class=no>LATEXMK_PATH</span><span class=si>}</span><span class=sb> </span><span class=si>#{</span><span class=n>output_file</span><span class=si>}</span><span class=sb> &amp;&amp; </span><span class=si>#{</span><span class=no>LATEXMK_PATH</span><span class=si>}</span><span class=sb> -c`</span>
+<span style=color:#e6db74>`</span><span style=color:#e6db74>#{</span><span style=color:#66d9ef>LATEXMK_PATH</span><span style=color:#e6db74>}</span><span style=color:#e6db74> </span><span style=color:#e6db74>#{</span>output_file<span style=color:#e6db74>}</span><span style=color:#e6db74> &amp;&amp; </span><span style=color:#e6db74>#{</span><span style=color:#66d9ef>LATEXMK_PATH</span><span style=color:#e6db74>}</span><span style=color:#e6db74> -c`</span>
 
-</code></pre></div><p>Vim の Quickrun の設定を次のように書く。</p><div class=highlight><pre class=chroma><code class=language-vim data-lang=vim><span class=k>let</span> <span class=nx>g</span>:<span class=nx>quickrun_config</span>[<span class=s1>&#39;tex&#39;</span>] <span class=p>=</span> {<span class=err>
-</span><span class=err></span>\   <span class=s1>&#39;exec&#39;</span>: <span class=s1>&#39;%c %s&#39;</span><span class=p>,</span><span class=err>
-</span><span class=err></span>\   <span class=s1>&#39;command&#39;</span> : <span class=s1>&#39;latexmk_wrapper&#39;</span><span class=p>,</span><span class=err>
-</span><span class=err></span>\}<span class=err>
-</span><span class=err>
-</span><span class=err></span><span class=nx>autocmd</span> <span class=nx>BufWritePost</span> *.<span class=nx>tex</span> :<span class=nx>QuickRun</span> <span class=nx>tex</span><span class=err>
+</code></pre></div><p>Vim の Quickrun の設定を次のように書く。</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-vim data-lang=vim><span style=color:#66d9ef>let</span> <span style=color:#a6e22e>g</span>:<span style=color:#a6e22e>quickrun_config</span>[<span style=color:#e6db74>&#39;tex&#39;</span>] = {<span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span>\   <span style=color:#e6db74>&#39;exec&#39;</span>: <span style=color:#e6db74>&#39;%c %s&#39;</span>,<span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span>\   <span style=color:#e6db74>&#39;command&#39;</span> : <span style=color:#e6db74>&#39;latexmk_wrapper&#39;</span>,<span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span>\}<span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>autocmd</span> <span style=color:#a6e22e>BufWritePost</span> *.<span style=color:#a6e22e>tex</span> :<span style=color:#a6e22e>QuickRun</span> <span style=color:#a6e22e>tex</span><span style=color:#960050;background-color:#1e0010>
 </span></code></pre></div><p>Vim で分割された .tex ファイルを開いている場合に <code>:w</code> すると、そのファイルの情報だけが PDF 化される。
 ファイル間をまたいだ参照は解決されないが、最後に全体を確認すればいいので大した問題にはならないと思う。
-これで修論はできたも同然であろう。</p><br><p class=back-to-posts><a href=https://itkq.jp/blog/>Back to posts</a></p></div><br><div class=disqus><div id=disqus_thread></div><script type=application/javascript>var disqus_config=function(){};(function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById('disqus_thread').innerHTML='Disqus comments not available by default when the website is previewed locally.';return;}
-var d=document,s=d.createElement('script');s.async=true;s.src='//'+"itkq-jp"+'.disqus.com/embed.js';s.setAttribute('data-timestamp',+new Date());(d.head||d.body).appendChild(s);})();</script><noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></div></div></div></section><script type=application/javascript>var doNotTrack=false;if(!doNotTrack){window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;ga('create','UA-71205730-2','auto');ga('send','pageview');}</script><script async src=https://www.google-analytics.com/analytics.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js></script><script type=text/javascript>hljs.initHighlightingOnLoad();</script></body></html>
+これで修論はできたも同然であろう。</p></div></article></div><aside class="col-12 col-md-3 float-left sidebar"><div class="sidebar-item sidebar-pages"><h3>Pages</h3><ul><li><a href=https://itkq.jp/about/>About</a></li><li><a href=https://itkq.jp/index.xml>RSS</a></li></ul></div><div class="sidebar-item sidebar-tags"><h3>Tags</h3><div><span><a href=https://itkq.jp/tags/activity/>Activity</a></span>
+<span><a href=https://itkq.jp/tags/aws/>AWS</a></span>
+<span><a href=https://itkq.jp/tags/chaos-engineering/>Chaos Engineering</a></span>
+<span><a href=https://itkq.jp/tags/contest/>Contest</a></span>
+<span><a href=https://itkq.jp/tags/english/>English</a></span>
+<span><a href=https://itkq.jp/tags/envoy/>Envoy</a></span>
+<span><a href=https://itkq.jp/tags/fluentd/>Fluentd</a></span>
+<span><a href=https://itkq.jp/tags/git/>Git</a></span>
+<span><a href=https://itkq.jp/tags/i/o/>I/O</a></span>
+<span><a href=https://itkq.jp/tags/isucon/>ISUCON</a></span>
+<span><a href=https://itkq.jp/tags/itamae/>Itamae</a></span>
+<span><a href=https://itkq.jp/tags/job-hunting/>Job Hunting</a></span>
+<span><a href=https://itkq.jp/tags/latex/>LaTeX</a></span>
+<span><a href=https://itkq.jp/tags/linux/>Linux</a></span>
+<span><a href=https://itkq.jp/tags/misc/>Misc</a></span>
+<span><a href=https://itkq.jp/tags/operation/>Operation</a></span>
+<span><a href=https://itkq.jp/tags/os/>OS</a></span>
+<span><a href=https://itkq.jp/tags/reading/>Reading</a></span>
+<span><a href=https://itkq.jp/tags/sql/>SQL</a></span>
+<span><a href=https://itkq.jp/tags/tcp/ip/>TCP/IP</a></span>
+<span><a href=https://itkq.jp/tags/thinking/>Thinking</a></span>
+<span><a href=https://itkq.jp/tags/tls/>TLS</a></span>
+<span><a href=https://itkq.jp/tags/tweetbot/>Tweetbot</a></span>
+<span><a href=https://itkq.jp/tags/unix/>Unix</a></span>
+<span><a href=https://itkq.jp/tags/vim/>Vim</a></span>
+<span><a href=https://itkq.jp/tags/x509/>X509</a></span></div></div><div class="sidebar-item sidebar-links"><h3>Links</h3><ul><li><a href=https://github.com/itkq target=_blank><span>GitHub</span></a></li><li><a href=https://keybase.io/itkq target=_blank><span>Keybase</span></a></li><li><a href=https://twitter.com/itkq target=_blank><span>Twitter</span></a></li><li><a href=https://itkq.page.link/wishlist target=_blank><span>Wishlist</span></a></li></ul></div></aside></div><div class=btn><div class=btn-toggle-mode><ion-icon name=contrast></ion-icon></div><div class=btn-scroll-top><ion-icon name=chevron-up></ion-icon></div></div></main><footer><div class="container-lg clearfix"><div class="col-12 footer"><span>&copy; 2020 <a href=https://itkq.jp/></a>|
+Powered by <a href=https://github.com/amzrk2/hugo-theme-fuji/ target=_blank>Fuji-v2</a> & <a href=https://gohugo.io/ target=_blank>Hugo</a></span></div></div></footer><script async type=module src=https://cdn.jsdelivr.net/npm/ionicons@5.0.1/dist/ionicons/ionicons.esm.js></script><script async nomodule src=https://cdn.jsdelivr.net/npm/ionicons@5.0.1/dist/ionicons/ionicons.js></script><script defer src=https://cdn.jsdelivr.net/npm/prismjs@1.20.0/components/prism-core.min.js></script><script defer src=https://cdn.jsdelivr.net/npm/prismjs@1.20.0/plugins/autoloader/prism-autoloader.min.js></script><script defer src=https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js></script><script defer src=https://itkq.jp/assets/js/fuji.min.js></script></body></html>

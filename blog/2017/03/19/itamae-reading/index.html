@@ -1,302 +1,320 @@
-<!doctype html><html lang=ja-jp><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="chrome=1"><meta name=HandheldFriendly content="True"><meta name=MobileOptimized content="320"><meta name=viewport content="width=device-width,initial-scale=1"><meta name=referrer content="no-referrer"><meta name=author content="itkq"><meta name=description content="元々は NeoVim を導入しようとしていた．その一環で，dotfiles を良い感じにしようとしていて，mitamae によるプロビジョニング設定の k0kubun/dotfiles から fork したものを整理していた．NeoBundle の NeoVim 対応版である dein.vim を導入する際，curl が必要だった．itamae の Resource ドキュメントを読むと，http_request というリソースがあった．これ使えば Docker の ADDコマンド的なことできるのかなと思ったけど詳細が書いてなくて，そういえば itamae 自体どうやって動いてるんだと気になったので読むことにした．
-itamae-kitchen/itamae/
-Code reading bin/itamae Itamae::CLI.start を呼ぶ．
-lib/itamae/cli.rb Itamae::CLI は CLI gem Thor を継承している． 実行環境 (backend_type) は3つあり，local, ssh, docker である．必要としていて，かつ他より単純そうな local を続けて読む．
-def local(*recipe_files) if recipe_files.empty? raise &#34;Please specify recipe files.&#34; end run(recipe_files, :local, options) end def run(recipe_files, backend_type, options) runner = Runner.run(recipe_files, backend_type, options) if options[:detailed_exitcode] && runner."><meta name=google-site-verification content="AyWEWMfqdOijgoPW5yMy188xoQqY46L6pFXyd3Jizyc"><meta property="og:title" content="itamae コードリーディング"><meta property="og:description" content="元々は NeoVim を導入しようとしていた．その一環で，dotfiles を良い感じにしようとしていて，mitamae によるプロビジョニング設定の k0kubun/dotfiles から fork したものを整理していた．NeoBundle の NeoVim 対応版である dein.vim を導入する際，curl が必要だった．itamae の Resource ドキュメントを読むと，http_request というリソースがあった．これ使えば Docker の ADDコマンド的なことできるのかなと思ったけど詳細が書いてなくて，そういえば itamae 自体どうやって動いてるんだと気になったので読むことにした．
-itamae-kitchen/itamae/
-Code reading bin/itamae Itamae::CLI.start を呼ぶ．
-lib/itamae/cli.rb Itamae::CLI は CLI gem Thor を継承している． 実行環境 (backend_type) は3つあり，local, ssh, docker である．必要としていて，かつ他より単純そうな local を続けて読む．
-def local(*recipe_files) if recipe_files.empty? raise &#34;Please specify recipe files.&#34; end run(recipe_files, :local, options) end def run(recipe_files, backend_type, options) runner = Runner.run(recipe_files, backend_type, options) if options[:detailed_exitcode] && runner."><meta property="og:type" content="article"><meta property="og:url" content="https://itkq.jp/blog/2017/03/19/itamae-reading/"><meta property="article:published_time" content="2017-03-19T19:25:53+09:00"><meta property="article:modified_time" content="2017-03-19T19:25:53+09:00"><title>itamae コードリーディング</title><link rel=canonical href=https://itkq.jp/blog/2017/03/19/itamae-reading/><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/styles/github.min.css><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Ubuntu+Mono:400,400i,700,700i|Raleway:500"><link rel=stylesheet href="https://itkq.jp/css/reset.css?t=2020-06-20%2016%3a32%3a17.747336376%20%2b0900%20JST%20m%3d%2b0.111785228"><link rel=stylesheet href="https://itkq.jp/css/pygments.css?t=2020-06-20%2016%3a32%3a17.747336376%20%2b0900%20JST%20m%3d%2b0.111785228"><link rel=stylesheet href="https://itkq.jp/css/main.css?t=2020-06-20%2016%3a32%3a17.747336376%20%2b0900%20JST%20m%3d%2b0.111785228"><link rel=stylesheet href="https://itkq.jp/css/override.css?t=2020-06-20%2016%3a32%3a17.747336376%20%2b0900%20JST%20m%3d%2b0.111785228"><link rel="shortcut icon" href=https://itkq.jp/img/leaf.ico></head><body lang=ja><section class=header><div class=container><a href=https://itkq.jp/><img class=avatar src=https://itkq.jp/img/profile.png srcset="https://itkq.jp/img/profile.png 1x"></a><div class=content><a href=https://itkq.jp/><div class=name>itkq</div></a><nav><ul><li class=nav-blog><a href=https://itkq.jp/blog/><span>Blog</span></a></li><li class=nav-about><a href=https://itkq.jp/about/><span>About</span></a></li></ul></nav></div></div></section><section class=icons><div class=container><div class=content><a href=https://github.com/itkq target=_blank rel=noopener><img class=icon src=https://itkq.jp/img/github.svg alt=github></a>
-<a href=https://twitter.com/itkq target=_blank rel=noopener><img class=icon src=https://itkq.jp/img/twitter.svg alt=twitter></a>
-<a href=//linkedin.com/in/takuya-kosugiyama-107402195/ target=_blank rel=noopener><img class=icon src=https://itkq.jp/img/linkedin.svg alt=linkedin></a>
-<a href=mailto:re@itkq.jp><img class=icon src=https://itkq.jp/img/email.svg alt=email></a></div></div></section><section class="main post non-narrow zero-top-spacing"><div class=container><div class=content><div class=front-matter><div class=title-container><div class=page-heading>itamae コードリーディング</div><div class=initials><a href=https://itkq.jp/>ad</a></div></div><div class=meta><div class=date title="Sun Mar 19 2017 19:25:53 JST">Mar 19, 2017</div></div></div><div class=markdown><p>元々は NeoVim を導入しようとしていた．その一環で，dotfiles を良い感じにしようとしていて，mitamae によるプロビジョニング設定の <a href=https://github.com/k0kubun/dotfiles>k0kubun/dotfiles</a> から fork したものを整理していた．NeoBundle の NeoVim 対応版である dein.vim を導入する際，curl が必要だった．itamae の Resource ドキュメントを読むと，<code>http_request</code> というリソースがあった．これ使えば Docker の ADDコマンド的なことできるのかなと思ったけど詳細が書いてなくて，そういえば itamae 自体どうやって動いてるんだと気になったので読むことにした．</p><p><a href=https://github.com/itamae-kitchen/itamae/>itamae-kitchen/itamae/</a></p><h1 id=code-reading>Code reading</h1><h2 id=binitamae>bin/itamae</h2><p><code>Itamae::CLI.start</code> を呼ぶ．</p><h2 id=libitamaeclirb>lib/itamae/cli.rb</h2><p><code>Itamae::CLI</code> は CLI gem <code>Thor</code> を継承している．
-実行環境 (backend_type) は3つあり，local, ssh, docker である．必要としていて，かつ他より単純そうな local を続けて読む．</p><div class=highlight><pre class=chroma><code class=language-ruby data-lang=ruby>  <span class=k>def</span> <span class=nf>local</span><span class=p>(</span><span class=o>*</span><span class=n>recipe_files</span><span class=p>)</span>
-    <span class=k>if</span> <span class=n>recipe_files</span><span class=o>.</span><span class=n>empty?</span>
-      <span class=k>raise</span> <span class=s2>&#34;Please specify recipe files.&#34;</span>
-    <span class=k>end</span>
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=HandheldFriendly content="True"><meta http-equiv=x-ua-compatible content="IE=edge"><meta http-equiv=cache-control content="no-transform"><meta http-equiv=cache-control content="no-siteapp"><meta name=generator content="Hugo 0.71.1"><link rel="shortcut icon" href=https://cdn.jsdelivr.net/gh/amzrk2/poal-jsdelivr@1.2.0/favicons/favicon.ico><title>itamae コードリーディング - itkq.jp</title><meta name=keywords content="Itamae,Reading"><meta property="og:title" content="itamae コードリーディング"><meta property="og:description" content="元々は NeoVim を導入しようとしていた．その一環で，dotfiles を良い感じにしようとしていて，mitamae によるプロビジョニング設定の k0kubun/dotfiles から fork したものを整理していた．NeoBundle の NeoVim 対応版である dein.vim を導入する際，curl が必要だった．itamae の Resource ドキュメントを読むと，http_request というリソースがあった．これ使えば Docker の ADDコマンド的なことできるのかなと思ったけど詳細が書いてなくて，そういえば itamae 自体どうやって動いてるんだと気になったので読むことにした．
+itamae-kitchen/itamae/"><meta property="og:type" content="article"><meta property="og:url" content="https://itkq.jp/blog/2017/03/19/itamae-reading/"><meta property="article:published_time" content="2017-03-19T19:25:53+09:00"><meta property="article:modified_time" content="2017-03-19T19:25:53+09:00"><meta name=twitter:card content="summary"><meta name=twitter:title content="itamae コードリーディング"><meta name=twitter:description content="元々は NeoVim を導入しようとしていた．その一環で，dotfiles を良い感じにしようとしていて，mitamae によるプロビジョニング設定の k0kubun/dotfiles から fork したものを整理していた．NeoBundle の NeoVim 対応版である dein.vim を導入する際，curl が必要だった．itamae の Resource ドキュメントを読むと，http_request というリソースがあった．これ使えば Docker の ADDコマンド的なことできるのかなと思ったけど詳細が書いてなくて，そういえば itamae 自体どうやって動いてるんだと気になったので読むことにした．
+itamae-kitchen/itamae/"><style>@media(prefers-color-scheme:dark){body[data-theme=auto] img{filter:brightness(60%)}}body[data-theme=dark] img{filter:brightness(60%)}</style><link rel=stylesheet href=https://itkq.jp/assets/css/fuji-custom.min.css></head><body data-theme=auto><script data-cfasync=false>var fujiThemeData=localStorage.getItem('fuji_data-theme');if(!fujiThemeData){localStorage.setItem('fuji_data-theme','auto');}else{if(fujiThemeData!=='auto'){document.body.setAttribute('data-theme',fujiThemeData==='dark'?'dark':'light');}}</script><script data-cfasync=false>function browserDetection(ua){if(ua.indexOf('MSIE ')>0||ua.indexOf('Trident/')>0){return true;}
+return false;}
+var ua=window.navigator.userAgent;if(browserDetection(ua)){window.location.href('https:\/\/itkq.jp\/ie\/');}</script><header><div class="container-lg clearfix"><div class="col-12 header"><a class=title-main href=https://itkq.jp/>itkq.jp</a></div></div></header><main><div class="container-lg clearfix"><div class="col-12 col-md-9 float-left content"><article><h2 class="post-item post-title"><a href=https://itkq.jp/blog/2017/03/19/itamae-reading/>itamae コードリーディング</a></h2><div class="post-item post-meta"><span><ion-icon name=today></ion-icon>&nbsp;2017-03-19</span><span><ion-icon name=pricetags></ion-icon>&nbsp;<a href=https://itkq.jp/tags/itamae>Itamae</a>&nbsp;<a href=https://itkq.jp/tags/reading>Reading</a>&nbsp;</span></div><div class="post-content markdown-body"><p>元々は NeoVim を導入しようとしていた．その一環で，dotfiles を良い感じにしようとしていて，mitamae によるプロビジョニング設定の <a href=https://github.com/k0kubun/dotfiles target=_blank>k0kubun/dotfiles</a> から fork したものを整理していた．NeoBundle の NeoVim 対応版である dein.vim を導入する際，curl が必要だった．itamae の Resource ドキュメントを読むと，<code>http_request</code> というリソースがあった．これ使えば Docker の ADDコマンド的なことできるのかなと思ったけど詳細が書いてなくて，そういえば itamae 自体どうやって動いてるんだと気になったので読むことにした．</p><p><a href=https://github.com/itamae-kitchen/itamae/ target=_blank>itamae-kitchen/itamae/</a></p><h1 id=code-reading>Code reading</h1><h2 id=binitamae>bin/itamae</h2><p><code>Itamae::CLI.start</code> を呼ぶ．</p><h2 id=libitamaeclirb>lib/itamae/cli.rb</h2><p><code>Itamae::CLI</code> は CLI gem <code>Thor</code> を継承している．
+実行環境 (backend_type) は3つあり，local, ssh, docker である．必要としていて，かつ他より単純そうな local を続けて読む．</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-ruby data-lang=ruby>  <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>local</span>(<span style=color:#f92672>*</span>recipe_files)
+    <span style=color:#66d9ef>if</span> recipe_files<span style=color:#f92672>.</span>empty?
+      <span style=color:#66d9ef>raise</span> <span style=color:#e6db74>&#34;Please specify recipe files.&#34;</span>
+    <span style=color:#66d9ef>end</span>
 
-    <span class=n>run</span><span class=p>(</span><span class=n>recipe_files</span><span class=p>,</span> <span class=ss>:local</span><span class=p>,</span> <span class=n>options</span><span class=p>)</span>
-  <span class=k>end</span>
-</code></pre></div><div class=highlight><pre class=chroma><code class=language-ruby data-lang=ruby>  <span class=k>def</span> <span class=nf>run</span><span class=p>(</span><span class=n>recipe_files</span><span class=p>,</span> <span class=n>backend_type</span><span class=p>,</span> <span class=n>options</span><span class=p>)</span>
-    <span class=n>runner</span> <span class=o>=</span> <span class=no>Runner</span><span class=o>.</span><span class=n>run</span><span class=p>(</span><span class=n>recipe_files</span><span class=p>,</span> <span class=n>backend_type</span><span class=p>,</span> <span class=n>options</span><span class=p>)</span>
-    <span class=k>if</span> <span class=n>options</span><span class=o>[</span><span class=ss>:detailed_exitcode</span><span class=o>]</span> <span class=o>&amp;&amp;</span> <span class=n>runner</span><span class=o>.</span><span class=n>diff?</span>
-      <span class=nb>exit</span> <span class=mi>2</span>
-    <span class=k>end</span>
-  <span class=k>end</span>
-</code></pre></div><h2 id=libitamaerunnerrb-1>lib/itamae/runner.rb (1)</h2><p>抽象実行環境のクラス <code>Itamae::Backend</code> を new している．</p><div class=highlight><pre class=chroma><code class=language-ruby data-lang=ruby><span class=k>class</span> <span class=nc>Runner</span>
-  <span class=k>class</span> <span class=o>&lt;&lt;</span> <span class=nb>self</span>
-    <span class=k>def</span> <span class=nf>run</span><span class=p>(</span><span class=n>recipe_files</span><span class=p>,</span> <span class=n>backend_type</span><span class=p>,</span> <span class=n>options</span><span class=p>)</span>
-      <span class=no>Itamae</span><span class=o>.</span><span class=n>logger</span><span class=o>.</span><span class=n>info</span> <span class=s2>&#34;Starting Itamae...&#34;</span>
+    run(recipe_files, <span style=color:#e6db74>:local</span>, options)
+  <span style=color:#66d9ef>end</span>
+</code></pre></div><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-ruby data-lang=ruby>  <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>run</span>(recipe_files, backend_type, options)
+    runner <span style=color:#f92672>=</span> <span style=color:#66d9ef>Runner</span><span style=color:#f92672>.</span>run(recipe_files, backend_type, options)
+    <span style=color:#66d9ef>if</span> options<span style=color:#f92672>[</span><span style=color:#e6db74>:detailed_exitcode</span><span style=color:#f92672>]</span> <span style=color:#f92672>&amp;&amp;</span> runner<span style=color:#f92672>.</span>diff?
+      exit <span style=color:#ae81ff>2</span>
+    <span style=color:#66d9ef>end</span>
+  <span style=color:#66d9ef>end</span>
+</code></pre></div><h2 id=libitamaerunnerrb-1>lib/itamae/runner.rb (1)</h2><p>抽象実行環境のクラス <code>Itamae::Backend</code> を new している．</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-ruby data-lang=ruby><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Runner</span>
+  <span style=color:#66d9ef>class</span> <span style=color:#f92672>&lt;&lt;</span> self
+    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>run</span>(recipe_files, backend_type, options)
+      <span style=color:#66d9ef>Itamae</span><span style=color:#f92672>.</span>logger<span style=color:#f92672>.</span>info <span style=color:#e6db74>&#34;Starting Itamae...&#34;</span>
       
-      <span class=n>backend</span> <span class=o>=</span> <span class=no>Backend</span><span class=o>.</span><span class=n>create</span><span class=p>(</span><span class=n>backend_type</span><span class=p>,</span> <span class=n>options</span><span class=p>)</span>
-      <span class=n>runner</span> <span class=o>=</span> <span class=nb>self</span><span class=o>.</span><span class=n>new</span><span class=p>(</span><span class=n>backend</span><span class=p>,</span> <span class=n>options</span><span class=p>)</span>
-      <span class=n>runner</span><span class=o>.</span><span class=n>load_recipes</span><span class=p>(</span><span class=n>recipe_files</span><span class=p>)</span>
-      <span class=n>runner</span><span class=o>.</span><span class=n>run</span>
+      backend <span style=color:#f92672>=</span> <span style=color:#66d9ef>Backend</span><span style=color:#f92672>.</span>create(backend_type, options)
+      runner <span style=color:#f92672>=</span> self<span style=color:#f92672>.</span>new(backend, options)
+      runner<span style=color:#f92672>.</span>load_recipes(recipe_files)
+      runner<span style=color:#f92672>.</span>run
 
-      <span class=n>runner</span>
-    <span class=k>end</span>
-  <span class=k>end</span>
-</code></pre></div><h2 id=libitamaebackendrb>lib/itamae/backend.rb</h2><p>itamae は serverspec のための抽象フレームワークである <a href=https://github.com/mizzy/specinfra>mizzy/specinfra</a> に依存している．local の場合，基本的には <code>/bin/sh</code> を起動して良い感じにコマンド実行して出力を
-得る動作だと思う．</p><div class=highlight><pre class=chroma><code class=language-ruby data-lang=ruby>  <span class=k>def</span> <span class=nf>create_specinfra_backend</span>
-    <span class=no>Specinfra</span><span class=o>::</span><span class=no>Backend</span><span class=o>::</span><span class=no>Exec</span><span class=o>.</span><span class=n>new</span><span class=p>(</span>
-      <span class=ss>shell</span><span class=p>:</span> <span class=vi>@options</span><span class=o>[</span><span class=ss>:shell</span><span class=o>]</span><span class=p>,</span>
-    <span class=p>)</span>
-  <span class=k>end</span>
-</code></pre></div><h2 id=libitamaerunnerrb-2>lib/itamae/runner.rb (2)</h2><div class=highlight><pre class=chroma><code class=language-ruby data-lang=ruby>  <span class=k>def</span> <span class=nf>initialize</span><span class=p>(</span><span class=n>backend</span><span class=p>,</span> <span class=n>options</span><span class=p>)</span>
-    <span class=vi>@backend</span> <span class=o>=</span> <span class=n>backend</span>
-    <span class=vi>@options</span> <span class=o>=</span> <span class=n>options</span>
+      runner
+    <span style=color:#66d9ef>end</span>
+  <span style=color:#66d9ef>end</span>
+</code></pre></div><h2 id=libitamaebackendrb>lib/itamae/backend.rb</h2><p>itamae は serverspec のための抽象フレームワークである <a href=https://github.com/mizzy/specinfra target=_blank>mizzy/specinfra</a> に依存している．local の場合，基本的には <code>/bin/sh</code> を起動して良い感じにコマンド実行して出力を
+得る動作だと思う．</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-ruby data-lang=ruby>  <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>create_specinfra_backend</span>
+    <span style=color:#66d9ef>Specinfra</span><span style=color:#f92672>::</span><span style=color:#66d9ef>Backend</span><span style=color:#f92672>::</span><span style=color:#66d9ef>Exec</span><span style=color:#f92672>.</span>new(
+      <span style=color:#e6db74>shell</span>: @options<span style=color:#f92672>[</span><span style=color:#e6db74>:shell</span><span style=color:#f92672>]</span>,
+    )
+  <span style=color:#66d9ef>end</span>
+</code></pre></div><h2 id=libitamaerunnerrb-2>lib/itamae/runner.rb (2)</h2><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-ruby data-lang=ruby>  <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>initialize</span>(backend, options)
+    @backend <span style=color:#f92672>=</span> backend
+    @options <span style=color:#f92672>=</span> options
 
-    <span class=n>prepare_handler</span>
+    prepare_handler
 
-    <span class=vi>@node</span> <span class=o>=</span> <span class=n>create_node</span>
-    <span class=vi>@tmpdir</span> <span class=o>=</span> <span class=s2>&#34;/tmp/itamae_tmp&#34;</span>
-    <span class=vi>@children</span> <span class=o>=</span> <span class=no>RecipeChildren</span><span class=o>.</span><span class=n>new</span>
-    <span class=vi>@diff</span> <span class=o>=</span> <span class=kp>false</span>
+    @node <span style=color:#f92672>=</span> create_node
+    @tmpdir <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;/tmp/itamae_tmp&#34;</span>
+    @children <span style=color:#f92672>=</span> <span style=color:#66d9ef>RecipeChildren</span><span style=color:#f92672>.</span>new
+    @diff <span style=color:#f92672>=</span> <span style=color:#66d9ef>false</span>
     
-    <span class=vi>@backend</span><span class=o>.</span><span class=n>run_command</span><span class=p>(</span><span class=o>[</span><span class=s2>&#34;mkdir&#34;</span><span class=p>,</span> <span class=s2>&#34;-p&#34;</span><span class=p>,</span> <span class=vi>@tmpdir</span><span class=o>]</span><span class=p>)</span>
-    <span class=vi>@backend</span><span class=o>.</span><span class=n>run_command</span><span class=p>(</span><span class=o>[</span><span class=s2>&#34;chmod&#34;</span><span class=p>,</span> <span class=s2>&#34;777&#34;</span><span class=p>,</span> <span class=vi>@tmpdir</span><span class=o>]</span><span class=p>)</span>
-  <span class=k>end</span>
+    @backend<span style=color:#f92672>.</span>run_command(<span style=color:#f92672>[</span><span style=color:#e6db74>&#34;mkdir&#34;</span>, <span style=color:#e6db74>&#34;-p&#34;</span>, @tmpdir<span style=color:#f92672>]</span>)
+    @backend<span style=color:#f92672>.</span>run_command(<span style=color:#f92672>[</span><span style=color:#e6db74>&#34;chmod&#34;</span>, <span style=color:#e6db74>&#34;777&#34;</span>, @tmpdir<span style=color:#f92672>]</span>)
+  <span style=color:#66d9ef>end</span>
 </code></pre></div><p><code>/tmp/itamae_tmp</code> を <code>777</code> で作成する．その後レシピのロード．
-<code>path</code> が名前空間なら gem, そうでなければ ファイルパスを <code>Itamae::Recipe.new</code> に渡す．</p><div class=highlight><pre class=chroma><code class=language-ruby data-lang=ruby>  <span class=k>def</span> <span class=nf>load_recipes</span><span class=p>(</span><span class=n>paths</span><span class=p>)</span>
-    <span class=n>paths</span><span class=o>.</span><span class=n>each</span> <span class=k>do</span> <span class=o>|</span><span class=n>path</span><span class=o>|</span>
-      <span class=n>expanded_path</span> <span class=o>=</span> <span class=no>File</span><span class=o>.</span><span class=n>expand_path</span><span class=p>(</span><span class=n>path</span><span class=p>)</span>
-      <span class=k>if</span> <span class=n>path</span><span class=o>.</span><span class=n>include?</span><span class=p>(</span><span class=s1>&#39;::&#39;</span><span class=p>)</span>
-        <span class=n>gem_path</span> <span class=o>=</span> <span class=no>Recipe</span><span class=o>.</span><span class=n>find_recipe_in_gem</span><span class=p>(</span><span class=n>path</span><span class=p>)</span>
-        <span class=n>expanded_path</span> <span class=o>=</span> <span class=n>gem_path</span> <span class=k>if</span> <span class=n>gem_path</span>
-      <span class=k>end</span>
+<code>path</code> が名前空間なら gem, そうでなければ ファイルパスを <code>Itamae::Recipe.new</code> に渡す．</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-ruby data-lang=ruby>  <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>load_recipes</span>(paths)
+    paths<span style=color:#f92672>.</span>each <span style=color:#66d9ef>do</span> <span style=color:#f92672>|</span>path<span style=color:#f92672>|</span>
+      expanded_path <span style=color:#f92672>=</span> <span style=color:#66d9ef>File</span><span style=color:#f92672>.</span>expand_path(path)
+      <span style=color:#66d9ef>if</span> path<span style=color:#f92672>.</span>include?(<span style=color:#e6db74>&#39;::&#39;</span>)
+        gem_path <span style=color:#f92672>=</span> <span style=color:#66d9ef>Recipe</span><span style=color:#f92672>.</span>find_recipe_in_gem(path)
+        expanded_path <span style=color:#f92672>=</span> gem_path <span style=color:#66d9ef>if</span> gem_path
+      <span style=color:#66d9ef>end</span>
 
-      <span class=n>recipe</span> <span class=o>=</span> <span class=no>Recipe</span><span class=o>.</span><span class=n>new</span><span class=p>(</span><span class=nb>self</span><span class=p>,</span> <span class=n>expanded_path</span><span class=p>)</span>
-      <span class=n>children</span> <span class=o>&lt;&lt;</span> <span class=n>recipe</span>
-      <span class=n>recipe</span><span class=o>.</span><span class=n>load</span>
-    <span class=k>end</span>
-  <span class=k>end</span>
-</code></pre></div><h2 id=libitamaereciperb-1>lib/itamae/recipe.rb (1)</h2><div class=highlight><pre class=chroma><code class=language-ruby data-lang=ruby> <span class=k>def</span> <span class=nf>initialize</span><span class=p>(</span><span class=n>runner</span><span class=p>,</span> <span class=n>path</span><span class=p>)</span>
-    <span class=vi>@runner</span> <span class=o>=</span> <span class=n>runner</span>
-    <span class=vi>@path</span> <span class=o>=</span> <span class=n>path</span>
-    <span class=vi>@delayed_notifications</span> <span class=o>=</span> <span class=o>[]</span>
-    <span class=vi>@children</span> <span class=o>=</span> <span class=no>RecipeChildren</span><span class=o>.</span><span class=n>new</span>
-  <span class=k>end</span>
-</code></pre></div><div class=highlight><pre class=chroma><code class=language-ruby data-lang=ruby>  <span class=k>def</span> <span class=nf>load</span><span class=p>(</span><span class=n>vars</span> <span class=o>=</span> <span class=p>{})</span>
-    <span class=n>context</span> <span class=o>=</span> <span class=no>EvalContext</span><span class=o>.</span><span class=n>new</span><span class=p>(</span><span class=nb>self</span><span class=p>,</span> <span class=n>vars</span><span class=p>)</span>
-    <span class=n>context</span><span class=o>.</span><span class=n>instance_eval</span><span class=p>(</span><span class=no>File</span><span class=o>.</span><span class=n>read</span><span class=p>(</span><span class=n>path</span><span class=p>),</span> <span class=n>path</span><span class=p>,</span> <span class=mi>1</span><span class=p>)</span>
-  <span class=k>end</span>
-</code></pre></div><p><code>EvalContext</code> が登場する．<code>BasicObject#instance_eval</code> は，Rubyコードの文字列と，レシーバのコンテキストを含むブロックを評価する．このメソッドにより，レシピファイルの内容を1行目から評価していく．</p><h3 id=evalcontext>EvalContext</h3><p><code>Basic#respond_to_missing?</code> は <code>BasicObject#method_missing</code> で反応するメソッドを定義．</p><div class=highlight><pre class=chroma><code class=language-ruby data-lang=ruby>    <span class=k>class</span> <span class=nc>EvalContext</span>
-      <span class=k>def</span> <span class=nf>initialize</span><span class=p>(</span><span class=n>recipe</span><span class=p>,</span> <span class=n>vars</span><span class=p>)</span>
-        <span class=vi>@recipe</span> <span class=o>=</span> <span class=n>recipe</span>
+      recipe <span style=color:#f92672>=</span> <span style=color:#66d9ef>Recipe</span><span style=color:#f92672>.</span>new(self, expanded_path)
+      children <span style=color:#f92672>&lt;&lt;</span> recipe
+      recipe<span style=color:#f92672>.</span>load
+    <span style=color:#66d9ef>end</span>
+  <span style=color:#66d9ef>end</span>
+</code></pre></div><h2 id=libitamaereciperb-1>lib/itamae/recipe.rb (1)</h2><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-ruby data-lang=ruby> <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>initialize</span>(runner, path)
+    @runner <span style=color:#f92672>=</span> runner
+    @path <span style=color:#f92672>=</span> path
+    @delayed_notifications <span style=color:#f92672>=</span> <span style=color:#f92672>[]</span>
+    @children <span style=color:#f92672>=</span> <span style=color:#66d9ef>RecipeChildren</span><span style=color:#f92672>.</span>new
+  <span style=color:#66d9ef>end</span>
+</code></pre></div><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-ruby data-lang=ruby>  <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>load</span>(vars <span style=color:#f92672>=</span> {})
+    context <span style=color:#f92672>=</span> <span style=color:#66d9ef>EvalContext</span><span style=color:#f92672>.</span>new(self, vars)
+    context<span style=color:#f92672>.</span>instance_eval(<span style=color:#66d9ef>File</span><span style=color:#f92672>.</span>read(path), path, <span style=color:#ae81ff>1</span>)
+  <span style=color:#66d9ef>end</span>
+</code></pre></div><p><code>EvalContext</code> が登場する．<code>BasicObject#instance_eval</code> は，Rubyコードの文字列と，レシーバのコンテキストを含むブロックを評価する．このメソッドにより，レシピファイルの内容を1行目から評価していく．</p><h3 id=evalcontext>EvalContext</h3><p><code>Basic#respond_to_missing?</code> は <code>BasicObject#method_missing</code> で反応するメソッドを定義．</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-ruby data-lang=ruby>    <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>EvalContext</span>
+      <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>initialize</span>(recipe, vars)
+        @recipe <span style=color:#f92672>=</span> recipe
 
-        <span class=n>vars</span><span class=o>.</span><span class=n>each</span> <span class=k>do</span> <span class=o>|</span><span class=n>k</span><span class=p>,</span> <span class=n>v</span><span class=o>|</span>
-          <span class=n>define_singleton_method</span><span class=p>(</span><span class=n>k</span><span class=p>)</span> <span class=p>{</span> <span class=n>v</span> <span class=p>}</span>
-        <span class=k>end</span>
-      <span class=k>end</span>
+        vars<span style=color:#f92672>.</span>each <span style=color:#66d9ef>do</span> <span style=color:#f92672>|</span>k, v<span style=color:#f92672>|</span>
+          define_singleton_method(k) { v }
+        <span style=color:#66d9ef>end</span>
+      <span style=color:#66d9ef>end</span>
 
-      <span class=k>def</span> <span class=nf>respond_to_missing?</span><span class=p>(</span><span class=nb>method</span><span class=p>,</span> <span class=n>include_private</span> <span class=o>=</span> <span class=kp>false</span><span class=p>)</span>
-        <span class=no>Resource</span><span class=o>.</span><span class=n>get_resource_class</span><span class=p>(</span><span class=nb>method</span><span class=p>)</span>
-        <span class=kp>true</span>
-      <span class=k>rescue</span> <span class=no>NameError</span>
-        <span class=kp>false</span>
-      <span class=k>end</span>
-</code></pre></div><p><code>[resource] do ... end</code> のための <code>BasicObject#method_missing</code>．</p><div class=highlight><pre class=chroma><code class=language-ruby data-lang=ruby>      <span class=k>def</span> <span class=nf>method_missing</span><span class=p>(</span><span class=o>*</span><span class=n>args</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>block</span><span class=p>)</span>
-        <span class=k>super</span> <span class=k>unless</span> <span class=n>args</span><span class=o>.</span><span class=n>size</span> <span class=o>==</span> <span class=mi>2</span>
+      <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>respond_to_missing?</span>(method, include_private <span style=color:#f92672>=</span> <span style=color:#66d9ef>false</span>)
+        <span style=color:#66d9ef>Resource</span><span style=color:#f92672>.</span>get_resource_class(method)
+        <span style=color:#66d9ef>true</span>
+      <span style=color:#66d9ef>rescue</span> <span style=color:#66d9ef>NameError</span>
+        <span style=color:#66d9ef>false</span>
+      <span style=color:#66d9ef>end</span>
+</code></pre></div><p><code>[resource] do ... end</code> のための <code>BasicObject#method_missing</code>．</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-ruby data-lang=ruby>      <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>method_missing</span>(<span style=color:#f92672>*</span>args, <span style=color:#f92672>&amp;</span>block)
+        <span style=color:#66d9ef>super</span> <span style=color:#66d9ef>unless</span> args<span style=color:#f92672>.</span>size <span style=color:#f92672>==</span> <span style=color:#ae81ff>2</span>
 
-        <span class=nb>method</span><span class=p>,</span> <span class=nb>name</span> <span class=o>=</span> <span class=n>args</span>
-        <span class=k>begin</span>
-          <span class=n>klass</span> <span class=o>=</span> <span class=no>Resource</span><span class=o>.</span><span class=n>get_resource_class</span><span class=p>(</span><span class=nb>method</span><span class=p>)</span>
-        <span class=k>rescue</span> <span class=no>NameError</span>
-          <span class=k>super</span>
-        <span class=k>end</span>
+        method, name <span style=color:#f92672>=</span> args
+        <span style=color:#66d9ef>begin</span>
+          klass <span style=color:#f92672>=</span> <span style=color:#66d9ef>Resource</span><span style=color:#f92672>.</span>get_resource_class(method)
+        <span style=color:#66d9ef>rescue</span> <span style=color:#66d9ef>NameError</span>
+          <span style=color:#66d9ef>super</span>
+        <span style=color:#66d9ef>end</span>
 
-        <span class=n>resource</span> <span class=o>=</span> <span class=n>klass</span><span class=o>.</span><span class=n>new</span><span class=p>(</span><span class=vi>@recipe</span><span class=p>,</span> <span class=nb>name</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>block</span><span class=p>)</span>
-        <span class=vi>@recipe</span><span class=o>.</span><span class=n>children</span> <span class=o>&lt;&lt;</span> <span class=n>resource</span>
-      <span class=k>end</span>
-</code></pre></div><p>なんで <code>args.size == 2</code> なのかと思ったけどリファレンスによると</p><div class=highlight><pre class=chroma><code class=language-ruby data-lang=ruby>  <span class=k>def</span> <span class=nf>method_missing</span><span class=p>(</span><span class=n>method_name</span> <span class=o>[</span><span class=p>,</span> <span class=o>*</span><span class=n>args</span> <span class=o>[</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>block</span><span class=o>]]</span><span class=p>)</span>
+        resource <span style=color:#f92672>=</span> klass<span style=color:#f92672>.</span>new(@recipe, name, <span style=color:#f92672>&amp;</span>block)
+        @recipe<span style=color:#f92672>.</span>children <span style=color:#f92672>&lt;&lt;</span> resource
+      <span style=color:#66d9ef>end</span>
+</code></pre></div><p>なんで <code>args.size == 2</code> なのかと思ったけどリファレンスによると</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-ruby data-lang=ruby>  <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>method_missing</span>(method_name <span style=color:#f92672>[</span>, <span style=color:#f92672>*</span>args <span style=color:#f92672>[</span>, <span style=color:#f92672>&amp;</span>block<span style=color:#f92672>]]</span>)
 </code></pre></div><p>で method_name も含まれていたからだった．ちょっとわかりづらかった．
-続いて <code>Itamae::Resource#get_resource_class</code> が呼ばれる．</p><h2 id=libitamaeresourcerb>lib/itamae/resource.rb</h2><div class=highlight><pre class=chroma><code class=language-ruby data-lang=ruby>  <span class=k>module</span> <span class=nn>Resource</span>
-    <span class=k>class</span> <span class=o>&lt;&lt;</span> <span class=nb>self</span>
-      <span class=k>def</span> <span class=nf>to_camel_case</span><span class=p>(</span><span class=n>str</span><span class=p>)</span>
-        <span class=n>str</span><span class=o>.</span><span class=n>split</span><span class=p>(</span><span class=s1>&#39;_&#39;</span><span class=p>)</span><span class=o>.</span><span class=n>map</span> <span class=p>{</span><span class=o>|</span><span class=n>part</span><span class=o>|</span> <span class=n>part</span><span class=o>.</span><span class=n>capitalize</span><span class=p>}</span><span class=o>.</span><span class=n>join</span>
-      <span class=k>end</span>
+続いて <code>Itamae::Resource#get_resource_class</code> が呼ばれる．</p><h2 id=libitamaeresourcerb>lib/itamae/resource.rb</h2><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-ruby data-lang=ruby>  <span style=color:#66d9ef>module</span> Resource
+    <span style=color:#66d9ef>class</span> <span style=color:#f92672>&lt;&lt;</span> self
+      <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>to_camel_case</span>(str)
+        str<span style=color:#f92672>.</span>split(<span style=color:#e6db74>&#39;_&#39;</span>)<span style=color:#f92672>.</span>map {<span style=color:#f92672>|</span>part<span style=color:#f92672>|</span> part<span style=color:#f92672>.</span>capitalize}<span style=color:#f92672>.</span>join
+      <span style=color:#66d9ef>end</span>
 
-      <span class=k>def</span> <span class=nf>get_resource_class</span><span class=p>(</span><span class=nb>method</span><span class=p>)</span>
-        <span class=k>begin</span>
-          <span class=nb>self</span><span class=o>.</span><span class=n>const_get</span><span class=p>(</span><span class=n>to_camel_case</span><span class=p>(</span><span class=nb>method</span><span class=o>.</span><span class=n>to_s</span><span class=p>))</span>
-        <span class=k>rescue</span> <span class=no>NameError</span>
-          <span class=k>begin</span>
-            <span class=o>::</span><span class=no>Itamae</span><span class=o>::</span><span class=no>Plugin</span><span class=o>::</span><span class=no>Resource</span><span class=o>.</span><span class=n>const_get</span><span class=p>(</span><span class=n>to_camel_case</span><span class=p>(</span><span class=nb>method</span><span class=o>.</span><span class=n>to_s</span><span class=p>))</span>
-          <span class=k>rescue</span> <span class=no>NameError</span>
-            <span class=n>autoload_plugin_resource</span><span class=p>(</span><span class=nb>method</span><span class=p>)</span>
-          <span class=k>end</span>
-        <span class=k>end</span>
-      <span class=k>end</span>
+      <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>get_resource_class</span>(method)
+        <span style=color:#66d9ef>begin</span>
+          self<span style=color:#f92672>.</span>const_get(to_camel_case(method<span style=color:#f92672>.</span>to_s))
+        <span style=color:#66d9ef>rescue</span> <span style=color:#66d9ef>NameError</span>
+          <span style=color:#66d9ef>begin</span>
+            <span style=color:#f92672>::</span><span style=color:#66d9ef>Itamae</span><span style=color:#f92672>::</span><span style=color:#66d9ef>Plugin</span><span style=color:#f92672>::</span><span style=color:#66d9ef>Resource</span><span style=color:#f92672>.</span>const_get(to_camel_case(method<span style=color:#f92672>.</span>to_s))
+          <span style=color:#66d9ef>rescue</span> <span style=color:#66d9ef>NameError</span>
+            autoload_plugin_resource(method)
+          <span style=color:#66d9ef>end</span>
+        <span style=color:#66d9ef>end</span>
+      <span style=color:#66d9ef>end</span>
 </code></pre></div><p><code>Module#const_get</code> は定数の値を取り出す．メソッドを文字列化してCamelケースに変換してアクセスする．</p><h2 id=libitamaereciperb-2>lib/itamae/recipe.rb (2)</h2><p>取得した <code>Itamae::Resource::</code> 以下のクラスに，ブロックを渡して new する．
-インスタンス変数 <code>@children</code> (<code>RecipeChildren</code>) に突っ込んでいく．</p><div class=highlight><pre class=chroma><code class=language-ruby data-lang=ruby>        <span class=n>resource</span> <span class=o>=</span> <span class=n>klass</span><span class=o>.</span><span class=n>new</span><span class=p>(</span><span class=vi>@recipe</span><span class=p>,</span> <span class=nb>name</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>block</span><span class=p>)</span>
-        <span class=vi>@recipe</span><span class=o>.</span><span class=n>children</span> <span class=o>&lt;&lt;</span> <span class=n>resource</span>
-</code></pre></div><h2 id=libitamaerecipe_chilrenrb-1>lib/itamae/recipe_chilren.rb (1)</h2><p>当然ながら <code>Array</code> を継承している．</p><div class=highlight><pre class=chroma><code class=language-ruby data-lang=ruby><span class=k>module</span> <span class=nn>Itamae</span>
-  <span class=k>class</span> <span class=nc>RecipeChildren</span> <span class=o>&lt;</span> <span class=nb>Array</span>
-</code></pre></div><h2 id=libitamaerunnerrb-3>lib/itamae/runner.rb (3)</h2><p>レシピをロードした．続いて実行．</p><div class=highlight><pre class=chroma><code class=language-ruby data-lang=ruby><span class=k>class</span> <span class=nc>Runner</span>
-  <span class=k>class</span> <span class=o>&lt;&lt;</span> <span class=nb>self</span>
-    <span class=k>def</span> <span class=nf>run</span><span class=p>(</span><span class=n>recipe_files</span><span class=p>,</span> <span class=n>backend_type</span><span class=p>,</span> <span class=n>options</span><span class=p>)</span>
-      <span class=o>...</span>
-      <span class=n>runner</span><span class=o>.</span><span class=n>run</span>
+インスタンス変数 <code>@children</code> (<code>RecipeChildren</code>) に突っ込んでいく．</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-ruby data-lang=ruby>        resource <span style=color:#f92672>=</span> klass<span style=color:#f92672>.</span>new(@recipe, name, <span style=color:#f92672>&amp;</span>block)
+        @recipe<span style=color:#f92672>.</span>children <span style=color:#f92672>&lt;&lt;</span> resource
+</code></pre></div><h2 id=libitamaerecipe_chilrenrb-1>lib/itamae/recipe_chilren.rb (1)</h2><p>当然ながら <code>Array</code> を継承している．</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-ruby data-lang=ruby><span style=color:#66d9ef>module</span> Itamae
+  <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>RecipeChildren</span> <span style=color:#f92672>&lt;</span> Array
+</code></pre></div><h2 id=libitamaerunnerrb-3>lib/itamae/runner.rb (3)</h2><p>レシピをロードした．続いて実行．</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-ruby data-lang=ruby><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Runner</span>
+  <span style=color:#66d9ef>class</span> <span style=color:#f92672>&lt;&lt;</span> self
+    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>run</span>(recipe_files, backend_type, options)
+      <span style=color:#f92672>...</span>
+      runner<span style=color:#f92672>.</span>run
 
-      <span class=n>runner</span>
-    <span class=k>end</span>
-  <span class=k>end</span>
+      runner
+    <span style=color:#66d9ef>end</span>
+  <span style=color:#66d9ef>end</span>
     
-  <span class=k>def</span> <span class=nf>run</span>
-    <span class=k>if</span> <span class=n>recipe_graph_file</span> <span class=o>=</span> <span class=n>options</span><span class=o>[</span><span class=ss>:recipe_graph</span><span class=o>]</span>
-      <span class=n>save_dependency_graph</span><span class=p>(</span><span class=n>recipe_graph_file</span><span class=p>)</span>
-    <span class=k>end</span>
+  <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>run</span>
+    <span style=color:#66d9ef>if</span> recipe_graph_file <span style=color:#f92672>=</span> options<span style=color:#f92672>[</span><span style=color:#e6db74>:recipe_graph</span><span style=color:#f92672>]</span>
+      save_dependency_graph(recipe_graph_file)
+    <span style=color:#66d9ef>end</span>
 
-    <span class=n>children</span><span class=o>.</span><span class=n>run</span>
-    <span class=vi>@backend</span><span class=o>.</span><span class=n>finalize</span>
+    children<span style=color:#f92672>.</span>run
+    @backend<span style=color:#f92672>.</span>finalize
 
-    <span class=k>if</span> <span class=n>profile</span> <span class=o>=</span> <span class=n>options</span><span class=o>[</span><span class=ss>:profile</span><span class=o>]</span>
-      <span class=n>save_profile</span><span class=p>(</span><span class=n>profile</span><span class=p>)</span>
-    <span class=k>end</span>
-  <span class=k>end</span>
-</code></pre></div><h2 id=libitamaerecipe_chilrenrb-2>lib/itamae/recipe_chilren.rb (2)</h2><p>各リソースについて実行．</p><div class=highlight><pre class=chroma><code class=language-ruby data-lang=ruby>  <span class=k>class</span> <span class=nc>RecipeChildren</span>
-    <span class=k>def</span> <span class=nf>run</span>
-      <span class=nb>self</span><span class=o>.</span><span class=n>each</span> <span class=k>do</span> <span class=o>|</span><span class=n>resource</span><span class=o>|</span>
-        <span class=n>resource</span><span class=o>.</span><span class=n>run</span>
-      <span class=k>end</span>
-    <span class=k>end</span>
-</code></pre></div><h2 id=libitamaeresourcebaserb>lib/itamae/resource/base.rb</h2><p>リソースは <code>Itamae::Resource::Base</code> を継承して実装されている．</p><div class=highlight><pre class=chroma><code class=language-ruby data-lang=ruby><span class=k>module</span> <span class=nn>Itamae</span>
-  <span class=k>module</span> <span class=nn>Resource</span>
-    <span class=k>class</span> <span class=nc>Base</span>
-      <span class=k>def</span> <span class=nf>initialize</span><span class=p>(</span><span class=n>recipe</span><span class=p>,</span> <span class=n>resource_name</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>block</span><span class=p>)</span>
-        <span class=n>clear_current_attributes</span>
-        <span class=vi>@recipe</span> <span class=o>=</span> <span class=n>recipe</span>
-        <span class=vi>@resource_name</span> <span class=o>=</span> <span class=n>resource_name</span>
-        <span class=vi>@updated</span> <span class=o>=</span> <span class=kp>false</span>
+    <span style=color:#66d9ef>if</span> profile <span style=color:#f92672>=</span> options<span style=color:#f92672>[</span><span style=color:#e6db74>:profile</span><span style=color:#f92672>]</span>
+      save_profile(profile)
+    <span style=color:#66d9ef>end</span>
+  <span style=color:#66d9ef>end</span>
+</code></pre></div><h2 id=libitamaerecipe_chilrenrb-2>lib/itamae/recipe_chilren.rb (2)</h2><p>各リソースについて実行．</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-ruby data-lang=ruby>  <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>RecipeChildren</span>
+    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>run</span>
+      self<span style=color:#f92672>.</span>each <span style=color:#66d9ef>do</span> <span style=color:#f92672>|</span>resource<span style=color:#f92672>|</span>
+        resource<span style=color:#f92672>.</span>run
+      <span style=color:#66d9ef>end</span>
+    <span style=color:#66d9ef>end</span>
+</code></pre></div><h2 id=libitamaeresourcebaserb>lib/itamae/resource/base.rb</h2><p>リソースは <code>Itamae::Resource::Base</code> を継承して実装されている．</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-ruby data-lang=ruby><span style=color:#66d9ef>module</span> Itamae
+  <span style=color:#66d9ef>module</span> Resource
+    <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Base</span>
+      <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>initialize</span>(recipe, resource_name, <span style=color:#f92672>&amp;</span>block)
+        clear_current_attributes
+        @recipe <span style=color:#f92672>=</span> recipe
+        @resource_name <span style=color:#f92672>=</span> resource_name
+        @updated <span style=color:#f92672>=</span> <span style=color:#66d9ef>false</span>
 
-        <span class=no>EvalContext</span><span class=o>.</span><span class=n>new</span><span class=p>(</span><span class=nb>self</span><span class=p>)</span><span class=o>.</span><span class=n>tap</span> <span class=k>do</span> <span class=o>|</span><span class=n>context</span><span class=o>|</span>
-          <span class=n>context</span><span class=o>.</span><span class=n>instance_eval</span><span class=p>(</span><span class=o>&amp;</span><span class=n>block</span><span class=p>)</span> <span class=k>if</span> <span class=n>block</span>
-          <span class=vi>@attributes</span> <span class=o>=</span> <span class=n>context</span><span class=o>.</span><span class=n>attributes</span>
-          <span class=vi>@notifications</span> <span class=o>=</span> <span class=n>context</span><span class=o>.</span><span class=n>notifications</span>
-          <span class=vi>@subscriptions</span> <span class=o>=</span> <span class=n>context</span><span class=o>.</span><span class=n>subscriptions</span>
-          <span class=vi>@only_if_command</span> <span class=o>=</span> <span class=n>context</span><span class=o>.</span><span class=n>only_if_command</span>
-          <span class=vi>@not_if_command</span> <span class=o>=</span> <span class=n>context</span><span class=o>.</span><span class=n>not_if_command</span>
-          <span class=vi>@verify_commands</span> <span class=o>=</span> <span class=n>context</span><span class=o>.</span><span class=n>verify_commands</span>
-        <span class=k>end</span>
+        <span style=color:#66d9ef>EvalContext</span><span style=color:#f92672>.</span>new(self)<span style=color:#f92672>.</span>tap <span style=color:#66d9ef>do</span> <span style=color:#f92672>|</span>context<span style=color:#f92672>|</span>
+          context<span style=color:#f92672>.</span>instance_eval(<span style=color:#f92672>&amp;</span>block) <span style=color:#66d9ef>if</span> block
+          @attributes <span style=color:#f92672>=</span> context<span style=color:#f92672>.</span>attributes
+          @notifications <span style=color:#f92672>=</span> context<span style=color:#f92672>.</span>notifications
+          @subscriptions <span style=color:#f92672>=</span> context<span style=color:#f92672>.</span>subscriptions
+          @only_if_command <span style=color:#f92672>=</span> context<span style=color:#f92672>.</span>only_if_command
+          @not_if_command <span style=color:#f92672>=</span> context<span style=color:#f92672>.</span>not_if_command
+          @verify_commands <span style=color:#f92672>=</span> context<span style=color:#f92672>.</span>verify_commands
+        <span style=color:#66d9ef>end</span>
 
-        <span class=n>process_attributes</span>
-      <span class=k>end</span>
-</code></pre></div><p>ここでも <code>EvalContext</code> が登場する．<code>Object#tap</code> は，レシーバ自身を返すメソッド．良い感じに簡潔に書きたい場合に使うっぽい．</p><div class=highlight><pre class=chroma><code class=language-ruby data-lang=ruby>      <span class=k>class</span> <span class=nc>EvalContext</span>
-        <span class=o>...</span>
+        process_attributes
+      <span style=color:#66d9ef>end</span>
+</code></pre></div><p>ここでも <code>EvalContext</code> が登場する．<code>Object#tap</code> は，レシーバ自身を返すメソッド．良い感じに簡潔に書きたい場合に使うっぽい．</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-ruby data-lang=ruby>      <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>EvalContext</span>
+        <span style=color:#f92672>...</span>
         
-        <span class=k>def</span> <span class=nf>initialize</span><span class=p>(</span><span class=n>resource</span><span class=p>)</span>
-          <span class=vi>@resource</span> <span class=o>=</span> <span class=n>resource</span>
+        <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>initialize</span>(resource)
+          @resource <span style=color:#f92672>=</span> resource
 
-          <span class=vi>@attributes</span> <span class=o>=</span> <span class=no>Hashie</span><span class=o>::</span><span class=no>Mash</span><span class=o>.</span><span class=n>new</span>
-          <span class=vi>@notifications</span> <span class=o>=</span> <span class=o>[]</span>
-          <span class=vi>@subscriptions</span> <span class=o>=</span> <span class=o>[]</span>
-          <span class=vi>@verify_commands</span> <span class=o>=</span> <span class=o>[]</span>
-        <span class=k>end</span>
+          @attributes <span style=color:#f92672>=</span> <span style=color:#66d9ef>Hashie</span><span style=color:#f92672>::</span><span style=color:#66d9ef>Mash</span><span style=color:#f92672>.</span>new
+          @notifications <span style=color:#f92672>=</span> <span style=color:#f92672>[]</span>
+          @subscriptions <span style=color:#f92672>=</span> <span style=color:#f92672>[]</span>
+          @verify_commands <span style=color:#f92672>=</span> <span style=color:#f92672>[]</span>
+        <span style=color:#66d9ef>end</span>
 
-        <span class=k>def</span> <span class=nf>respond_to_missing?</span><span class=p>(</span><span class=nb>method</span><span class=p>,</span> <span class=n>include_private</span> <span class=o>=</span> <span class=kp>false</span><span class=p>)</span>
-          <span class=vi>@resource</span><span class=o>.</span><span class=n>class</span><span class=o>.</span><span class=n>defined_attributes</span><span class=o>.</span><span class=n>has_key?</span><span class=p>(</span><span class=nb>method</span><span class=p>)</span> <span class=o>||</span> <span class=k>super</span>
-        <span class=k>end</span>
+        <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>respond_to_missing?</span>(method, include_private <span style=color:#f92672>=</span> <span style=color:#66d9ef>false</span>)
+          @resource<span style=color:#f92672>.</span>class<span style=color:#f92672>.</span>defined_attributes<span style=color:#f92672>.</span>has_key?(method) <span style=color:#f92672>||</span> <span style=color:#66d9ef>super</span>
+        <span style=color:#66d9ef>end</span>
 
-        <span class=k>def</span> <span class=nf>method_missing</span><span class=p>(</span><span class=nb>method</span><span class=p>,</span> <span class=o>*</span><span class=n>args</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>block</span><span class=p>)</span>
-          <span class=k>if</span> <span class=vi>@resource</span><span class=o>.</span><span class=n>class</span><span class=o>.</span><span class=n>defined_attributes</span><span class=o>[</span><span class=nb>method</span><span class=o>]</span>
-            <span class=k>if</span> <span class=n>args</span><span class=o>.</span><span class=n>size</span> <span class=o>==</span> <span class=mi>1</span>
-              <span class=k>return</span> <span class=vi>@attributes</span><span class=o>[</span><span class=nb>method</span><span class=o>]</span> <span class=o>=</span> <span class=n>args</span><span class=o>.</span><span class=n>first</span>
-            <span class=k>elsif</span> <span class=n>args</span><span class=o>.</span><span class=n>size</span> <span class=o>==</span> <span class=mi>0</span> <span class=o>&amp;&amp;</span> <span class=nb>block_given?</span>
-              <span class=k>return</span> <span class=vi>@attributes</span><span class=o>[</span><span class=nb>method</span><span class=o>]</span> <span class=o>=</span> <span class=n>block</span>
-            <span class=k>elsif</span> <span class=n>args</span><span class=o>.</span><span class=n>size</span> <span class=o>==</span> <span class=mi>0</span>
-              <span class=k>return</span> <span class=vi>@attributes</span><span class=o>[</span><span class=nb>method</span><span class=o>]</span>
-            <span class=k>end</span>
-          <span class=k>end</span>
+        <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>method_missing</span>(method, <span style=color:#f92672>*</span>args, <span style=color:#f92672>&amp;</span>block)
+          <span style=color:#66d9ef>if</span> @resource<span style=color:#f92672>.</span>class<span style=color:#f92672>.</span>defined_attributes<span style=color:#f92672>[</span>method<span style=color:#f92672>]</span>
+            <span style=color:#66d9ef>if</span> args<span style=color:#f92672>.</span>size <span style=color:#f92672>==</span> <span style=color:#ae81ff>1</span>
+              <span style=color:#66d9ef>return</span> @attributes<span style=color:#f92672>[</span>method<span style=color:#f92672>]</span> <span style=color:#f92672>=</span> args<span style=color:#f92672>.</span>first
+            <span style=color:#66d9ef>elsif</span> args<span style=color:#f92672>.</span>size <span style=color:#f92672>==</span> <span style=color:#ae81ff>0</span> <span style=color:#f92672>&amp;&amp;</span> block_given?
+              <span style=color:#66d9ef>return</span> @attributes<span style=color:#f92672>[</span>method<span style=color:#f92672>]</span> <span style=color:#f92672>=</span> block
+            <span style=color:#66d9ef>elsif</span> args<span style=color:#f92672>.</span>size <span style=color:#f92672>==</span> <span style=color:#ae81ff>0</span>
+              <span style=color:#66d9ef>return</span> @attributes<span style=color:#f92672>[</span>method<span style=color:#f92672>]</span>
+            <span style=color:#66d9ef>end</span>
+          <span style=color:#66d9ef>end</span>
 
-          <span class=k>super</span>
-        <span class=k>end</span>
-</code></pre></div><p><code>Itamae::Resource::Base#defined_attributes</code> によって，attribute を定義できる．サブクラスからは呼ぶと上書きではなく追加で定義される．</p><div class=highlight><pre class=chroma><code class=language-ruby data-lang=ruby>      <span class=k>class</span> <span class=o>&lt;&lt;</span> <span class=nb>self</span>
-        <span class=kp>attr_reader</span> <span class=ss>:defined_attributes</span>
+          <span style=color:#66d9ef>super</span>
+        <span style=color:#66d9ef>end</span>
+</code></pre></div><p><code>Itamae::Resource::Base#defined_attributes</code> によって，attribute を定義できる．サブクラスからは呼ぶと上書きではなく追加で定義される．</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-ruby data-lang=ruby>      <span style=color:#66d9ef>class</span> <span style=color:#f92672>&lt;&lt;</span> self
+        <span style=color:#66d9ef>attr_reader</span> <span style=color:#e6db74>:defined_attributes</span>
 
-        <span class=k>def</span> <span class=nf>define_attribute</span><span class=p>(</span><span class=nb>name</span><span class=p>,</span> <span class=n>options</span><span class=p>)</span>
-          <span class=n>current</span> <span class=o>=</span> <span class=vi>@defined_attributes</span><span class=o>[</span><span class=nb>name</span><span class=o>.</span><span class=n>to_sym</span><span class=o>]</span> <span class=o>||</span> <span class=p>{}</span>
-          <span class=vi>@defined_attributes</span><span class=o>[</span><span class=nb>name</span><span class=o>.</span><span class=n>to_sym</span><span class=o>]</span> <span class=o>=</span> <span class=n>current</span><span class=o>.</span><span class=n>merge</span><span class=p>(</span><span class=n>options</span><span class=p>)</span>
-        <span class=k>end</span>
-      <span class=k>end</span>
-</code></pre></div><div class=highlight><pre class=chroma><code class=language-ruby data-lang=ruby>      <span class=k>def</span> <span class=nf>run</span><span class=p>(</span><span class=n>specific_action</span> <span class=o>=</span> <span class=kp>nil</span><span class=p>)</span>
-        <span class=n>runner</span><span class=o>.</span><span class=n>handler</span><span class=o>.</span><span class=n>event</span><span class=p>(</span><span class=ss>:resource</span><span class=p>,</span> <span class=ss>resource_type</span><span class=p>:</span> <span class=n>resource_type</span><span class=p>,</span> <span class=ss>resource_name</span><span class=p>:</span> <span class=n>resource_name</span><span class=p>)</span> <span class=k>do</span>
-          <span class=no>Itamae</span><span class=o>.</span><span class=n>logger</span><span class=o>.</span><span class=n>debug</span> <span class=s2>&#34;</span><span class=si>#{</span><span class=n>resource_type</span><span class=si>}</span><span class=s2>[</span><span class=si>#{</span><span class=n>resource_name</span><span class=si>}</span><span class=s2>]&#34;</span>
+        <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>define_attribute</span>(name, options)
+          current <span style=color:#f92672>=</span> @defined_attributes<span style=color:#f92672>[</span>name<span style=color:#f92672>.</span>to_sym<span style=color:#f92672>]</span> <span style=color:#f92672>||</span> {}
+          @defined_attributes<span style=color:#f92672>[</span>name<span style=color:#f92672>.</span>to_sym<span style=color:#f92672>]</span> <span style=color:#f92672>=</span> current<span style=color:#f92672>.</span>merge(options)
+        <span style=color:#66d9ef>end</span>
+      <span style=color:#66d9ef>end</span>
+</code></pre></div><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-ruby data-lang=ruby>      <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>run</span>(specific_action <span style=color:#f92672>=</span> <span style=color:#66d9ef>nil</span>)
+        runner<span style=color:#f92672>.</span>handler<span style=color:#f92672>.</span>event(<span style=color:#e6db74>:resource</span>, <span style=color:#e6db74>resource_type</span>: resource_type, <span style=color:#e6db74>resource_name</span>: resource_name) <span style=color:#66d9ef>do</span>
+          <span style=color:#66d9ef>Itamae</span><span style=color:#f92672>.</span>logger<span style=color:#f92672>.</span>debug <span style=color:#e6db74>&#34;</span><span style=color:#e6db74>#{</span>resource_type<span style=color:#e6db74>}</span><span style=color:#e6db74>[</span><span style=color:#e6db74>#{</span>resource_name<span style=color:#e6db74>}</span><span style=color:#e6db74>]&#34;</span>
 
-          <span class=no>Itamae</span><span class=o>.</span><span class=n>logger</span><span class=o>.</span><span class=n>with_indent_if</span><span class=p>(</span><span class=no>Itamae</span><span class=o>.</span><span class=n>logger</span><span class=o>.</span><span class=n>debug?</span><span class=p>)</span> <span class=k>do</span>
-            <span class=k>if</span> <span class=n>do_not_run_because_of_only_if?</span>
-              <span class=no>Itamae</span><span class=o>.</span><span class=n>logger</span><span class=o>.</span><span class=n>debug</span> <span class=s2>&#34;</span><span class=si>#{</span><span class=n>resource_type</span><span class=si>}</span><span class=s2>[</span><span class=si>#{</span><span class=n>resource_name</span><span class=si>}</span><span class=s2>] Execution skipped because of only_if attribute&#34;</span>
-              <span class=k>return</span>
-            <span class=k>elsif</span> <span class=n>do_not_run_because_of_not_if?</span>
-              <span class=no>Itamae</span><span class=o>.</span><span class=n>logger</span><span class=o>.</span><span class=n>debug</span> <span class=s2>&#34;</span><span class=si>#{</span><span class=n>resource_type</span><span class=si>}</span><span class=s2>[</span><span class=si>#{</span><span class=n>resource_name</span><span class=si>}</span><span class=s2>] Execution skipped because of not_if attribute&#34;</span>
-              <span class=k>return</span>
-            <span class=k>end</span>
+          <span style=color:#66d9ef>Itamae</span><span style=color:#f92672>.</span>logger<span style=color:#f92672>.</span>with_indent_if(<span style=color:#66d9ef>Itamae</span><span style=color:#f92672>.</span>logger<span style=color:#f92672>.</span>debug?) <span style=color:#66d9ef>do</span>
+            <span style=color:#66d9ef>if</span> do_not_run_because_of_only_if?
+              <span style=color:#66d9ef>Itamae</span><span style=color:#f92672>.</span>logger<span style=color:#f92672>.</span>debug <span style=color:#e6db74>&#34;</span><span style=color:#e6db74>#{</span>resource_type<span style=color:#e6db74>}</span><span style=color:#e6db74>[</span><span style=color:#e6db74>#{</span>resource_name<span style=color:#e6db74>}</span><span style=color:#e6db74>] Execution skipped because of only_if attribute&#34;</span>
+              <span style=color:#66d9ef>return</span>
+            <span style=color:#66d9ef>elsif</span> do_not_run_because_of_not_if?
+              <span style=color:#66d9ef>Itamae</span><span style=color:#f92672>.</span>logger<span style=color:#f92672>.</span>debug <span style=color:#e6db74>&#34;</span><span style=color:#e6db74>#{</span>resource_type<span style=color:#e6db74>}</span><span style=color:#e6db74>[</span><span style=color:#e6db74>#{</span>resource_name<span style=color:#e6db74>}</span><span style=color:#e6db74>] Execution skipped because of not_if attribute&#34;</span>
+              <span style=color:#66d9ef>return</span>
+            <span style=color:#66d9ef>end</span>
 
-            <span class=o>[</span><span class=n>specific_action</span> <span class=o>||</span> <span class=n>attributes</span><span class=o>.</span><span class=n>action</span><span class=o>].</span><span class=n>flatten</span><span class=o>.</span><span class=n>each</span> <span class=k>do</span> <span class=o>|</span><span class=n>action</span><span class=o>|</span>
-              <span class=n>run_action</span><span class=p>(</span><span class=n>action</span><span class=p>)</span>
-            <span class=k>end</span>
+            <span style=color:#f92672>[</span>specific_action <span style=color:#f92672>||</span> attributes<span style=color:#f92672>.</span>action<span style=color:#f92672>].</span>flatten<span style=color:#f92672>.</span>each <span style=color:#66d9ef>do</span> <span style=color:#f92672>|</span>action<span style=color:#f92672>|</span>
+              run_action(action)
+            <span style=color:#66d9ef>end</span>
 
-            <span class=n>verify</span> <span class=k>unless</span> <span class=n>runner</span><span class=o>.</span><span class=n>dry_run?</span>
-            <span class=k>if</span> <span class=n>updated?</span>
-              <span class=n>runner</span><span class=o>.</span><span class=n>diff_found!</span>
-              <span class=n>notify</span>
-              <span class=n>runner</span><span class=o>.</span><span class=n>handler</span><span class=o>.</span><span class=n>event</span><span class=p>(</span><span class=ss>:resource_updated</span><span class=p>)</span>
-            <span class=k>end</span>
-          <span class=k>end</span>
+            verify <span style=color:#66d9ef>unless</span> runner<span style=color:#f92672>.</span>dry_run?
+            <span style=color:#66d9ef>if</span> updated?
+              runner<span style=color:#f92672>.</span>diff_found!
+              notify
+              runner<span style=color:#f92672>.</span>handler<span style=color:#f92672>.</span>event(<span style=color:#e6db74>:resource_updated</span>)
+            <span style=color:#66d9ef>end</span>
+          <span style=color:#66d9ef>end</span>
 
-          <span class=vi>@updated</span> <span class=o>=</span> <span class=kp>false</span>
-        <span class=k>end</span>
-      <span class=k>rescue</span> <span class=no>Backend</span><span class=o>::</span><span class=no>CommandExecutionError</span>
-        <span class=no>Itamae</span><span class=o>.</span><span class=n>logger</span><span class=o>.</span><span class=n>error</span> <span class=s2>&#34;</span><span class=si>#{</span><span class=n>resource_type</span><span class=si>}</span><span class=s2>[</span><span class=si>#{</span><span class=n>resource_name</span><span class=si>}</span><span class=s2>] Failed.&#34;</span>
-        <span class=nb>exit</span> <span class=mi>2</span>
-      <span class=k>end</span>
+          @updated <span style=color:#f92672>=</span> <span style=color:#66d9ef>false</span>
+        <span style=color:#66d9ef>end</span>
+      <span style=color:#66d9ef>rescue</span> <span style=color:#66d9ef>Backend</span><span style=color:#f92672>::</span><span style=color:#66d9ef>CommandExecutionError</span>
+        <span style=color:#66d9ef>Itamae</span><span style=color:#f92672>.</span>logger<span style=color:#f92672>.</span>error <span style=color:#e6db74>&#34;</span><span style=color:#e6db74>#{</span>resource_type<span style=color:#e6db74>}</span><span style=color:#e6db74>[</span><span style=color:#e6db74>#{</span>resource_name<span style=color:#e6db74>}</span><span style=color:#e6db74>] Failed.&#34;</span>
+        exit <span style=color:#ae81ff>2</span>
+      <span style=color:#66d9ef>end</span>
 </code></pre></div><p><code>Itamae::Runner#handler</code> は <code>Itamae::HandlerProxy</code> のインスタンスである．
 Proxy パターンであり，ロギングしているだけ．
-実際の処理は <code>Itamae::Resource::Base#run_action</code> が行う．</p><div class=highlight><pre class=chroma><code class=language-ruby data-lang=ruby>      <span class=k>def</span> <span class=nf>run_action</span><span class=p>(</span><span class=n>action</span><span class=p>)</span>
-        <span class=n>runner</span><span class=o>.</span><span class=n>handler</span><span class=o>.</span><span class=n>event</span><span class=p>(</span><span class=ss>:action</span><span class=p>,</span> <span class=ss>action</span><span class=p>:</span> <span class=n>action</span><span class=p>)</span> <span class=k>do</span>
-          <span class=n>original_attributes</span> <span class=o>=</span> <span class=vi>@attributes</span> <span class=c1># preserve and restore later</span>
-          <span class=vi>@current_action</span> <span class=o>=</span> <span class=n>action</span>
+実際の処理は <code>Itamae::Resource::Base#run_action</code> が行う．</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-ruby data-lang=ruby>      <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>run_action</span>(action)
+        runner<span style=color:#f92672>.</span>handler<span style=color:#f92672>.</span>event(<span style=color:#e6db74>:action</span>, <span style=color:#e6db74>action</span>: action) <span style=color:#66d9ef>do</span>
+          original_attributes <span style=color:#f92672>=</span> @attributes <span style=color:#75715e># preserve and restore later</span>
+          @current_action <span style=color:#f92672>=</span> action
 
-          <span class=n>clear_current_attributes</span>
+          clear_current_attributes
 
-          <span class=no>Itamae</span><span class=o>.</span><span class=n>logger</span><span class=o>.</span><span class=n>debug</span> <span class=s2>&#34;</span><span class=si>#{</span><span class=n>resource_type</span><span class=si>}</span><span class=s2>[</span><span class=si>#{</span><span class=n>resource_name</span><span class=si>}</span><span class=s2>] action: </span><span class=si>#{</span><span class=n>action</span><span class=si>}</span><span class=s2>&#34;</span>
+          <span style=color:#66d9ef>Itamae</span><span style=color:#f92672>.</span>logger<span style=color:#f92672>.</span>debug <span style=color:#e6db74>&#34;</span><span style=color:#e6db74>#{</span>resource_type<span style=color:#e6db74>}</span><span style=color:#e6db74>[</span><span style=color:#e6db74>#{</span>resource_name<span style=color:#e6db74>}</span><span style=color:#e6db74>] action: </span><span style=color:#e6db74>#{</span>action<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>
 
-          <span class=k>return</span> <span class=k>if</span> <span class=n>action</span> <span class=o>==</span> <span class=ss>:nothing</span>
+          <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>if</span> action <span style=color:#f92672>==</span> <span style=color:#e6db74>:nothing</span>
 
-          <span class=no>Itamae</span><span class=o>.</span><span class=n>logger</span><span class=o>.</span><span class=n>with_indent_if</span><span class=p>(</span><span class=no>Itamae</span><span class=o>.</span><span class=n>logger</span><span class=o>.</span><span class=n>debug?</span><span class=p>)</span> <span class=k>do</span>
-            <span class=no>Itamae</span><span class=o>.</span><span class=n>logger</span><span class=o>.</span><span class=n>debug</span> <span class=s2>&#34;(in pre_action)&#34;</span>
-            <span class=n>pre_action</span>
+          <span style=color:#66d9ef>Itamae</span><span style=color:#f92672>.</span>logger<span style=color:#f92672>.</span>with_indent_if(<span style=color:#66d9ef>Itamae</span><span style=color:#f92672>.</span>logger<span style=color:#f92672>.</span>debug?) <span style=color:#66d9ef>do</span>
+            <span style=color:#66d9ef>Itamae</span><span style=color:#f92672>.</span>logger<span style=color:#f92672>.</span>debug <span style=color:#e6db74>&#34;(in pre_action)&#34;</span>
+            pre_action
 
-            <span class=no>Itamae</span><span class=o>.</span><span class=n>logger</span><span class=o>.</span><span class=n>debug</span> <span class=s2>&#34;(in set_current_attributes)&#34;</span>
-            <span class=n>set_current_attributes</span>
+            <span style=color:#66d9ef>Itamae</span><span style=color:#f92672>.</span>logger<span style=color:#f92672>.</span>debug <span style=color:#e6db74>&#34;(in set_current_attributes)&#34;</span>
+            set_current_attributes
 
-            <span class=no>Itamae</span><span class=o>.</span><span class=n>logger</span><span class=o>.</span><span class=n>debug</span> <span class=s2>&#34;(in show_differences)&#34;</span>
-            <span class=n>show_differences</span>
+            <span style=color:#66d9ef>Itamae</span><span style=color:#f92672>.</span>logger<span style=color:#f92672>.</span>debug <span style=color:#e6db74>&#34;(in show_differences)&#34;</span>
+            show_differences
 
-            <span class=n>method_name</span> <span class=o>=</span> <span class=s2>&#34;action_</span><span class=si>#{</span><span class=n>action</span><span class=si>}</span><span class=s2>&#34;</span>
-            <span class=k>if</span> <span class=n>runner</span><span class=o>.</span><span class=n>dry_run?</span>
-              <span class=k>unless</span> <span class=nb>respond_to?</span><span class=p>(</span><span class=n>method_name</span><span class=p>)</span>
-                <span class=no>Itamae</span><span class=o>.</span><span class=n>logger</span><span class=o>.</span><span class=n>error</span> <span class=s2>&#34;action </span><span class=si>#{</span><span class=n>action</span><span class=o>.</span><span class=n>inspect</span><span class=si>}</span><span class=s2> is unavailable&#34;</span>
-              <span class=k>end</span>
-            <span class=k>else</span>
-              <span class=n>args</span> <span class=o>=</span> <span class=o>[</span><span class=n>method_name</span><span class=o>]</span>
-              <span class=k>if</span> <span class=nb>method</span><span class=p>(</span><span class=n>method_name</span><span class=p>)</span><span class=o>.</span><span class=n>arity</span> <span class=o>==</span> <span class=mi>1</span>
-                <span class=c1># for plugin compatibility</span>
-                <span class=n>args</span> <span class=o>&lt;&lt;</span> <span class=n>runner</span><span class=o>.</span><span class=n>options</span>
-              <span class=k>end</span>
+            method_name <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;action_</span><span style=color:#e6db74>#{</span>action<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>
+            <span style=color:#66d9ef>if</span> runner<span style=color:#f92672>.</span>dry_run?
+              <span style=color:#66d9ef>unless</span> respond_to?(method_name)
+                <span style=color:#66d9ef>Itamae</span><span style=color:#f92672>.</span>logger<span style=color:#f92672>.</span>error <span style=color:#e6db74>&#34;action </span><span style=color:#e6db74>#{</span>action<span style=color:#f92672>.</span>inspect<span style=color:#e6db74>}</span><span style=color:#e6db74> is unavailable&#34;</span>
+              <span style=color:#66d9ef>end</span>
+            <span style=color:#66d9ef>else</span>
+              args <span style=color:#f92672>=</span> <span style=color:#f92672>[</span>method_name<span style=color:#f92672>]</span>
+              <span style=color:#66d9ef>if</span> method(method_name)<span style=color:#f92672>.</span>arity <span style=color:#f92672>==</span> <span style=color:#ae81ff>1</span>
+                <span style=color:#75715e># for plugin compatibility</span>
+                args <span style=color:#f92672>&lt;&lt;</span> runner<span style=color:#f92672>.</span>options
+              <span style=color:#66d9ef>end</span>
 
-              <span class=n>public_send</span><span class=p>(</span><span class=o>*</span><span class=n>args</span><span class=p>)</span>
-            <span class=k>end</span>
+              public_send(<span style=color:#f92672>*</span>args)
+            <span style=color:#66d9ef>end</span>
 
-            <span class=k>if</span> <span class=n>different?</span>
-              <span class=n>updated!</span>
-              <span class=n>runner</span><span class=o>.</span><span class=n>handler</span><span class=o>.</span><span class=n>event</span><span class=p>(</span><span class=ss>:attribute_changed</span><span class=p>,</span> <span class=ss>from</span><span class=p>:</span> <span class=vi>@current_attributes</span><span class=p>,</span> <span class=ss>to</span><span class=p>:</span> <span class=vi>@attributes</span><span class=p>)</span>
-            <span class=k>end</span>
-          <span class=k>end</span>
+            <span style=color:#66d9ef>if</span> different?
+              updated!
+              runner<span style=color:#f92672>.</span>handler<span style=color:#f92672>.</span>event(<span style=color:#e6db74>:attribute_changed</span>, <span style=color:#e6db74>from</span>: @current_attributes, <span style=color:#e6db74>to</span>: @attributes)
+            <span style=color:#66d9ef>end</span>
+          <span style=color:#66d9ef>end</span>
 
-          <span class=vi>@current_action</span> <span class=o>=</span> <span class=kp>nil</span>
-          <span class=vi>@attributes</span> <span class=o>=</span> <span class=n>original_attributes</span>
-        <span class=k>end</span>
-      <span class=k>end</span>
+          @current_action <span style=color:#f92672>=</span> <span style=color:#66d9ef>nil</span>
+          @attributes <span style=color:#f92672>=</span> original_attributes
+        <span style=color:#66d9ef>end</span>
+      <span style=color:#66d9ef>end</span>
 </code></pre></div><p><code>method_name = "action_#{action}"</code> というメソッドを実装してアクションを追加できる．<code>#pre_action</code>, <code>#set_current_attributes</code> などサブクラスで使えるフックが用意されている．
-コマンドの発行は，サブクラスにて <code>#run_command</code> を使う．</p><h1 id=http_request-リソース>http_request リソース</h1><p>上記を踏まえて，lib/resources/http_request.rb を読んだら，単純に HTTP request を送るもので，HTTP でファイルを取ってくる感じではなかった．<code>file</code> リソースにもそんな感じの機能はなかったので，<code>execute</code> リソースでやってくださいということだと理解した．</p><br><p class=back-to-posts><a href=https://itkq.jp/blog/>Back to posts</a></p></div><br><div class=disqus><div id=disqus_thread></div><script type=application/javascript>var disqus_config=function(){};(function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById('disqus_thread').innerHTML='Disqus comments not available by default when the website is previewed locally.';return;}
-var d=document,s=d.createElement('script');s.async=true;s.src='//'+"itkq-jp"+'.disqus.com/embed.js';s.setAttribute('data-timestamp',+new Date());(d.head||d.body).appendChild(s);})();</script><noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></div></div></div></section><script type=application/javascript>var doNotTrack=false;if(!doNotTrack){window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;ga('create','UA-71205730-2','auto');ga('send','pageview');}</script><script async src=https://www.google-analytics.com/analytics.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js></script><script type=text/javascript>hljs.initHighlightingOnLoad();</script></body></html>
+コマンドの発行は，サブクラスにて <code>#run_command</code> を使う．</p><h1 id=http_request-リソース>http_request リソース</h1><p>上記を踏まえて，lib/resources/http_request.rb を読んだら，単純に HTTP request を送るもので，HTTP でファイルを取ってくる感じではなかった．<code>file</code> リソースにもそんな感じの機能はなかったので，<code>execute</code> リソースでやってくださいということだと理解した．</p></div></article></div><aside class="col-12 col-md-3 float-left sidebar"><div class="sidebar-item sidebar-pages"><h3>Pages</h3><ul><li><a href=https://itkq.jp/about/>About</a></li><li><a href=https://itkq.jp/index.xml>RSS</a></li></ul></div><div class="sidebar-item sidebar-tags"><h3>Tags</h3><div><span><a href=https://itkq.jp/tags/activity/>Activity</a></span>
+<span><a href=https://itkq.jp/tags/aws/>AWS</a></span>
+<span><a href=https://itkq.jp/tags/chaos-engineering/>Chaos Engineering</a></span>
+<span><a href=https://itkq.jp/tags/contest/>Contest</a></span>
+<span><a href=https://itkq.jp/tags/english/>English</a></span>
+<span><a href=https://itkq.jp/tags/envoy/>Envoy</a></span>
+<span><a href=https://itkq.jp/tags/fluentd/>Fluentd</a></span>
+<span><a href=https://itkq.jp/tags/git/>Git</a></span>
+<span><a href=https://itkq.jp/tags/i/o/>I/O</a></span>
+<span><a href=https://itkq.jp/tags/isucon/>ISUCON</a></span>
+<span><a href=https://itkq.jp/tags/itamae/>Itamae</a></span>
+<span><a href=https://itkq.jp/tags/job-hunting/>Job Hunting</a></span>
+<span><a href=https://itkq.jp/tags/latex/>LaTeX</a></span>
+<span><a href=https://itkq.jp/tags/linux/>Linux</a></span>
+<span><a href=https://itkq.jp/tags/misc/>Misc</a></span>
+<span><a href=https://itkq.jp/tags/operation/>Operation</a></span>
+<span><a href=https://itkq.jp/tags/os/>OS</a></span>
+<span><a href=https://itkq.jp/tags/reading/>Reading</a></span>
+<span><a href=https://itkq.jp/tags/sql/>SQL</a></span>
+<span><a href=https://itkq.jp/tags/tcp/ip/>TCP/IP</a></span>
+<span><a href=https://itkq.jp/tags/thinking/>Thinking</a></span>
+<span><a href=https://itkq.jp/tags/tls/>TLS</a></span>
+<span><a href=https://itkq.jp/tags/tweetbot/>Tweetbot</a></span>
+<span><a href=https://itkq.jp/tags/unix/>Unix</a></span>
+<span><a href=https://itkq.jp/tags/vim/>Vim</a></span>
+<span><a href=https://itkq.jp/tags/x509/>X509</a></span></div></div><div class="sidebar-item sidebar-links"><h3>Links</h3><ul><li><a href=https://github.com/itkq target=_blank><span>GitHub</span></a></li><li><a href=https://keybase.io/itkq target=_blank><span>Keybase</span></a></li><li><a href=https://twitter.com/itkq target=_blank><span>Twitter</span></a></li><li><a href=https://itkq.page.link/wishlist target=_blank><span>Wishlist</span></a></li></ul></div></aside></div><div class=btn><div class=btn-toggle-mode><ion-icon name=contrast></ion-icon></div><div class=btn-scroll-top><ion-icon name=chevron-up></ion-icon></div></div></main><footer><div class="container-lg clearfix"><div class="col-12 footer"><span>&copy; 2020 <a href=https://itkq.jp/></a>|
+Powered by <a href=https://github.com/amzrk2/hugo-theme-fuji/ target=_blank>Fuji-v2</a> & <a href=https://gohugo.io/ target=_blank>Hugo</a></span></div></div></footer><script async type=module src=https://cdn.jsdelivr.net/npm/ionicons@5.0.1/dist/ionicons/ionicons.esm.js></script><script async nomodule src=https://cdn.jsdelivr.net/npm/ionicons@5.0.1/dist/ionicons/ionicons.js></script><script defer src=https://cdn.jsdelivr.net/npm/prismjs@1.20.0/components/prism-core.min.js></script><script defer src=https://cdn.jsdelivr.net/npm/prismjs@1.20.0/plugins/autoloader/prism-autoloader.min.js></script><script defer src=https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js></script><script defer src=https://itkq.jp/assets/js/fuji.min.js></script></body></html>

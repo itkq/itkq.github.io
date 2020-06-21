@@ -1,60 +1,41 @@
-<!doctype html><html lang=ja-jp><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="chrome=1"><meta name=HandheldFriendly content="True"><meta name=MobileOptimized content="320"><meta name=viewport content="width=device-width,initial-scale=1"><meta name=referrer content="no-referrer"><meta name=author content="itkq"><meta name=description content="最近自分の Git に対する知識の無さを感じてきたので本を読もうと思っていたら、ちょうど借りる機会があったのでまとめた。Git コマンドの操作をより自信を持って行えるようになった気がする。
- Git の基本的な概念 Git リポジトリは、作業ディレクトリと .git ディレクトリから成る。
-git init により生成される Git リポジトリ (.git ディレクトリ) には、リビジョンと履歴の情報がすべて詰まっている。Git リポジトリが保持するデータ構造は、オブジェクト格納領域とインデックスの2つ。
-Git オブジェクト Git オブジェクト格納領域は、オブジェクトの内容に SHA1 を適用して得られたハッシュ値から生成されるユニークな オブジェクト ID (名前) をもつ。 オブジェクト格納領域 (.git/objects) に配置される Git オブジェクトは、次の4種類である。
-  blob
-ファイルの各バージョンは blob (binary large object) で表される。blob にはファイルのデータのみが含まれており、メタデータやファイル名は含まれていない。 Git はファイル名を気にしないため、同じ内容のファイルが複数あっても、それは1つの blob で表される。
-  tree
-tree オブジェクトは、1階層分のディレクトリ情報を表現する。 tree は blob のオブジェクトID とパス名を持っている。 コミットが指す tree オブジェクトの ID さえ分かれば、再帰的に子の tree を辿ることで、そのコミットの状態のファイルをすべて取り出せる。
-  commit
-コミットオブジェクトは、リポジトリに加えられた変更のメタデータを持つ。"><meta name=google-site-verification content="AyWEWMfqdOijgoPW5yMy188xoQqY46L6pFXyd3Jizyc"><meta property="og:title" content="実用Git 読んだ"><meta property="og:description" content="最近自分の Git に対する知識の無さを感じてきたので本を読もうと思っていたら、ちょうど借りる機会があったのでまとめた。Git コマンドの操作をより自信を持って行えるようになった気がする。
- Git の基本的な概念 Git リポジトリは、作業ディレクトリと .git ディレクトリから成る。
-git init により生成される Git リポジトリ (.git ディレクトリ) には、リビジョンと履歴の情報がすべて詰まっている。Git リポジトリが保持するデータ構造は、オブジェクト格納領域とインデックスの2つ。
-Git オブジェクト Git オブジェクト格納領域は、オブジェクトの内容に SHA1 を適用して得られたハッシュ値から生成されるユニークな オブジェクト ID (名前) をもつ。 オブジェクト格納領域 (.git/objects) に配置される Git オブジェクトは、次の4種類である。
-  blob
-ファイルの各バージョンは blob (binary large object) で表される。blob にはファイルのデータのみが含まれており、メタデータやファイル名は含まれていない。 Git はファイル名を気にしないため、同じ内容のファイルが複数あっても、それは1つの blob で表される。
-  tree
-tree オブジェクトは、1階層分のディレクトリ情報を表現する。 tree は blob のオブジェクトID とパス名を持っている。 コミットが指す tree オブジェクトの ID さえ分かれば、再帰的に子の tree を辿ることで、そのコミットの状態のファイルをすべて取り出せる。
-  commit
-コミットオブジェクトは、リポジトリに加えられた変更のメタデータを持つ。"><meta property="og:type" content="article"><meta property="og:url" content="https://itkq.jp/blog/2016/04/04/%E5%AE%9F%E7%94%A8git-%E8%AA%AD%E3%82%93%E3%81%A0/"><meta property="article:published_time" content="2016-04-04T02:20:25+09:00"><meta property="article:modified_time" content="2016-04-04T02:20:25+09:00"><title>実用Git 読んだ</title><link rel=canonical href=https://itkq.jp/blog/2016/04/04/%E5%AE%9F%E7%94%A8git-%E8%AA%AD%E3%82%93%E3%81%A0/><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/styles/github.min.css><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Ubuntu+Mono:400,400i,700,700i|Raleway:500"><link rel=stylesheet href="https://itkq.jp/css/reset.css?t=2020-06-20%2016%3a32%3a17.748463068%20%2b0900%20JST%20m%3d%2b0.112911820"><link rel=stylesheet href="https://itkq.jp/css/pygments.css?t=2020-06-20%2016%3a32%3a17.748463068%20%2b0900%20JST%20m%3d%2b0.112911820"><link rel=stylesheet href="https://itkq.jp/css/main.css?t=2020-06-20%2016%3a32%3a17.748463068%20%2b0900%20JST%20m%3d%2b0.112911820"><link rel=stylesheet href="https://itkq.jp/css/override.css?t=2020-06-20%2016%3a32%3a17.748463068%20%2b0900%20JST%20m%3d%2b0.112911820"><link rel="shortcut icon" href=https://itkq.jp/img/leaf.ico></head><body lang=ja><section class=header><div class=container><a href=https://itkq.jp/><img class=avatar src=https://itkq.jp/img/profile.png srcset="https://itkq.jp/img/profile.png 1x"></a><div class=content><a href=https://itkq.jp/><div class=name>itkq</div></a><nav><ul><li class=nav-blog><a href=https://itkq.jp/blog/><span>Blog</span></a></li><li class=nav-about><a href=https://itkq.jp/about/><span>About</span></a></li></ul></nav></div></div></section><section class=icons><div class=container><div class=content><a href=https://github.com/itkq target=_blank rel=noopener><img class=icon src=https://itkq.jp/img/github.svg alt=github></a>
-<a href=https://twitter.com/itkq target=_blank rel=noopener><img class=icon src=https://itkq.jp/img/twitter.svg alt=twitter></a>
-<a href=//linkedin.com/in/takuya-kosugiyama-107402195/ target=_blank rel=noopener><img class=icon src=https://itkq.jp/img/linkedin.svg alt=linkedin></a>
-<a href=mailto:re@itkq.jp><img class=icon src=https://itkq.jp/img/email.svg alt=email></a></div></div></section><section class="main post non-narrow zero-top-spacing"><div class=container><div class=content><div class=front-matter><div class=title-container><div class=page-heading>実用Git 読んだ</div><div class=initials><a href=https://itkq.jp/>ad</a></div></div><div class=meta><div class=date title="Mon Apr 4 2016 02:20:25 JST">Apr 4, 2016</div></div></div><div class=markdown><p>最近自分の Git に対する知識の無さを感じてきたので本を読もうと思っていたら、ちょうど借りる機会があったのでまとめた。Git コマンドの操作をより自信を持って行えるようになった気がする。</p><hr><h1 id=git-の基本的な概念>Git の基本的な概念</h1><p>Git リポジトリは、作業ディレクトリと <code>.git</code> ディレクトリから成る。</p><p><code>git init</code> により生成される <strong>Git リポジトリ</strong> (<code>.git</code> ディレクトリ) には、リビジョンと履歴の情報がすべて詰まっている。Git リポジトリが保持するデータ構造は、<strong>オブジェクト格納領域</strong>と<strong>インデックス</strong>の2つ。</p><h2 id=git-オブジェクト>Git オブジェクト</h2><p>Git オブジェクト格納領域は、オブジェクトの内容に SHA1 を適用して得られたハッシュ値から生成されるユニークな <strong>オブジェクト ID</strong> (名前) をもつ。
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=HandheldFriendly content="True"><meta http-equiv=x-ua-compatible content="IE=edge"><meta http-equiv=cache-control content="no-transform"><meta http-equiv=cache-control content="no-siteapp"><meta name=generator content="Hugo 0.71.1"><link rel="shortcut icon" href=https://cdn.jsdelivr.net/gh/amzrk2/poal-jsdelivr@1.2.0/favicons/favicon.ico><title>実用Git 読んだ - itkq.jp</title><meta name=author content="itkq"><meta name=keywords content="Reading,Git"><meta property="og:title" content="実用Git 読んだ"><meta property="og:description" content="最近自分の Git に対する知識の無さを感じてきたので本を読もうと思っていたら、ちょうど借りる機会があったのでまとめた。Git コマンドの操作をより自信を持って行えるようになった気がする。"><meta property="og:type" content="article"><meta property="og:url" content="https://itkq.jp/blog/2016/04/04/%E5%AE%9F%E7%94%A8git-%E8%AA%AD%E3%82%93%E3%81%A0/"><meta property="article:published_time" content="2016-04-04T02:20:25+09:00"><meta property="article:modified_time" content="2016-04-04T02:20:25+09:00"><meta name=twitter:card content="summary"><meta name=twitter:title content="実用Git 読んだ"><meta name=twitter:description content="最近自分の Git に対する知識の無さを感じてきたので本を読もうと思っていたら、ちょうど借りる機会があったのでまとめた。Git コマンドの操作をより自信を持って行えるようになった気がする。"><style>@media(prefers-color-scheme:dark){body[data-theme=auto] img{filter:brightness(60%)}}body[data-theme=dark] img{filter:brightness(60%)}</style><link rel=stylesheet href=https://itkq.jp/assets/css/fuji-custom.min.css></head><body data-theme=auto><script data-cfasync=false>var fujiThemeData=localStorage.getItem('fuji_data-theme');if(!fujiThemeData){localStorage.setItem('fuji_data-theme','auto');}else{if(fujiThemeData!=='auto'){document.body.setAttribute('data-theme',fujiThemeData==='dark'?'dark':'light');}}</script><script data-cfasync=false>function browserDetection(ua){if(ua.indexOf('MSIE ')>0||ua.indexOf('Trident/')>0){return true;}
+return false;}
+var ua=window.navigator.userAgent;if(browserDetection(ua)){window.location.href('https:\/\/itkq.jp\/ie\/');}</script><header><div class="container-lg clearfix"><div class="col-12 header"><a class=title-main href=https://itkq.jp/>itkq.jp</a></div></div></header><main><div class="container-lg clearfix"><div class="col-12 col-md-9 float-left content"><article><h2 class="post-item post-title"><a href=https://itkq.jp/blog/2016/04/04/%E5%AE%9F%E7%94%A8git-%E8%AA%AD%E3%82%93%E3%81%A0/>実用Git 読んだ</a></h2><div class="post-item post-meta"><span><ion-icon name=today></ion-icon>&nbsp;2016-04-04</span><span><ion-icon name=pricetags></ion-icon>&nbsp;<a href=https://itkq.jp/tags/reading>Reading</a>&nbsp;<a href=https://itkq.jp/tags/git>Git</a>&nbsp;</span></div><div class="post-content markdown-body"><p>最近自分の Git に対する知識の無さを感じてきたので本を読もうと思っていたら、ちょうど借りる機会があったのでまとめた。Git コマンドの操作をより自信を持って行えるようになった気がする。</p><h1 id=git-の基本的な概念>Git の基本的な概念</h1><p>Git リポジトリは、作業ディレクトリと <code>.git</code> ディレクトリから成る。</p><p><code>git init</code> により生成される <strong>Git リポジトリ</strong> (<code>.git</code> ディレクトリ) には、リビジョンと履歴の情報がすべて詰まっている。Git リポジトリが保持するデータ構造は、<strong>オブジェクト格納領域</strong>と<strong>インデックス</strong>の2つ。</p><h2 id=git-オブジェクト>Git オブジェクト</h2><p>Git オブジェクト格納領域は、オブジェクトの内容に SHA1 を適用して得られたハッシュ値から生成されるユニークな <strong>オブジェクト ID</strong> (名前) をもつ。
 オブジェクト格納領域 (<code>.git/objects</code>) に配置される Git オブジェクトは、次の4種類である。</p><ul><li><p><strong>blob</strong><br>ファイルの各バージョンは blob (<em>binary large object</em>) で表される。blob にはファイルのデータのみが含まれており、メタデータやファイル名は含まれていない。
 Git はファイル名を気にしないため、同じ内容のファイルが複数あっても、それは1つの blob で表される。</p></li><li><p><strong>tree</strong><br>tree オブジェクトは、1階層分のディレクトリ情報を表現する。
 tree は blob のオブジェクトID とパス名を持っている。
 コミットが指す tree オブジェクトの ID さえ分かれば、再帰的に子の tree を辿ることで、そのコミットの状態のファイルをすべて取り出せる。</p></li><li><p><strong>commit</strong><br>コミットオブジェクトは、リポジトリに加えられた変更のメタデータを持つ。</p><ul><li>tree の名前</li><li>新しいバージョンの作成者 (<em>author</em>)</li><li>作成された時間</li><li>新しいバージョンをリポジトリに置いた人 (<em>comitter</em>)</li><li>リビジョンを作った理由の説明 (<em>commit message</em>)</li></ul><p>ルートコミット（最初のコミット）以外は1つ以上の親コミットIDをもつ。</p></li><li><p><strong>tag</strong><br>特定のオブジェクトに対して、名前をつけるためのオブジェクト。
 タグには<strong>軽量タグ</strong> (<em>lightweight tag</em>) と <strong>注釈付きタグ</strong> (<em>annotated tag</em>) の2種類がある。
 軽量タグは、単にコミットオブジェクトを指すもので、永続的なオブジェクトは生成しない。対して注釈付きタグはオブジェクトを生成する。タグの正体は、後述するシンボリック参照である。</p></li></ul><p><code>.git/objects/</code> にオブジェクトを格納する際、オブジェクトID の先頭2文字のディレクトリを作成し、その下にそれ以降のIDを名前とした実際のオブジェクトを配置する（ファイルシステムの効率化）。
-オブジェクト格納領域が大きくなると、Git はオブジェクトを圧縮して<strong>パックファイル</strong>を作成し <code>.git/objects/pack/</code> 以下に置く。</p><p>次のような操作をしたとする。</p><div class=highlight><pre class=chroma><code class=language-sh data-lang=sh>$ mkdir hoge <span class=o>&amp;&amp;</span> <span class=nb>cd</span> hoge
+オブジェクト格納領域が大きくなると、Git はオブジェクトを圧縮して<strong>パックファイル</strong>を作成し <code>.git/objects/pack/</code> 以下に置く。</p><p>次のような操作をしたとする。</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sh data-lang=sh>$ mkdir hoge <span style=color:#f92672>&amp;&amp;</span> cd hoge
 $ git init
-$ <span class=nb>echo</span> <span class=s1>&#39;Hello, World!&#39;</span> &gt; hello.txt
-$ git commit -am <span class=s1>&#39;first hello&#39;</span>
-$ git tag -a v1.0 -m <span class=s1>&#39;version 1.0&#39;</span> master <span class=c1># masterブランチの先頭を指す注釈付きタグ</span>
-</code></pre></div><p>オブジェクトの詳細を調べる。</p><div class=highlight><pre class=chroma><code class=language-sh data-lang=sh>$ git rev-parse master <span class=c1># master (branch) が指すコミットの名前</span>
+$ echo <span style=color:#e6db74>&#39;Hello, World!&#39;</span> &gt; hello.txt
+$ git commit -am <span style=color:#e6db74>&#39;first hello&#39;</span>
+$ git tag -a v1.0 -m <span style=color:#e6db74>&#39;version 1.0&#39;</span> master <span style=color:#75715e># masterブランチの先頭を指す注釈付きタグ</span>
+</code></pre></div><p>オブジェクトの詳細を調べる。</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sh data-lang=sh>$ git rev-parse master <span style=color:#75715e># master (branch) が指すコミットの名前</span>
 cca3c27176c5539148cb0662a61e475d90a3bc78  
 
-$ git cat-file -p cca3c27176c5539148cb0662a61e475d90a3bc78 <span class=c1># commit の内容</span>
+$ git cat-file -p cca3c27176c5539148cb0662a61e475d90a3bc78 <span style=color:#75715e># commit の内容</span>
 tree bc225ea23f53f06c0c5bd3ba2be85c2120d68417
-author itkq &lt;mail@itkq.jp&gt; <span class=m>1458492347</span> +0900
-committer itkq &lt;mail@itkq.jp&gt; <span class=m>1458492347</span> +0900
+author itkq &lt;mail@itkq.jp&gt; <span style=color:#ae81ff>1458492347</span> +0900
+committer itkq &lt;mail@itkq.jp&gt; <span style=color:#ae81ff>1458492347</span> +0900
 
 first hello
 
-$ git cat-file -p bc225ea23f53f06c0c5bd3ba2be85c2120d68417 <span class=c1># tree の内容</span>
-<span class=m>100644</span> blob 8ab686eafeb1f44702738c8b0f24f2567c36da6d    hello.txt
+$ git cat-file -p bc225ea23f53f06c0c5bd3ba2be85c2120d68417 <span style=color:#75715e># tree の内容</span>
+<span style=color:#ae81ff>100644</span> blob 8ab686eafeb1f44702738c8b0f24f2567c36da6d    hello.txt
 
-$ git cat-file -p 8ab686eafeb1f44702738c8b0f24f2567c36da6d <span class=c1># blob の内容</span>
+$ git cat-file -p 8ab686eafeb1f44702738c8b0f24f2567c36da6d <span style=color:#75715e># blob の内容</span>
 Hello, World!
 
-$ git rev-parse v1.0 <span class=c1># v1.0 (tag) が指すコミットの名前</span>
+$ git rev-parse v1.0 <span style=color:#75715e># v1.0 (tag) が指すコミットの名前</span>
 0aba706179c7e6cf682be3378460ca824c11f775
 
-$ git cat-file -p 0aba706179c7e6cf682be3378460ca824c11f775 <span class=c1># tag の内容</span>
+$ git cat-file -p 0aba706179c7e6cf682be3378460ca824c11f775 <span style=color:#75715e># tag の内容</span>
 object cca3c27176c5539148cb0662a61e475d90a3bc78
-<span class=nb>type</span> commit
+type commit
 tag v1.0
-tagger itkq &lt;mail@itkq.jp&gt; <span class=m>1458492759</span> +0900
+tagger itkq &lt;mail@itkq.jp&gt; <span style=color:#ae81ff>1458492759</span> +0900
 
 version 1.0
 
@@ -74,18 +55,18 @@ $ find .git/objects
 
 </code></pre></div><h2 id=インデックス>インデックス</h2><p>インデックスは、リポジトリ全体のディレクトリ構造が記述されたバイナリファイルであり、段階的開発とコミットの分離をするための機能である。
 インデックスの導入により、ファイルは3種類に分けられる。</p><ul><li><p><strong>追跡</strong> (<em>tracked</em>)<br>すでにリポジトリに入っているか、インデックスに登録されているファイル</p></li><li><p><strong>無視</strong> (<em>ignored</em>)<br><code>.gitignore</code> によって明示的に宣言した Git で扱わないファイル</p></li><li><p><strong>未追跡</strong> (<em>untracked</em>)<br>追跡でも無視でもないファイル</p></li></ul><p>無視でないファイルは、<code>git add</code> コマンドによってオブジェクト格納領域にコピーされ、格納により生じる SHA1 名によってインデックスが作成される。この操作を<strong>ステージする</strong> (<em>stage</em>) という。
-インデックスは仮想的な tree オブジェクトである。</p><div class=highlight><pre class=chroma><code class=language-sh data-lang=sh>$ touch data
+インデックスは仮想的な tree オブジェクトである。</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sh data-lang=sh>$ touch data
 $ git status
 On branch master
 
 Initial commit
 
 Untracked files:
-  <span class=o>(</span>use <span class=s2>&#34;git add &lt;file&gt;...&#34;</span> to include in what will be committed<span class=o>)</span>
+  <span style=color:#f92672>(</span>use <span style=color:#e6db74>&#34;git add &lt;file&gt;...&#34;</span> to include in what will be committed<span style=color:#f92672>)</span>
 
         data
 
-nothing added to commit but untracked files present <span class=o>(</span>use <span class=s2>&#34;git add&#34;</span> to track<span class=o>)</span>
+nothing added to commit but untracked files present <span style=color:#f92672>(</span>use <span style=color:#e6db74>&#34;git add&#34;</span> to track<span style=color:#f92672>)</span>
 
 $ git add data
 $ git status
@@ -94,16 +75,16 @@ On branch master
 Initial commit
 
 Changes to be committed:
-  <span class=o>(</span>use <span class=s2>&#34;git rm --cached &lt;file&gt;...&#34;</span> to unstage<span class=o>)</span>
+  <span style=color:#f92672>(</span>use <span style=color:#e6db74>&#34;git rm --cached &lt;file&gt;...&#34;</span> to unstage<span style=color:#f92672>)</span>
 
         new file:   data
 
 
-$ git ls-files --stage <span class=c1># インデックスの内容</span>
-<span class=m>100644</span> e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 <span class=m>0</span>       data
+$ git ls-files --stage <span style=color:#75715e># インデックスの内容</span>
+<span style=color:#ae81ff>100644</span> e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 <span style=color:#ae81ff>0</span>       data
 </code></pre></div><p>ステージされたファイルは、<code>git commit</code> コマンドで commit オブジェクトと tree オブジェクトの作成により Git に記録される。</p><p>ファイルを削除する操作は3つある。インデックスからファイルを削除する操作をアンステージという。</p><ul><li><code>git rm</code> : インデックスと作業ディレクトリから削除（ <code>rm</code> + <code>git add</code> )</li><li><code>git rm --cached</code> : インデックスからのみ削除</li><li><code>rm</code> : 作業ディレクトリからのみ削除</li></ul><h1 id=ブランチ>ブランチ</h1><p>ブランチは、ソフトウェア開発において別の開発ラインを立ち上げるための基本的な方法である。
 Git では、1つのリポジトリの内部に複数のブランチを作ることができる。</p><h2 id=参照>参照</h2><p><strong>参照</strong> (<em>ref</em>) とは、Git のオブジェクト格納領域内でオブジェクトを参照する SHA1 ハッシュ値であり、<strong>シンボリック参照</strong> (<em>symref</em>) は、Git オブジェクトを間接的に指す名前である。
-シンボリック参照は、<code>refs/</code> で始まる名前で、 <code>refs/head/[ref]/</code> (ローカルブランチ)、<code>refs/remotes/[ref]/</code> (リモート追跡ブランチ)、<code>refs/tags/[ref]</code> (タグ) の3種類がある。</p><p>Git が管理する特殊なシンボリック参照</p><ul><li><p><code>HEAD</code><br>カレントブランチの最新のコミットを指す</p></li><li><p><code>ORIG_HEAD</code><br>マージやリセットの操作で <code>HEAD</code> が更新される前のバックアップ</p></li><li><p><code>MERGE_HEAD</code><br>マージにおいてマージ元のブランチの先頭を指す</p></li><li><p><code>FETCH_HEAD</code><br><code>git fetch</code> コマンドでフェッチしたブランチの先頭が記録されている</p></li></ul><p>ブランチの正体は、commit オブジェクトへのシンボリック参照である。ローカルブランチ <code>master</code> は、<code>refs/heads/master</code> の短縮形である。</p><div class=highlight><pre class=chroma><code class=language-sh data-lang=sh>$ git rev-parse master
+シンボリック参照は、<code>refs/</code> で始まる名前で、 <code>refs/head/[ref]/</code> (ローカルブランチ)、<code>refs/remotes/[ref]/</code> (リモート追跡ブランチ)、<code>refs/tags/[ref]</code> (タグ) の3種類がある。</p><p>Git が管理する特殊なシンボリック参照</p><ul><li><p><code>HEAD</code><br>カレントブランチの最新のコミットを指す</p></li><li><p><code>ORIG_HEAD</code><br>マージやリセットの操作で <code>HEAD</code> が更新される前のバックアップ</p></li><li><p><code>MERGE_HEAD</code><br>マージにおいてマージ元のブランチの先頭を指す</p></li><li><p><code>FETCH_HEAD</code><br><code>git fetch</code> コマンドでフェッチしたブランチの先頭が記録されている</p></li></ul><p>ブランチの正体は、commit オブジェクトへのシンボリック参照である。ローカルブランチ <code>master</code> は、<code>refs/heads/master</code> の短縮形である。</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sh data-lang=sh>$ git rev-parse master
 cca3c27176c5539148cb0662a61e475d90a3bc78
 
 $ git rev-parse refs/heads/master
@@ -111,8 +92,8 @@ cca3c27176c5539148cb0662a61e475d90a3bc78
 
 $ git cat-file -p cca3c27176c5539148cb0662a61e475d90a3bc78
 tree bc225ea23f53f06c0c5bd3ba2be85c2120d68417
-author itkq &lt;mail@itkq.jp&gt; <span class=m>1458492347</span> +0900
-committer itkq &lt;mail@itkq.jp&gt; <span class=m>1458492347</span> +0900
+author itkq &lt;mail@itkq.jp&gt; <span style=color:#ae81ff>1458492347</span> +0900
+committer itkq &lt;mail@itkq.jp&gt; <span style=color:#ae81ff>1458492347</span> +0900
 
 first hello
 </code></pre></div><h2 id=ブランチの作成>ブランチの作成</h2><p>リポジトリ内に作成するブランチを、<strong>トピックブランチ</strong>や<strong>開発ブランチ</strong>と呼ぶ。
@@ -120,259 +101,284 @@ first hello
 <code>git checkout [branch]</code> によって、対象のブランチの tree と同じ状態になるようにオブジェクト格納領域のオブジェクトを作業ディレクトリに反映する。
 ブランチの先頭にチェックアウトすることが普通であるが、チェックアウトは任意のコミットに対して実行できる。その場合、Git は切り離されたブランチ (<em>detached branch</em>) という無名のブランチを作成する。</p><h1 id=コミット>コミット</h1><p>Git では、リポジトリの変更を記録するためにコミットを使う。</p><h2 id=git-commit><code>git commit</code></h2><p>次のように動作する。</p><ol><li>インデックスを本物のツリーオブジェクトに変換し、対応する SHA1 名でオブジェクト格納領域に配置する。</li><li>コミットオブジェクトを作成する。配置したツリーオブジェクトと直前のコミットを親として指す。</li><li>ブランチの参照が新規のコミットオブジェクトに移り、<code>HEAD</code> となる。</li></ol><h2 id=コミットの参照>コミットの参照</h2><p>あるコミット <code>C</code> に対して <code>C^n</code> は第nの親を、<code>C~n</code> はn番目の祖先を意味する。
 チルダによる参照は、親が複数あるときは常に第一の親を辿る。</p><h2 id=コミット関連のコマンド>コミット関連のコマンド</h2><h3 id=git-reset><code>git reset</code></h3><p><code>git reset</code> コマンドは、リポジトリと作業ディレクトリを既知の状態に変更する。厳密には、<code>HEAD</code> の参照を指定されたコミットに変更する。3つの段階的なオプションがある。
-<code>--hard</code> オプションは唯一作業ディレクトリの変更を破棄する。</p><ul><li><p><code>git reset --soft [commit]</code><br><code>HEAD</code> の参照を指定されたコミットに変更する</p></li><li><p><code>git reset --mixed [commit]</code><br><code>HEAD</code> の変更に加え、インデックスもコミットのツリーの内容に変更する</p></li><li><p><code>git reset --hard [commit]</code><br><code>HEAD</code> とインデックスの変更に加え、作業ディレクトリもコミットのツリーの内容に変更する</p></li></ul><p><code>git reflog</code> コマンドでリポジトリ内の変更履歴を表示できる。</p><div class=highlight><pre class=chroma><code class=language-sh data-lang=sh>$ git reflog
-794eec4 HEAD@<span class=o>{</span>0<span class=o>}</span>: commit <span class=o>(</span>merge<span class=o>)</span>: Merge branch <span class=s1>&#39;alternate&#39;</span>
-a43a771 HEAD@<span class=o>{</span>1<span class=o>}</span>: checkout: moving from alternate to master
-a861233 HEAD@<span class=o>{</span>2<span class=o>}</span>: commit: Add alternate line <span class=m>5</span> and <span class=m>6</span>
-ea825d6 HEAD@<span class=o>{</span>3<span class=o>}</span>: checkout: moving from master to alternate
-a43a771 HEAD@<span class=o>{</span>4<span class=o>}</span>: commit: Add line <span class=m>5</span> and <span class=m>6</span>
-6bb76eb HEAD@<span class=o>{</span>5<span class=o>}</span>: checkout: moving from master to master
-6bb76eb HEAD@<span class=o>{</span>6<span class=o>}</span>: merge alternate: Merge made by the <span class=s1>&#39;recursive&#39;</span> strategy.
-f554bac HEAD@<span class=o>{</span>7<span class=o>}</span>: checkout: moving from alternate to master
-ea825d6 HEAD@<span class=o>{</span>8<span class=o>}</span>: commit: Add alternate line <span class=m>4</span>
-cc92869 HEAD@<span class=o>{</span>9<span class=o>}</span>: checkout: moving from master to alternate
-f554bac HEAD@<span class=o>{</span>10<span class=o>}</span>: commit: Another file
-cc92869 HEAD@<span class=o>{</span>11<span class=o>}</span>: commit <span class=o>(</span>initial<span class=o>)</span>: Initial <span class=m>3</span> line file
-</code></pre></div><p><code>git checkout</code> が ブランチを切り替えて <code>HEAD</code> を変更するのに対し、<code>git reset</code> は ブランチを変更せずに <code>HEAD</code> を変更する。</p><h3 id=git-cherry-pick><code>git cherry-pick</code></h3><p><code>git cherry-pick [commit]</code> コマンドは、指定したコミットが持ち込んだ変更をカレントブランチに適用する。その際、新しくコミットを作る。</p><h3 id=git-revert><code>git revert</code></h3><p><code>git revert [commit]</code> コマンドは、指定したコミットの逆を適用するコミットを作成する。</p><h3 id=git-commit---amend><code>git commit --amend</code></h3><p>カレントブランチの最新のコミットを修正するためのコマンドであるが、実質的には</p><div class=highlight><pre class=chroma><code class=language-sh data-lang=sh>$ git reset --soft HEAD^
+<code>--hard</code> オプションは唯一作業ディレクトリの変更を破棄する。</p><ul><li><p><code>git reset --soft [commit]</code><br><code>HEAD</code> の参照を指定されたコミットに変更する</p></li><li><p><code>git reset --mixed [commit]</code><br><code>HEAD</code> の変更に加え、インデックスもコミットのツリーの内容に変更する</p></li><li><p><code>git reset --hard [commit]</code><br><code>HEAD</code> とインデックスの変更に加え、作業ディレクトリもコミットのツリーの内容に変更する</p></li></ul><p><code>git reflog</code> コマンドでリポジトリ内の変更履歴を表示できる。</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sh data-lang=sh>$ git reflog
+794eec4 HEAD@<span style=color:#f92672>{</span>0<span style=color:#f92672>}</span>: commit <span style=color:#f92672>(</span>merge<span style=color:#f92672>)</span>: Merge branch <span style=color:#e6db74>&#39;alternate&#39;</span>
+a43a771 HEAD@<span style=color:#f92672>{</span>1<span style=color:#f92672>}</span>: checkout: moving from alternate to master
+a861233 HEAD@<span style=color:#f92672>{</span>2<span style=color:#f92672>}</span>: commit: Add alternate line <span style=color:#ae81ff>5</span> and <span style=color:#ae81ff>6</span>
+ea825d6 HEAD@<span style=color:#f92672>{</span>3<span style=color:#f92672>}</span>: checkout: moving from master to alternate
+a43a771 HEAD@<span style=color:#f92672>{</span>4<span style=color:#f92672>}</span>: commit: Add line <span style=color:#ae81ff>5</span> and <span style=color:#ae81ff>6</span>
+6bb76eb HEAD@<span style=color:#f92672>{</span>5<span style=color:#f92672>}</span>: checkout: moving from master to master
+6bb76eb HEAD@<span style=color:#f92672>{</span>6<span style=color:#f92672>}</span>: merge alternate: Merge made by the <span style=color:#e6db74>&#39;recursive&#39;</span> strategy.
+f554bac HEAD@<span style=color:#f92672>{</span>7<span style=color:#f92672>}</span>: checkout: moving from alternate to master
+ea825d6 HEAD@<span style=color:#f92672>{</span>8<span style=color:#f92672>}</span>: commit: Add alternate line <span style=color:#ae81ff>4</span>
+cc92869 HEAD@<span style=color:#f92672>{</span>9<span style=color:#f92672>}</span>: checkout: moving from master to alternate
+f554bac HEAD@<span style=color:#f92672>{</span>10<span style=color:#f92672>}</span>: commit: Another file
+cc92869 HEAD@<span style=color:#f92672>{</span>11<span style=color:#f92672>}</span>: commit <span style=color:#f92672>(</span>initial<span style=color:#f92672>)</span>: Initial <span style=color:#ae81ff>3</span> line file
+</code></pre></div><p><code>git checkout</code> が ブランチを切り替えて <code>HEAD</code> を変更するのに対し、<code>git reset</code> は ブランチを変更せずに <code>HEAD</code> を変更する。</p><h3 id=git-cherry-pick><code>git cherry-pick</code></h3><p><code>git cherry-pick [commit]</code> コマンドは、指定したコミットが持ち込んだ変更をカレントブランチに適用する。その際、新しくコミットを作る。</p><h3 id=git-revert><code>git revert</code></h3><p><code>git revert [commit]</code> コマンドは、指定したコミットの逆を適用するコミットを作成する。</p><h3 id=git-commit---amend><code>git commit --amend</code></h3><p>カレントブランチの最新のコミットを修正するためのコマンドであるが、実質的には</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sh data-lang=sh>$ git reset --soft HEAD^
 $ git commit
-</code></pre></div><p>と同じである。</p><h1 id=マージ>マージ</h1><p>マージ (<em>merge</em>) は、2つ以上のブランチを統合する。</p><h2 id=通常-recursive-マージの例>通常 (recursive) マージの例</h2><div class=highlight><pre class=chroma><code class=language-sh data-lang=sh>$ git init
+</code></pre></div><p>と同じである。</p><h1 id=マージ>マージ</h1><p>マージ (<em>merge</em>) は、2つ以上のブランチを統合する。</p><h2 id=通常-recursive-マージの例>通常 (recursive) マージの例</h2><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sh data-lang=sh>$ git init
 Initialized empty Git repository in /Users/itkq/tmp/fuga/.git/
 
 $ cat &gt; file
-Line <span class=m>1</span> stuff
-Line <span class=m>2</span> stuff
-Line <span class=m>3</span> stuff
+Line <span style=color:#ae81ff>1</span> stuff
+Line <span style=color:#ae81ff>2</span> stuff
+Line <span style=color:#ae81ff>3</span> stuff
 ^D
 
-$ git add file <span class=o>&amp;&amp;</span> git commit -m <span class=s2>&#34;Initial 3 line file&#34;</span>
-<span class=o>[</span>master <span class=o>(</span>root-commit<span class=o>)</span> cc92869<span class=o>]</span> Initial <span class=m>3</span> line file
- <span class=m>1</span> file changed, <span class=m>3</span> insertions<span class=o>(</span>+<span class=o>)</span>
- create mode <span class=m>100644</span> file
+$ git add file <span style=color:#f92672>&amp;&amp;</span> git commit -m <span style=color:#e6db74>&#34;Initial 3 line file&#34;</span>
+<span style=color:#f92672>[</span>master <span style=color:#f92672>(</span>root-commit<span style=color:#f92672>)</span> cc92869<span style=color:#f92672>]</span> Initial <span style=color:#ae81ff>3</span> line file
+ <span style=color:#ae81ff>1</span> file changed, <span style=color:#ae81ff>3</span> insertions<span style=color:#f92672>(</span>+<span style=color:#f92672>)</span>
+ create mode <span style=color:#ae81ff>100644</span> file
 
 $ cat &gt; other_file
 Here is stuff on another file!
 ^D
 
-$ git add other_file <span class=o>&amp;&amp;</span> git commit -m <span class=s2>&#34;Another file&#34;</span>
-<span class=o>[</span>master f554bac<span class=o>]</span> Another file
- <span class=m>1</span> file changed, <span class=m>1</span> insertion<span class=o>(</span>+<span class=o>)</span>
- create mode <span class=m>100644</span> other_file
+$ git add other_file <span style=color:#f92672>&amp;&amp;</span> git commit -m <span style=color:#e6db74>&#34;Another file&#34;</span>
+<span style=color:#f92672>[</span>master f554bac<span style=color:#f92672>]</span> Another file
+ <span style=color:#ae81ff>1</span> file changed, <span style=color:#ae81ff>1</span> insertion<span style=color:#f92672>(</span>+<span style=color:#f92672>)</span>
+ create mode <span style=color:#ae81ff>100644</span> other_file
 
 $ git checkout -b alternate master^
-Switched to a new branch <span class=s1>&#39;alternate&#39;</span>
+Switched to a new branch <span style=color:#e6db74>&#39;alternate&#39;</span>
 
 $ git show-branch
-* <span class=o>[</span>alternate<span class=o>]</span> Initial <span class=m>3</span> line file
- ! <span class=o>[</span>master<span class=o>]</span> Another file
+* <span style=color:#f92672>[</span>alternate<span style=color:#f92672>]</span> Initial <span style=color:#ae81ff>3</span> line file
+ ! <span style=color:#f92672>[</span>master<span style=color:#f92672>]</span> Another file
 --
- + <span class=o>[</span>master<span class=o>]</span> Another file
-*+ <span class=o>[</span>alternate<span class=o>]</span> Initial <span class=m>3</span> line file
+ + <span style=color:#f92672>[</span>master<span style=color:#f92672>]</span> Another file
+*+ <span style=color:#f92672>[</span>alternate<span style=color:#f92672>]</span> Initial <span style=color:#ae81ff>3</span> line file
 
 $ cat &gt;&gt; file
-Line <span class=m>4</span> alternate stuff
+Line <span style=color:#ae81ff>4</span> alternate stuff
 ^D
 
-$ git commit -am <span class=s2>&#34;Add alternate line 4&#34;</span>
-<span class=o>[</span>alternate ea825d6<span class=o>]</span> Add alternate line <span class=m>4</span>
- <span class=m>1</span> file changed, <span class=m>1</span> insertion<span class=o>(</span>+<span class=o>)</span>
+$ git commit -am <span style=color:#e6db74>&#34;Add alternate line 4&#34;</span>
+<span style=color:#f92672>[</span>alternate ea825d6<span style=color:#f92672>]</span> Add alternate line <span style=color:#ae81ff>4</span>
+ <span style=color:#ae81ff>1</span> file changed, <span style=color:#ae81ff>1</span> insertion<span style=color:#f92672>(</span>+<span style=color:#f92672>)</span>
 
 $ git checkout master
-Switched to branch <span class=s1>&#39;master&#39;</span>
+Switched to branch <span style=color:#e6db74>&#39;master&#39;</span>
 
 $ git merge alternate
-Merge made by the <span class=s1>&#39;recursive&#39;</span> strategy.
- file <span class=p>|</span> <span class=m>1</span> +
- <span class=m>1</span> file changed, <span class=m>1</span> insertion<span class=o>(</span>+<span class=o>)</span>
+Merge made by the <span style=color:#e6db74>&#39;recursive&#39;</span> strategy.
+ file | <span style=color:#ae81ff>1</span> +
+ <span style=color:#ae81ff>1</span> file changed, <span style=color:#ae81ff>1</span> insertion<span style=color:#f92672>(</span>+<span style=color:#f92672>)</span>
 
-$ git log --graph --pretty<span class=o>=</span>oneline --abbrev-commit
-*   6bb76eb Merge branch <span class=s1>&#39;alternate&#39;</span>
-<span class=p>|</span><span class=se>\
-</span><span class=se></span><span class=p>|</span> * ea825d6 Add alternate line <span class=m>4</span>
-* <span class=p>|</span> f554bac Another file
-<span class=p>|</span>/
-* cc92869 Initial <span class=m>3</span> line file
-</code></pre></div><h2 id=競合を伴うマージの例>競合を伴うマージの例</h2><div class=highlight><pre class=chroma><code class=language-sh data-lang=sh>$ git checkout master
-Already on <span class=s1>&#39;master&#39;</span>
+$ git log --graph --pretty<span style=color:#f92672>=</span>oneline --abbrev-commit
+*   6bb76eb Merge branch <span style=color:#e6db74>&#39;alternate&#39;</span>
+|<span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>| * ea825d6 Add alternate line <span style=color:#ae81ff>4</span>
+* | f554bac Another file
+|/
+* cc92869 Initial <span style=color:#ae81ff>3</span> line file
+</code></pre></div><h2 id=競合を伴うマージの例>競合を伴うマージの例</h2><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sh data-lang=sh>$ git checkout master
+Already on <span style=color:#e6db74>&#39;master&#39;</span>
 
 $ cat &gt;&gt; file
-Line <span class=m>5</span> stuff
-Line <span class=m>6</span> stuff
+Line <span style=color:#ae81ff>5</span> stuff
+Line <span style=color:#ae81ff>6</span> stuff
 ^D
 
-$ git commit -am <span class=s2>&#34;Add line 5 and 6&#34;</span>
-<span class=o>[</span>master a43a771<span class=o>]</span> Add line <span class=m>5</span> and <span class=m>6</span>
- <span class=m>1</span> file changed, <span class=m>2</span> insertions<span class=o>(</span>+<span class=o>)</span>
+$ git commit -am <span style=color:#e6db74>&#34;Add line 5 and 6&#34;</span>
+<span style=color:#f92672>[</span>master a43a771<span style=color:#f92672>]</span> Add line <span style=color:#ae81ff>5</span> and <span style=color:#ae81ff>6</span>
+ <span style=color:#ae81ff>1</span> file changed, <span style=color:#ae81ff>2</span> insertions<span style=color:#f92672>(</span>+<span style=color:#f92672>)</span>
 
 $ git checkout alternate
-Switched to branch <span class=s1>&#39;alternate&#39;</span>
+Switched to branch <span style=color:#e6db74>&#39;alternate&#39;</span>
 
 $ git show-branch
-* <span class=o>[</span>alternate<span class=o>]</span> Add alternate line <span class=m>4</span>
- ! <span class=o>[</span>master<span class=o>]</span> Add line <span class=m>5</span> and <span class=m>6</span>
+* <span style=color:#f92672>[</span>alternate<span style=color:#f92672>]</span> Add alternate line <span style=color:#ae81ff>4</span>
+ ! <span style=color:#f92672>[</span>master<span style=color:#f92672>]</span> Add line <span style=color:#ae81ff>5</span> and <span style=color:#ae81ff>6</span>
 --
- + <span class=o>[</span>master<span class=o>]</span> Add line <span class=m>5</span> and <span class=m>6</span>
-*+ <span class=o>[</span>alternate<span class=o>]</span> Add alternate line <span class=m>4</span>
+ + <span style=color:#f92672>[</span>master<span style=color:#f92672>]</span> Add line <span style=color:#ae81ff>5</span> and <span style=color:#ae81ff>6</span>
+*+ <span style=color:#f92672>[</span>alternate<span style=color:#f92672>]</span> Add alternate line <span style=color:#ae81ff>4</span>
 
 $ cat &gt;&gt; file                                        
-Line <span class=m>5</span> alternate stuff
-Line <span class=m>6</span> alternate stuff
+Line <span style=color:#ae81ff>5</span> alternate stuff
+Line <span style=color:#ae81ff>6</span> alternate stuff
 
 $ cat file
-Line <span class=m>1</span> stuff
-Line <span class=m>2</span> stuff
-Line <span class=m>3</span> stuff
-Line <span class=m>4</span> alternate stuff
-Line <span class=m>5</span> alternate stuff
-Line <span class=m>6</span> alternate stuff
+Line <span style=color:#ae81ff>1</span> stuff
+Line <span style=color:#ae81ff>2</span> stuff
+Line <span style=color:#ae81ff>3</span> stuff
+Line <span style=color:#ae81ff>4</span> alternate stuff
+Line <span style=color:#ae81ff>5</span> alternate stuff
+Line <span style=color:#ae81ff>6</span> alternate stuff
 
-$ git commit -am <span class=s2>&#34;Add alternate line 5 and 6&#34;</span>
-<span class=o>[</span>alternate a861233<span class=o>]</span> Add alternate line <span class=m>5</span> and <span class=m>6</span>
- <span class=m>1</span> file changed, <span class=m>2</span> insertions<span class=o>(</span>+<span class=o>)</span>
+$ git commit -am <span style=color:#e6db74>&#34;Add alternate line 5 and 6&#34;</span>
+<span style=color:#f92672>[</span>alternate a861233<span style=color:#f92672>]</span> Add alternate line <span style=color:#ae81ff>5</span> and <span style=color:#ae81ff>6</span>
+ <span style=color:#ae81ff>1</span> file changed, <span style=color:#ae81ff>2</span> insertions<span style=color:#f92672>(</span>+<span style=color:#f92672>)</span>
  
 $ git show-branch
-* <span class=o>[</span>alternate<span class=o>]</span> Add alternate line <span class=m>5</span> and <span class=m>6</span>
- ! <span class=o>[</span>master<span class=o>]</span> Add line <span class=m>5</span> and <span class=m>6</span>
+* <span style=color:#f92672>[</span>alternate<span style=color:#f92672>]</span> Add alternate line <span style=color:#ae81ff>5</span> and <span style=color:#ae81ff>6</span>
+ ! <span style=color:#f92672>[</span>master<span style=color:#f92672>]</span> Add line <span style=color:#ae81ff>5</span> and <span style=color:#ae81ff>6</span>
 --
-*  <span class=o>[</span>alternate<span class=o>]</span> Add alternate line <span class=m>5</span> and <span class=m>6</span>
- + <span class=o>[</span>master<span class=o>]</span> Add line <span class=m>5</span> and <span class=m>6</span>
-*+ <span class=o>[</span>alternate^<span class=o>]</span> Add alternate line <span class=m>4</span>
+*  <span style=color:#f92672>[</span>alternate<span style=color:#f92672>]</span> Add alternate line <span style=color:#ae81ff>5</span> and <span style=color:#ae81ff>6</span>
+ + <span style=color:#f92672>[</span>master<span style=color:#f92672>]</span> Add line <span style=color:#ae81ff>5</span> and <span style=color:#ae81ff>6</span>
+*+ <span style=color:#f92672>[</span>alternate^<span style=color:#f92672>]</span> Add alternate line <span style=color:#ae81ff>4</span>
 
 $ git checkout master
-Switched to branch <span class=s1>&#39;master&#39;</span>
+Switched to branch <span style=color:#e6db74>&#39;master&#39;</span>
 
-$ git merge alternate <span class=c1># conflict!</span>
+$ git merge alternate <span style=color:#75715e># conflict!</span>
 Auto-merging file
-CONFLICT <span class=o>(</span>content<span class=o>)</span>: Merge conflict in file
-Automatic merge failed<span class=p>;</span> fix conflicts and <span class=k>then</span> commit the result.
+CONFLICT <span style=color:#f92672>(</span>content<span style=color:#f92672>)</span>: Merge conflict in file
+Automatic merge failed; fix conflicts and <span style=color:#66d9ef>then</span> commit the result.
 
 $ git diff
 diff --cc file
 index 4d77dd1,802acf8..0000000
 --- a/file
 +++ b/file
-@@@ -2,5 -2,5 +2,10 @@@ Line <span class=m>1</span> stuf
-  Line <span class=m>2</span> stuff
-  Line <span class=m>3</span> stuff
-  Line <span class=m>4</span> alternate stuff
-++<span class=o>&lt;&lt;&lt;&lt;&lt;&lt;</span>&lt; HEAD
- +Line <span class=m>5</span> stuff
- +Line <span class=m>6</span> stuff
-++<span class=o>=======</span>
-+ Line <span class=m>5</span> alternate stuff
-+ Line <span class=m>6</span> alternate stuff
+@@@ -2,5 -2,5 +2,10 @@@ Line <span style=color:#ae81ff>1</span> stuf
+  Line <span style=color:#ae81ff>2</span> stuff
+  Line <span style=color:#ae81ff>3</span> stuff
+  Line <span style=color:#ae81ff>4</span> alternate stuff
+++<span style=color:#f92672>&lt;&lt;&lt;&lt;&lt;&lt;</span>&lt; HEAD
+ +Line <span style=color:#ae81ff>5</span> stuff
+ +Line <span style=color:#ae81ff>6</span> stuff
+++<span style=color:#f92672>=======</span>
++ Line <span style=color:#ae81ff>5</span> alternate stuff
++ Line <span style=color:#ae81ff>6</span> alternate stuff
 ++&gt;&gt;&gt;&gt;&gt;&gt;&gt; alternate
 
 $ git log --merge --left-right -p
 commit &gt; a8612335753608ea80a9a2bfc179706628426616
 Author: itkq &lt;mail@itkq.jp&gt;
-Date:   Mon Mar <span class=m>21</span> 18:26:13 <span class=m>2016</span> +0900
+Date:   Mon Mar <span style=color:#ae81ff>21</span> 18:26:13 <span style=color:#ae81ff>2016</span> +0900
 
-    Add alternate line <span class=m>5</span> and <span class=m>6</span>
+    Add alternate line <span style=color:#ae81ff>5</span> and <span style=color:#ae81ff>6</span>
 
 diff --git a/file b/file
-index a29c52b..802acf8 <span class=m>100644</span>
+index a29c52b..802acf8 <span style=color:#ae81ff>100644</span>
 --- a/file
 +++ b/file
-@@ -2,3 +2,5 @@ Line <span class=m>1</span> stuff
- Line <span class=m>2</span> stuff
- Line <span class=m>3</span> stuff
- Line <span class=m>4</span> alternate stuff
-+Line <span class=m>5</span> alternate stuff
-+Line <span class=m>6</span> alternate stuff
+@@ -2,3 +2,5 @@ Line <span style=color:#ae81ff>1</span> stuff
+ Line <span style=color:#ae81ff>2</span> stuff
+ Line <span style=color:#ae81ff>3</span> stuff
+ Line <span style=color:#ae81ff>4</span> alternate stuff
++Line <span style=color:#ae81ff>5</span> alternate stuff
++Line <span style=color:#ae81ff>6</span> alternate stuff
 
 commit &lt; a43a7710935a7de4219e26183237dc842cbb1b3e
 Author: itkq &lt;mail@itkq.jp&gt;
-Date:   Mon Mar <span class=m>21</span> 18:25:12 <span class=m>2016</span> +0900
+Date:   Mon Mar <span style=color:#ae81ff>21</span> 18:25:12 <span style=color:#ae81ff>2016</span> +0900
 
-    Add line <span class=m>5</span> and <span class=m>6</span>
+    Add line <span style=color:#ae81ff>5</span> and <span style=color:#ae81ff>6</span>
 
 diff --git a/file b/file
-index a29c52b..4d77dd1 <span class=m>100644</span>
+index a29c52b..4d77dd1 <span style=color:#ae81ff>100644</span>
 --- a/file
 +++ b/file
-@@ -2,3 +2,5 @@ Line <span class=m>1</span> stuff
- Line <span class=m>2</span> stuff
- Line <span class=m>3</span> stuff
- Line <span class=m>4</span> alternate stuff
-+Line <span class=m>5</span> stuff
-+Line <span class=m>6</span> stuff
+@@ -2,3 +2,5 @@ Line <span style=color:#ae81ff>1</span> stuff
+ Line <span style=color:#ae81ff>2</span> stuff
+ Line <span style=color:#ae81ff>3</span> stuff
+ Line <span style=color:#ae81ff>4</span> alternate stuff
++Line <span style=color:#ae81ff>5</span> stuff
++Line <span style=color:#ae81ff>6</span> stuff
 </code></pre></div><p>マージで競合 (<em>conflict</em>) が起こった場合、
 Git のインデックスは、個々の競合ファイルのコピーを3つ保持している。
-マージ基点、our バージョン、their バージョンであり、それぞれステージ番号として 1, 2, 3 が割り振られる。</p><div class=highlight><pre class=chroma><code class=language-sh data-lang=sh>$ git ls-files -s
-<span class=m>100644</span> a29c52b5dcff9d445bc1e5ebeedac28e88ce6327 <span class=m>1</span>       file <span class=c1># base of merge</span>
-<span class=m>100644</span> 4d77dd1638c289baa16fdcb24c8aa7386ab464ab <span class=m>2</span>       file <span class=c1># our</span>
-<span class=m>100644</span> 802acf861df14fb91823a7ca1cfaf5d8a8100279 <span class=m>3</span>       file <span class=c1># their</span>
-<span class=m>100644</span> eaeeeba5973e46152dc758215c7e76dcecfd5f9b <span class=m>0</span>       other_file
+マージ基点、our バージョン、their バージョンであり、それぞれステージ番号として 1, 2, 3 が割り振られる。</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sh data-lang=sh>$ git ls-files -s
+<span style=color:#ae81ff>100644</span> a29c52b5dcff9d445bc1e5ebeedac28e88ce6327 <span style=color:#ae81ff>1</span>       file <span style=color:#75715e># base of merge</span>
+<span style=color:#ae81ff>100644</span> 4d77dd1638c289baa16fdcb24c8aa7386ab464ab <span style=color:#ae81ff>2</span>       file <span style=color:#75715e># our</span>
+<span style=color:#ae81ff>100644</span> 802acf861df14fb91823a7ca1cfaf5d8a8100279 <span style=color:#ae81ff>3</span>       file <span style=color:#75715e># their</span>
+<span style=color:#ae81ff>100644</span> eaeeeba5973e46152dc758215c7e76dcecfd5f9b <span style=color:#ae81ff>0</span>       other_file
 
-$ git diff :1:file :3:file <span class=c1># マージ基点とtheirの比較</span>
+$ git diff :1:file :3:file <span style=color:#75715e># マージ基点とtheirの比較</span>
 diff --git a/:1:file b/:3:file
-index a29c52b..802acf8 <span class=m>100644</span>
+index a29c52b..802acf8 <span style=color:#ae81ff>100644</span>
 --- a/:1:file
 +++ b/:3:file
-@@ -2,3 +2,5 @@ Line <span class=m>1</span> stuff
- Line <span class=m>2</span> stuff
- Line <span class=m>3</span> stuff
- Line <span class=m>4</span> alternate stuff
-+Line <span class=m>5</span> alternate stuff
-+Line <span class=m>6</span> alternate stuff
-</code></pre></div><p><code>git checkout</code> の引数として <code>--ours</code> と <code>--theirs</code> を使うことで、競合マージのどちらかからファイルをチェックアウトできる。</p><div class=highlight><pre class=chroma><code class=language-sh data-lang=sh>$ git checkout --theirs file
+@@ -2,3 +2,5 @@ Line <span style=color:#ae81ff>1</span> stuff
+ Line <span style=color:#ae81ff>2</span> stuff
+ Line <span style=color:#ae81ff>3</span> stuff
+ Line <span style=color:#ae81ff>4</span> alternate stuff
++Line <span style=color:#ae81ff>5</span> alternate stuff
++Line <span style=color:#ae81ff>6</span> alternate stuff
+</code></pre></div><p><code>git checkout</code> の引数として <code>--ours</code> と <code>--theirs</code> を使うことで、競合マージのどちらかからファイルをチェックアウトできる。</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sh data-lang=sh>$ git checkout --theirs file
 
 $ git diff --ours
 * Unmerged path file
 diff --git a/file b/file
-index 4d77dd1..802acf8 <span class=m>100644</span>
+index 4d77dd1..802acf8 <span style=color:#ae81ff>100644</span>
 --- a/file
 +++ b/file
-@@ -2,5 +2,5 @@ Line <span class=m>1</span> stuff
- Line <span class=m>2</span> stuff
- Line <span class=m>3</span> stuff
- Line <span class=m>4</span> alternate stuff
--Line <span class=m>5</span> stuff
--Line <span class=m>6</span> stuff
-+Line <span class=m>5</span> alternate stuff
-+Line <span class=m>6</span> alternate stuff
-</code></pre></div><p>競合を解決したら、ファイルをステージし、マージコミットを作成する。</p><div class=highlight><pre class=chroma><code class=language-sh data-lang=sh>$ git add file
+@@ -2,5 +2,5 @@ Line <span style=color:#ae81ff>1</span> stuff
+ Line <span style=color:#ae81ff>2</span> stuff
+ Line <span style=color:#ae81ff>3</span> stuff
+ Line <span style=color:#ae81ff>4</span> alternate stuff
+-Line <span style=color:#ae81ff>5</span> stuff
+-Line <span style=color:#ae81ff>6</span> stuff
++Line <span style=color:#ae81ff>5</span> alternate stuff
++Line <span style=color:#ae81ff>6</span> alternate stuff
+</code></pre></div><p>競合を解決したら、ファイルをステージし、マージコミットを作成する。</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sh data-lang=sh>$ git add file
 $ git commit
 
-<span class=c1>#### launch editor</span>
-Merge branch <span class=s1>&#39;alternate&#39;</span>
+<span style=color:#75715e>#### launch editor</span>
+Merge branch <span style=color:#e6db74>&#39;alternate&#39;</span>
 
-<span class=c1># Conflicts:</span>
-<span class=c1>#	file</span>
+<span style=color:#75715e># Conflicts:</span>
+<span style=color:#75715e>#	file</span>
 #
-<span class=c1># It looks like you may be committing a merge.</span>
-<span class=c1># If this is not correct, please remove the file</span>
-<span class=c1>#	.git/MERGE_HEAD</span>
-<span class=c1># and try again.</span>
+<span style=color:#75715e># It looks like you may be committing a merge.</span>
+<span style=color:#75715e># If this is not correct, please remove the file</span>
+<span style=color:#75715e>#	.git/MERGE_HEAD</span>
+<span style=color:#75715e># and try again.</span>
 
 
-<span class=c1># Please enter the commit message for your changes. Lines starting</span>
-<span class=c1># with &#39;#&#39; will be ignored, and an empty message aborts the commit.</span>
-<span class=c1># On branch master</span>
-<span class=c1># All conflicts fixed but you are still merging.</span>
+<span style=color:#75715e># Please enter the commit message for your changes. Lines starting</span>
+<span style=color:#75715e># with &#39;#&#39; will be ignored, and an empty message aborts the commit.</span>
+<span style=color:#75715e># On branch master</span>
+<span style=color:#75715e># All conflicts fixed but you are still merging.</span>
 #
-<span class=c1># Changes to be committed:</span>
-<span class=c1>#	modified:   file</span>
+<span style=color:#75715e># Changes to be committed:</span>
+<span style=color:#75715e>#	modified:   file</span>
 #
 
-<span class=c1>#### editor</span>
+<span style=color:#75715e>#### editor</span>
 
-<span class=o>[</span>master 794eec4<span class=o>]</span> Merge branch <span class=s1>&#39;alternate&#39;</span>
+<span style=color:#f92672>[</span>master 794eec4<span style=color:#f92672>]</span> Merge branch <span style=color:#e6db74>&#39;alternate&#39;</span>
 
 $ git show-branch
-! <span class=o>[</span>alternate<span class=o>]</span> Add alternate line <span class=m>5</span> and <span class=m>6</span>
- * <span class=o>[</span>master<span class=o>]</span> Merge branch <span class=s1>&#39;alternate&#39;</span>
+! <span style=color:#f92672>[</span>alternate<span style=color:#f92672>]</span> Add alternate line <span style=color:#ae81ff>5</span> and <span style=color:#ae81ff>6</span>
+ * <span style=color:#f92672>[</span>master<span style=color:#f92672>]</span> Merge branch <span style=color:#e6db74>&#39;alternate&#39;</span>
 --
- - <span class=o>[</span>master<span class=o>]</span> Merge branch <span class=s1>&#39;alternate&#39;</span>
-+* <span class=o>[</span>alternate<span class=o>]</span> Add alternate line <span class=m>5</span> and <span class=m>6</span>
-</code></pre></div><p>マージ操作を開始したものの、マージをやめたくなった場合は</p><div class=highlight><pre class=chroma><code class=language-sh data-lang=sh>$ git reset --hard HEAD
+ - <span style=color:#f92672>[</span>master<span style=color:#f92672>]</span> Merge branch <span style=color:#e6db74>&#39;alternate&#39;</span>
++* <span style=color:#f92672>[</span>alternate<span style=color:#f92672>]</span> Add alternate line <span style=color:#ae81ff>5</span> and <span style=color:#ae81ff>6</span>
+</code></pre></div><p>マージ操作を開始したものの、マージをやめたくなった場合は</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sh data-lang=sh>$ git reset --hard HEAD
 </code></pre></div><p>で作業ツリーとインデックスをマージ前の状態に戻せる。
-マージの完了後にマージを破棄したい場合は</p><div class=highlight><pre class=chroma><code class=language-sh data-lang=sh>$ git reset --hard ORIG_HEAD
+マージの完了後にマージを破棄したい場合は</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sh data-lang=sh>$ git reset --hard ORIG_HEAD
 </code></pre></div><p>とする。</p><h2 id=マージ戦略>マージ戦略</h2><p>Git の開発者は、マージを一般化し、様々なシナリオを扱える、<strong>マージ戦略</strong>を導入した。</p><h3 id=縮退マージ>縮退マージ</h3><p>2つのシナリオがある。どちらのシナリオも、実際には新しいマージコミットを作らない。</p><ul><li><p><em>already up-to-date</em><br>他のブランチ (の <code>HEAD</code> ) からのコミットがすべて対象ブランチに含まれている場合。操作は何も行わない。</p></li><li><p><em>fast-forward</em><br>対象ブランチの <code>HEAD</code> がすでに他のブランチ上にすべて存在している場合。単に <code>HEAD</code> に他のコミットを付け足し、<code>HEAD</code> を最新のコミットに移動させるだけである。</p></li></ul><h3 id=通常マージ>通常マージ</h3><p>マージの結果としてコミットを作り出し、カレントブランチに追加する。
 マージ基点が複数ある場合、そのマージは<strong>交差マージ</strong> (<em>criss-cross merge</em>) という。</p><ul><li><p><em>resolve</em><br>2つのブランチのみを扱う。共通の祖先をマージ基点とし、マージ基点から他のブランチの先端までの変更をカレントブランチに適用することで、直接 3way マージを実行する直感的な戦略。</p></li><li><p><em>recursive</em><br><em>resolve</em> 同様に、2つのブランチのみ扱う。2つのマージ基点から一時的なマージ基点を生成し、それをマージに用いる。この方法は再帰的に適用できる。<code>git merge</code> コマンドのデフォルトは <em>recursive</em> 戦略を用いる。</p></li><li><p><em>octopus</em><br>2つ以上のブランチを同時にマージする戦略。内部的には <em>recursive</em> 戦略を複数回呼び出している。</p></li></ul><h1 id=リベース>リベース</h1><p><code>git rebase</code> コマンドは、一連のコミットの基点を変更する際に使う。
 一般的な用途は、ローカルの一連のコミットを、追跡ブランチの最新の状態に合わせるというものである。
-一連のコミットをブランチの先頭へリベースすることは、2つのブランチのマージに似ているが、リベースでは、Git は完全に新しいコミットを作成する。また、リベースによって元ブランチの開発履歴が線形化されるため、リベースしたいブランチ上のコミットをすでに公開している場合は、リベースは適さない。</p><h1 id=リポジトリ>リポジトリ</h1><h2 id=git-リポジトリの概念>Git リポジトリの概念</h2><p>Git のリポジトリは2種類ある。</p><ul><li><p><strong>ベア</strong> (<em>bare</em>) リポジトリ<br>作業ディレクトリを持たず、通常の開発には使用されない。チェックアウトされたブランチの概念もない。</p></li><li><p><strong>開発</strong>リポジトリ<br>ベアでない (<em>non-bare</em>) リポジトリで、通常の開発に使用される。カレントブランチの概念を持ち、作業ディレクトリ内における、現在のブランチのチェックアウトされたコピーを提供する。</p></li></ul><h2 id=リモート>リモート</h2><p>現在作業中のリポジトリを<strong>ローカルリポジトリ</strong>、ファイルを交換する相手のリポジトリを<strong>リモートリポジトリ</strong>という。</p><h3 id=refspec>refspec</h3><p>refspec は、リモートリポジトリ中のブランチ名を、ローカルリポジトリ中のブランチ名に対応付ける。refspec は、ローカルリポジトリ、リモートリポジトリのブランチを同時に指定することが必要なので、完全なブランチ名を使用する。</p><p>refspec の構文は次の通りである。</p><div class=highlight><pre class=chroma><code class=language-sh data-lang=sh><span class=o>[</span>+<span class=o>]</span>source:destination
+一連のコミットをブランチの先頭へリベースすることは、2つのブランチのマージに似ているが、リベースでは、Git は完全に新しいコミットを作成する。また、リベースによって元ブランチの開発履歴が線形化されるため、リベースしたいブランチ上のコミットをすでに公開している場合は、リベースは適さない。</p><h1 id=リポジトリ>リポジトリ</h1><h2 id=git-リポジトリの概念>Git リポジトリの概念</h2><p>Git のリポジトリは2種類ある。</p><ul><li><p><strong>ベア</strong> (<em>bare</em>) リポジトリ<br>作業ディレクトリを持たず、通常の開発には使用されない。チェックアウトされたブランチの概念もない。</p></li><li><p><strong>開発</strong>リポジトリ<br>ベアでない (<em>non-bare</em>) リポジトリで、通常の開発に使用される。カレントブランチの概念を持ち、作業ディレクトリ内における、現在のブランチのチェックアウトされたコピーを提供する。</p></li></ul><h2 id=リモート>リモート</h2><p>現在作業中のリポジトリを<strong>ローカルリポジトリ</strong>、ファイルを交換する相手のリポジトリを<strong>リモートリポジトリ</strong>という。</p><h3 id=refspec>refspec</h3><p>refspec は、リモートリポジトリ中のブランチ名を、ローカルリポジトリ中のブランチ名に対応付ける。refspec は、ローカルリポジトリ、リモートリポジトリのブランチを同時に指定することが必要なので、完全なブランチ名を使用する。</p><p>refspec の構文は次の通りである。</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sh data-lang=sh><span style=color:#f92672>[</span>+<span style=color:#f92672>]</span>source:destination
 </code></pre></div><p>オプションとして、先頭に <code>+</code> をつけると転送中に fast-forward による安全チェックが実行されない。</p><h3 id=クローン>クローン</h3><p><code>git clone</code> によるクローンでは、元リポジトリの <code>refs/heads/</code> の格納されているローカルブランチは、新しいクローンの <code>refs/remotes/</code> 以下のリモート追跡ブランチとなる。
-Git はまた、デフォルトの fetch refspec を使って <code>origin</code> リモートを設定する。</p><div class=highlight><pre class=chroma><code class=language-sh data-lang=sh><span class=nv>fetch</span> <span class=o>=</span> +refs/heads/*:refs/remotes/origin/*
-</code></pre></div><h3 id=リモートリポジトリを参照するコマンド>リモートリポジトリを参照するコマンド</h3><ul><li><p><code>git fetch</code><br>リモートリポジトリからオブジェクトとそれに関連したメタデータを取得</p></li><li><p><code>git pull</code><br><code>git fetch</code> に加えて対応するブランチに変更をマージする</p></li><li><p><code>git push</code><br>オブジェクトとそれに関連したメタデータをリモートリポジトリに転送</p></li><li><p><code>git ls-remote</code><br>リモート内の参照を表示</p></li></ul><h1 id=その他>その他</h1><h2 id=git-diff><code>git diff</code></h2><ul><li><p><code>git diff</code><br>作業ディレクトリとインデックスの差異</p></li><li><p><code>git diff [commit]</code><br>作業ディレクトリと commit の差異</p></li><li><p><code>git diff --cached [commit]</code><br>インデックスにステージされた変更と commit の差異</p></li><li><p><code>git diff [commit1] [commit2]</code><br>2つの commit の差異</p></li></ul><h2 id=git-bisect><code>git bisect</code></h2><p>2分探索によってコミットを特定するコマンド。</p><br><p class=back-to-posts><a href=https://itkq.jp/blog/>Back to posts</a></p></div><br><div class=disqus><div id=disqus_thread></div><script type=application/javascript>var disqus_config=function(){};(function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById('disqus_thread').innerHTML='Disqus comments not available by default when the website is previewed locally.';return;}
-var d=document,s=d.createElement('script');s.async=true;s.src='//'+"itkq-jp"+'.disqus.com/embed.js';s.setAttribute('data-timestamp',+new Date());(d.head||d.body).appendChild(s);})();</script><noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></div></div></div></section><script type=application/javascript>var doNotTrack=false;if(!doNotTrack){window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;ga('create','UA-71205730-2','auto');ga('send','pageview');}</script><script async src=https://www.google-analytics.com/analytics.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js></script><script type=text/javascript>hljs.initHighlightingOnLoad();</script></body></html>
+Git はまた、デフォルトの fetch refspec を使って <code>origin</code> リモートを設定する。</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sh data-lang=sh>fetch <span style=color:#f92672>=</span> +refs/heads/*:refs/remotes/origin/*
+</code></pre></div><h3 id=リモートリポジトリを参照するコマンド>リモートリポジトリを参照するコマンド</h3><ul><li><p><code>git fetch</code><br>リモートリポジトリからオブジェクトとそれに関連したメタデータを取得</p></li><li><p><code>git pull</code><br><code>git fetch</code> に加えて対応するブランチに変更をマージする</p></li><li><p><code>git push</code><br>オブジェクトとそれに関連したメタデータをリモートリポジトリに転送</p></li><li><p><code>git ls-remote</code><br>リモート内の参照を表示</p></li></ul><h1 id=その他>その他</h1><h2 id=git-diff><code>git diff</code></h2><ul><li><p><code>git diff</code><br>作業ディレクトリとインデックスの差異</p></li><li><p><code>git diff [commit]</code><br>作業ディレクトリと commit の差異</p></li><li><p><code>git diff --cached [commit]</code><br>インデックスにステージされた変更と commit の差異</p></li><li><p><code>git diff [commit1] [commit2]</code><br>2つの commit の差異</p></li></ul><h2 id=git-bisect><code>git bisect</code></h2><p>2分探索によってコミットを特定するコマンド。</p></div></article></div><aside class="col-12 col-md-3 float-left sidebar"><div class="sidebar-item sidebar-pages"><h3>Pages</h3><ul><li><a href=https://itkq.jp/about/>About</a></li><li><a href=https://itkq.jp/index.xml>RSS</a></li></ul></div><div class="sidebar-item sidebar-tags"><h3>Tags</h3><div><span><a href=https://itkq.jp/tags/activity/>Activity</a></span>
+<span><a href=https://itkq.jp/tags/aws/>AWS</a></span>
+<span><a href=https://itkq.jp/tags/chaos-engineering/>Chaos Engineering</a></span>
+<span><a href=https://itkq.jp/tags/contest/>Contest</a></span>
+<span><a href=https://itkq.jp/tags/english/>English</a></span>
+<span><a href=https://itkq.jp/tags/envoy/>Envoy</a></span>
+<span><a href=https://itkq.jp/tags/fluentd/>Fluentd</a></span>
+<span><a href=https://itkq.jp/tags/git/>Git</a></span>
+<span><a href=https://itkq.jp/tags/i/o/>I/O</a></span>
+<span><a href=https://itkq.jp/tags/isucon/>ISUCON</a></span>
+<span><a href=https://itkq.jp/tags/itamae/>Itamae</a></span>
+<span><a href=https://itkq.jp/tags/job-hunting/>Job Hunting</a></span>
+<span><a href=https://itkq.jp/tags/latex/>LaTeX</a></span>
+<span><a href=https://itkq.jp/tags/linux/>Linux</a></span>
+<span><a href=https://itkq.jp/tags/misc/>Misc</a></span>
+<span><a href=https://itkq.jp/tags/operation/>Operation</a></span>
+<span><a href=https://itkq.jp/tags/os/>OS</a></span>
+<span><a href=https://itkq.jp/tags/reading/>Reading</a></span>
+<span><a href=https://itkq.jp/tags/sql/>SQL</a></span>
+<span><a href=https://itkq.jp/tags/tcp/ip/>TCP/IP</a></span>
+<span><a href=https://itkq.jp/tags/thinking/>Thinking</a></span>
+<span><a href=https://itkq.jp/tags/tls/>TLS</a></span>
+<span><a href=https://itkq.jp/tags/tweetbot/>Tweetbot</a></span>
+<span><a href=https://itkq.jp/tags/unix/>Unix</a></span>
+<span><a href=https://itkq.jp/tags/vim/>Vim</a></span>
+<span><a href=https://itkq.jp/tags/x509/>X509</a></span></div></div><div class="sidebar-item sidebar-links"><h3>Links</h3><ul><li><a href=https://github.com/itkq target=_blank><span>GitHub</span></a></li><li><a href=https://keybase.io/itkq target=_blank><span>Keybase</span></a></li><li><a href=https://twitter.com/itkq target=_blank><span>Twitter</span></a></li><li><a href=https://itkq.page.link/wishlist target=_blank><span>Wishlist</span></a></li></ul></div></aside></div><div class=btn><div class=btn-toggle-mode><ion-icon name=contrast></ion-icon></div><div class=btn-scroll-top><ion-icon name=chevron-up></ion-icon></div></div></main><footer><div class="container-lg clearfix"><div class="col-12 footer"><span>&copy; 2020 <a href=https://itkq.jp/></a>|
+Powered by <a href=https://github.com/amzrk2/hugo-theme-fuji/ target=_blank>Fuji-v2</a> & <a href=https://gohugo.io/ target=_blank>Hugo</a></span></div></div></footer><script async type=module src=https://cdn.jsdelivr.net/npm/ionicons@5.0.1/dist/ionicons/ionicons.esm.js></script><script async nomodule src=https://cdn.jsdelivr.net/npm/ionicons@5.0.1/dist/ionicons/ionicons.js></script><script defer src=https://cdn.jsdelivr.net/npm/prismjs@1.20.0/components/prism-core.min.js></script><script defer src=https://cdn.jsdelivr.net/npm/prismjs@1.20.0/plugins/autoloader/prism-autoloader.min.js></script><script defer src=https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js></script><script defer src=https://itkq.jp/assets/js/fuji.min.js></script></body></html>

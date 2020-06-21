@@ -1,0 +1,34 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=HandheldFriendly content="True"><meta http-equiv=x-ua-compatible content="IE=edge"><meta http-equiv=cache-control content="no-transform"><meta http-equiv=cache-control content="no-siteapp"><meta name=generator content="Hugo 0.71.1"><link rel="shortcut icon" href=https://cdn.jsdelivr.net/gh/amzrk2/poal-jsdelivr@1.2.0/favicons/favicon.ico><title>LaTeXiTのCLIみたいなのを書いた - itkq.jp</title><meta name=keywords content="LaTeX"><meta property="og:title" content="LaTeXiTのCLIみたいなのを書いた"><meta property="og:description" content="LaTeXiT というTeX形式の数式を入力するとTeX形式の画像を出力するツールを知った．
+研究発表のスライドを作る場合に，TeX形式の画像を貼り付けたいことがあり，早速インストールした．"><meta property="og:type" content="article"><meta property="og:url" content="https://itkq.jp/blog/2016/10/27/latexit-cli/"><meta property="article:published_time" content="2016-10-27T22:14:40+09:00"><meta property="article:modified_time" content="2016-10-27T22:14:40+09:00"><meta name=twitter:card content="summary"><meta name=twitter:title content="LaTeXiTのCLIみたいなのを書いた"><meta name=twitter:description content="LaTeXiT というTeX形式の数式を入力するとTeX形式の画像を出力するツールを知った．
+研究発表のスライドを作る場合に，TeX形式の画像を貼り付けたいことがあり，早速インストールした．"><style>@media(prefers-color-scheme:dark){body[data-theme=auto] img{filter:brightness(60%)}}body[data-theme=dark] img{filter:brightness(60%)}</style><link rel=stylesheet href=https://itkq.jp/assets/css/fuji-custom.min.css></head><body data-theme=auto><script data-cfasync=false>var fujiThemeData=localStorage.getItem('fuji_data-theme');if(!fujiThemeData){localStorage.setItem('fuji_data-theme','auto');}else{if(fujiThemeData!=='auto'){document.body.setAttribute('data-theme',fujiThemeData==='dark'?'dark':'light');}}</script><script data-cfasync=false>function browserDetection(ua){if(ua.indexOf('MSIE ')>0||ua.indexOf('Trident/')>0){return true;}
+return false;}
+var ua=window.navigator.userAgent;if(browserDetection(ua)){window.location.href('https:\/\/itkq.jp\/ie\/');}</script><header><div class="container-lg clearfix"><div class="col-12 header"><a class=title-main href=https://itkq.jp/>itkq.jp</a></div></div></header><main><div class="container-lg clearfix"><div class="col-12 col-md-9 float-left content"><article><h2 class="post-item post-title"><a href=https://itkq.jp/blog/2016/10/27/latexit-cli/>LaTeXiTのCLIみたいなのを書いた</a></h2><div class="post-item post-meta"><span><ion-icon name=today></ion-icon>&nbsp;2016-10-27</span><span><ion-icon name=pricetags></ion-icon>&nbsp;<a href=https://itkq.jp/tags/latex>LaTeX</a>&nbsp;</span></div><div class="post-content markdown-body"><p><a href=https://www.chachatelier.fr/latexit/ target=_blank>LaTeXiT </a>というTeX形式の数式を入力するとTeX形式の画像を出力するツールを知った．<br>研究発表のスライドを作る場合に，TeX形式の画像を貼り付けたいことがあり，早速インストールした．</p><p><a href=http://blog.itkq.jp/post/vim-latex/ target=_blank>最近のVim+LaTeX事情</a> に書いたように，最近はTexLiveのDockerイメージでLaTeX文書をコンパイルしている．<br>LaTeXiTのコンパイル設定をカスタマイズすれば対応できると思ったが，うまくいかなかった．
+コンパイルスクリプトでは，作業ディレクトリをマウントしてDockerイメージのコンパイルバイナリを走らせている．LaTeXiTが実行するコンパイルコマンドは，一時的に作成した
+/var/folders/&mldr;/.tex を絶対参照しており，その部分は書き換えようがなかった．</p><p>LaTeXiTの動作は，コンパイル後にBounding boxを計算してトリミングして各種画像に変換する感じで作れそうだったのでCLIとして作った．</p><p>文字列をクリップボードにコピーする pbcopy は知っていたが，画像をコピーするものはないかと探したところ <a href=https://gist.github.com/beng/806b8420cc16bcf8a07a target=_blank>impbcopy</a> があった．
+これを利用して，実行するとクリップボード中の文字列に対応するTeX形式の画像をクリップボードにコピーするので，サクッと使える感じになった．</p><p></p><p>本当はPopclipのExtensionとして作りたかったけどうまくいかなかった😇</p></div></article></div><aside class="col-12 col-md-3 float-left sidebar"><div class="sidebar-item sidebar-pages"><h3>Pages</h3><ul><li><a href=https://itkq.jp/about/>About</a></li><li><a href=https://itkq.jp/index.xml>RSS</a></li></ul></div><div class="sidebar-item sidebar-tags"><h3>Tags</h3><div><span><a href=https://itkq.jp/tags/activity/>Activity</a></span>
+<span><a href=https://itkq.jp/tags/aws/>AWS</a></span>
+<span><a href=https://itkq.jp/tags/chaos-engineering/>Chaos Engineering</a></span>
+<span><a href=https://itkq.jp/tags/contest/>Contest</a></span>
+<span><a href=https://itkq.jp/tags/english/>English</a></span>
+<span><a href=https://itkq.jp/tags/envoy/>Envoy</a></span>
+<span><a href=https://itkq.jp/tags/fluentd/>Fluentd</a></span>
+<span><a href=https://itkq.jp/tags/git/>Git</a></span>
+<span><a href=https://itkq.jp/tags/i/o/>I/O</a></span>
+<span><a href=https://itkq.jp/tags/isucon/>ISUCON</a></span>
+<span><a href=https://itkq.jp/tags/itamae/>Itamae</a></span>
+<span><a href=https://itkq.jp/tags/job-hunting/>Job Hunting</a></span>
+<span><a href=https://itkq.jp/tags/latex/>LaTeX</a></span>
+<span><a href=https://itkq.jp/tags/linux/>Linux</a></span>
+<span><a href=https://itkq.jp/tags/misc/>Misc</a></span>
+<span><a href=https://itkq.jp/tags/operation/>Operation</a></span>
+<span><a href=https://itkq.jp/tags/os/>OS</a></span>
+<span><a href=https://itkq.jp/tags/reading/>Reading</a></span>
+<span><a href=https://itkq.jp/tags/sql/>SQL</a></span>
+<span><a href=https://itkq.jp/tags/tcp/ip/>TCP/IP</a></span>
+<span><a href=https://itkq.jp/tags/thinking/>Thinking</a></span>
+<span><a href=https://itkq.jp/tags/tls/>TLS</a></span>
+<span><a href=https://itkq.jp/tags/tweetbot/>Tweetbot</a></span>
+<span><a href=https://itkq.jp/tags/unix/>Unix</a></span>
+<span><a href=https://itkq.jp/tags/vim/>Vim</a></span>
+<span><a href=https://itkq.jp/tags/x509/>X509</a></span></div></div><div class="sidebar-item sidebar-links"><h3>Links</h3><ul><li><a href=https://github.com/itkq target=_blank><span>GitHub</span></a></li><li><a href=https://keybase.io/itkq target=_blank><span>Keybase</span></a></li><li><a href=https://twitter.com/itkq target=_blank><span>Twitter</span></a></li><li><a href=https://itkq.page.link/wishlist target=_blank><span>Wishlist</span></a></li></ul></div></aside></div><div class=btn><div class=btn-toggle-mode><ion-icon name=contrast></ion-icon></div><div class=btn-scroll-top><ion-icon name=chevron-up></ion-icon></div></div></main><footer><div class="container-lg clearfix"><div class="col-12 footer"><span>&copy; 2020 <a href=https://itkq.jp/></a>|
+Powered by <a href=https://github.com/amzrk2/hugo-theme-fuji/ target=_blank>Fuji-v2</a> & <a href=https://gohugo.io/ target=_blank>Hugo</a></span></div></div></footer><script async type=module src=https://cdn.jsdelivr.net/npm/ionicons@5.0.1/dist/ionicons/ionicons.esm.js></script><script async nomodule src=https://cdn.jsdelivr.net/npm/ionicons@5.0.1/dist/ionicons/ionicons.js></script><script defer src=https://cdn.jsdelivr.net/npm/prismjs@1.20.0/components/prism-core.min.js></script><script defer src=https://cdn.jsdelivr.net/npm/prismjs@1.20.0/plugins/autoloader/prism-autoloader.min.js></script><script defer src=https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js></script><script defer src=https://itkq.jp/assets/js/fuji.min.js></script></body></html>
